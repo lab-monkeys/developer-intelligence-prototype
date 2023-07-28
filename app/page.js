@@ -33,9 +33,9 @@ export default function AuthenticationPage() {
         <div className="relative hidden h-full flex-col bg-muted p-32 text-white dark:border-r lg:flex lg:col-span-3">
 
           <div className="relative z-30 mt-auto text-white border-l-4 border-red-600 pl-8">
-            <div className="font-bold text-base">Developer Intelligence</div>
-            <div className="font-semibold text-3xl tracking-tight mt-1">Run and manage applications anywhere</div>
-            <p className="mt-4">The flexibility to run your applications across environments—from bare metal to virtual machines (VMs), edge computing, private cloud, and public clouds—without having to rebuild applications, retrain people, or maintain disparate environments is the outcome of implementing an open hybrid cloud strategy.</p>
+            <div className="font-bold text-base">Red Hat Developer Intelligence&trade;</div>
+            <div className="font-semibold text-3xl tracking-tight mt-1">Redefine development and unlock your potential</div>
+            <p className="mt-4">Elevate your development game with Red Hat Developer Intelligence and witness how this game-changing product unlocks new levels of efficiency, collaboration, and excellence in software development. Embrace the future of coding with confidence, precision, and intelligence at your fingertips.</p>
           </div>
           <div className="absolute z-20 inset-0 bg-gradient-to-t from-zinc-900 to-transparent" />
           <Image className="relative object-cover z-10" src={SignInPhoto} alt="Authentication" placeholder="blur" fill priority />

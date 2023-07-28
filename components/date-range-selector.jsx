@@ -7,6 +7,7 @@ import { DateRange } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
@@ -14,11 +15,35 @@ export function DateRangeSelector() {
   
   const [date, setDate] = useState({
     from: subDays(new Date(), 28),
-    to: subDays(new Date(), 1),
+    to: new Date(),
   })
 
+  const convertMsToDays = ms => {
+    const msInOneSecond = 1000
+    const secondsInOneMinute = 60
+    const minutesInOneHour = 60
+    const hoursInOneDay = 24
+  
+    const minutesInOneDay = hoursInOneDay * minutesInOneHour
+    const secondsInOneDay = secondsInOneMinute * minutesInOneDay
+    const msInOneDay = msInOneSecond * secondsInOneDay
+  
+    return Math.ceil(ms / msInOneDay)
+  }
+
+  const getDaysBetweenDates = (dateOne, dateTwo) => {
+    let differenceInMs = dateTwo.getTime() - dateOne.getTime()
+  
+    if (differenceInMs < 0) {
+      differenceInMs = dateOne.getTime() - dateTwo.getTime()
+    }
+  
+    return convertMsToDays(differenceInMs)
+  }
+
   return (
-    <div className="grid gap-2">
+    <div className="flex items-center gap-4">
+      <Badge>{getDaysBetweenDates(date.from, date.to)} days</Badge>
       <Popover>
         <PopoverTrigger asChild>
           <Button id="date" variant={"outline"} className={cn( "w-[240px] justify-start text-left font-normal", !date && "text-muted-foreground" )}>
