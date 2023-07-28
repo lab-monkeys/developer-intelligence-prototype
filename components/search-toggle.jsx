@@ -1,7 +1,7 @@
 'use client'
 
 import { Toggle } from '@/components/ui/toggle'
-import { Search } from "lucide-react"
+import { Search } from 'lucide-react'
 
 export function SearchToggle() {
   return (
