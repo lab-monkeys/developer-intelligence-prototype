@@ -8,6 +8,10 @@ module.exports = {
     './src/**/*.{js,jsx}',
 	],
   theme: {
+    fontFamily: {
+      'display': ['"Red Hat Display"'],
+      'body': ['"Red Hat Text"']
+    },
     container: {
       center: true,
       padding: "2rem",
