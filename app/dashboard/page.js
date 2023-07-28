@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
 import { CodeRepoSelector } from '@/components/code-repo-selector'
+import { DateRangeSelector } from '@/components/date-range-selector'
 import { UserNav } from '@/components/user-nav'
 import { NotificationsToggle } from '@/components/notifications-toggle'
 import { ChartLeadTime } from '@/components/chart-lead-time'
@@ -16,6 +17,7 @@ export default function Page() {
 
       <header className="flex justify-between items-center px-16 py-16">
         <Image src="/logos/logo--developer-intelligence.svg" alt="Red Hat Developer Intelligence logo" width={330} height={32} />
+        <h1 className="visually-hidden">Red Hat Developer Intelligence</h1>
         <div className="flex justify-end items-center gap-4">
           <NotificationsToggle />
           <UserNav />
@@ -26,7 +28,7 @@ export default function Page() {
 
         <div className="flex justify-between items-center">
           <CodeRepoSelector />
-          <div>Date picker component</div>
+          <DateRangeSelector />
         </div>
 
         <div className="mt-8">
