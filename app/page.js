@@ -13,7 +13,7 @@ export default function AuthenticationPage() {
     <>
       <div className="container relative hidden h-full flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-5 lg:px-0">
 
-        <div className="relative h-full flex flex-col justify-center lg:p-8 lg:col-span-2">
+        <div className="relative h-full flex flex-col justify-center lg:p-8 lg:col-span-2 pattern-background">
           <div className="absolute top-16 left-16 h-10 flex z-20 flex items-center text-lg font-medium">
             <Image src="/logos/logo--developer-intelligence.svg" alt="Red Hat Developer Intelligence logo" width={330} height={32} />
             <h1 className="visually-hidden">Red Hat Developer Intelligence</h1>

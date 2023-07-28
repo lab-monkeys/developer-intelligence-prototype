@@ -80,3 +80,10 @@ h1, h2, h3, h4, h5, h6 {
   clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap; /* added line */
 }
+
+.pattern-background {
+  background-image: url('/illustrations/illustration--sign-in.svg');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: 0 100%;
+}
