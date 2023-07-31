@@ -1,10 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Button, buttonVariants } from '@/components/ui/button'
-
+import ButtonSignInGithub from '@/components/button-signin-github'
+import ButtonSignInGoogle from '@/components/button-signin-google'
 import SignInPhoto from '@/public/images/image--sign-in.jpg'
-import LogoGithub from '@/public/logos/logo--github.svg'
-import LogoGoogle from '@/public/logos/logo--google.svg'
 
 export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
@@ -20,16 +18,11 @@ export default function AuthenticationPage() {
             <Image src="/logos/logo--developer-intelligence.svg" alt="Red Hat Developer Intelligence logo" width={330} height={32} />
             <h1 className="visually-hidden">Red Hat Developer Intelligence</h1>
           </div>
-          <div className="mx-auto flex w-full flex-col space-y-6 sm:w-[350px]">
-            <div className="flex flex-col space-y-2 text-center">
+          <div className="mx-auto flex w-full flex-col space-y-6 w-3/4 2xl:w-2/4">
+            <div className="flex flex-col mb-4 space-y-2 text-center">
               <h2 className="text-3xl	font-bold tracking-tight">Sign in</h2>
             </div>
-            <Button type="button">
-              <span className="mr-2 w-4 h-4">
-                <LogoGithub />
-              </span>
-              <span>Sign in with Github</span>
-            </Button>
+            <ButtonSignInGithub />
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
@@ -40,12 +33,7 @@ export default function AuthenticationPage() {
                 </span>
               </div>
             </div>
-            <Button variant="outline" type="button">
-              <span className="mr-2 w-4 h-4">
-                <LogoGoogle />
-              </span>
-              <span>Sign in with Google</span>
-            </Button>
+            <ButtonSignInGoogle />
             <p className="px-8 text-center text-sm text-muted-foreground">By signing in, you agree to our <Link href="https://www.redhat.com/en/about/terms-use">terms of service</Link> and <Link href="https://www.redhat.com/en/about/privacy-policy">privacy policy</Link>.</p>          
           </div>
         </div>

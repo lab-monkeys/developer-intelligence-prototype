@@ -18,7 +18,9 @@ export const red_hat_text = Red_Hat_Text({
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${red_hat_display.variable} ${red_hat_text.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+      </body>
     </html>
   )
 }
