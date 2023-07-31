@@ -1,5 +1,8 @@
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import { options } from '../api/auth/[...nextauth]/options'
+import { getServerSession } from 'next-auth/next'
+import { redirect } from 'next/navigation'
 
 import { CodeRepoSelector } from '@/components/code-repo-selector'
 import { DateRangeSelector } from '@/components/date-range-selector'
@@ -12,7 +15,12 @@ export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
 }
 
-export default function Page() {
+export default async function Page() {
+
+  const session = await getServerSession(options)
+
+  if (!session) { redirect('/?callbackUrl=/dashboard') }
+
   return (
     <div className=" h-full">
 
