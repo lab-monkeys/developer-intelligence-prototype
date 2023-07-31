@@ -76,11 +76,11 @@ const data = [
   },
 ]
 
-export function ChartLeadTime() {
+export function ChartDeploymentFrequency() {
   return (
     <Card className="flex flex-col h-full">
       <CardHeader>
-        <CardTitle>Lead time for change</CardTitle>
+        <CardTitle>Deployment frequency</CardTitle>
         <CardDescription>7 days, 13 hours <span>16%</span></CardDescription>
       </CardHeader>
       <CardContent className="h-full">

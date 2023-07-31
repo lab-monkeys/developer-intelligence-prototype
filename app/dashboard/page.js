@@ -1,28 +1,23 @@
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { options } from '../api/auth/[...nextauth]/options'
-import { getServerSession } from 'next-auth/next'
-import { redirect } from 'next/navigation'
-
 import { CodeRepoSelector } from '@/components/code-repo-selector'
 import { DateRangeSelector } from '@/components/date-range-selector'
 import { UserNav } from '@/components/user-nav'
 import { NotificationsToggle } from '@/components/notifications-toggle'
 import { ChartLeadTime } from '@/components/chart-lead-time'
+import { ChartDeploymentFrequency } from '@/components/chart-deployment-frequency'
+import { ChartChangeFailureRate } from '@/components/chart-change-failure-rate'
+import { ChartMeanTimeRecovery } from '@/components/chart-mean-time-recovery'
 import { SearchToggle } from '@/components/search-toggle'
 
 export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
 }
 
-export default async function Page() {
-
-  const session = await getServerSession(options)
-
-  if (!session) { redirect('/?callbackUrl=/dashboard') }
+export default function Page() {
 
   return (
-    <div className=" h-full">
+    <div className="flex flex-col h-full">
 
       <header className="flex justify-between items-center px-16 py-16">
         <Image src="/logos/logo--developer-intelligence.svg" alt="Red Hat Developer Intelligence logo" width={330} height={32} />
@@ -36,15 +31,17 @@ export default async function Page() {
         </div>
       </header>
 
-      <main className="p-16">
-
+      <main className="flex flex-col h-full p-16 pt-0">
         <div className="flex justify-between items-center">
           <CodeRepoSelector />
           <DateRangeSelector />
         </div>
 
-        <div className="mt-8">
+        <div className="h-full grid grid-cols-2 grid-rows-2 gap-8 mt-8">
+          <ChartDeploymentFrequency />
           <ChartLeadTime />
+          <ChartChangeFailureRate />
+          <ChartMeanTimeRecovery />
         </div>
       </main>
     </div>

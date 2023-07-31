@@ -10,18 +10,18 @@ import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popove
 
 const repositories = [
   {
-    value: "next.js",
-    label: "Next.js",
+    value: "1",
+    label: "psc-ansible",
     icon: Github,
   },
   {
-    value: "sveltekit",
-    label: "SvelteKit",
+    value: "2",
+    label: "pipeline-as-a-service",
     icon: Github,
   },
   {
-    value: "nuxt.js",
-    label: "Nuxt.js",
+    value: "3",
+    label: "starchiver",
     icon: Github,
   },
   {
@@ -50,7 +50,7 @@ export function CodeRepoSelector() {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent align={'left'} className="w-[320px] p-0">
         <Command>
           <CommandInput placeholder="Search repository..." />
           <CommandEmpty>No repository found.</CommandEmpty>
