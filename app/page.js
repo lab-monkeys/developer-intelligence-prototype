@@ -20,7 +20,6 @@ export default function AuthenticationPage() {
             <Image src="/logos/logo--developer-intelligence.svg" alt="Red Hat Developer Intelligence logo" width={330} height={32} />
             <h1 className="visually-hidden">Red Hat Developer Intelligence</h1>
           </div>
-
           <div className="mx-auto flex w-full flex-col space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h2 className="text-3xl	font-bold tracking-tight">Sign in</h2>
@@ -51,7 +50,7 @@ export default function AuthenticationPage() {
           </div>
         </div>
 
-        <div className="relative hidden h-full flex-col bg-muted p-32 text-white dark:border-r lg:flex lg:col-span-3">
+        <div className="relative hidden h-full flex-col bg-zinc-900 p-32 text-white dark:border-r lg:flex lg:col-span-3">
           <div className="relative z-30 mt-auto text-white border-l-4 border-red-600 pl-8">
             <div className="font-bold text-base">Red Hat Developer Intelligence&trade;</div>
             <div className="font-semibold text-3xl tracking-tight mt-1">Redefine development and unlock your potential</div>
