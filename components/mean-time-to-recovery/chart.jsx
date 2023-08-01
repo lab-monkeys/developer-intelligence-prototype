@@ -80,6 +80,8 @@ const data = [
   },
 ]
 
+const animationDuration = 3000
+
 export function MeanTimeToRecoveryChart() {
   return (
     <Card className="flex flex-col h-full">
@@ -103,10 +105,10 @@ export function MeanTimeToRecoveryChart() {
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
             <YAxis style={{ fontSize: '0.75rem' }} />
             <Tooltip />
-            <Area type="monotone" dataKey="Expected range" fill="#a7f3d0" stroke="#d1fae5" strokeWidth={0} strokeDasharray="4 2" /> {/* Color: Emerald 200 */}
+            <Area type="monotone" dataKey="Expected range" fill="#a7f3d0" stroke="#d1fae5" strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Emerald 200 */}
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
-            <Line type="monotone" dataKey="Rolling average" dot={false} stroke="#10b981" strokeWidth={3} strokeLinecap="round" /> {/* Color: Emerald 500 */}
-            <Line type="monotone" dataKey="Goal" dot={false} stroke="#f59e0b" strokeWidth={3} strokeLinecap="round" /> {/* Color: Amber 500 */}
+            <Line type="monotone" dataKey="Rolling average" dot={false} stroke="#10b981" strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Emerald 500 */}
+            <Line type="monotone" dataKey="Goal" dot={false} stroke="#f59e0b" strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Amber 500 */}
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>
