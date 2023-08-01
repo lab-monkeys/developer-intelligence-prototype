@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from 'react'
-import { Check, ChevronsUpDown, Github } from "lucide-react"
+import { Check, ChevronsUpDown, Github, Gitlab } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -10,29 +10,19 @@ import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popove
 
 const repositories = [
   {
-    value: "1",
+    value: "psc-ansible",
     label: "psc-ansible",
-    icon: Github,
+    icon: Gitlab,
   },
   {
-    value: "2",
+    value: "pipeline-as-a-service",
     label: "pipeline-as-a-service",
-    icon: Github,
+    icon: Gitlab,
   },
   {
-    value: "3",
+    value: "starchiver",
     label: "starchiver",
-    icon: Github,
-  },
-  {
-    value: "remix",
-    label: "Remix",
-    icon: Github,
-  },
-  {
-    value: "astro",
-    label: "Astro",
-    icon: Github,
+    icon: Gitlab,
   },
 ]
 
