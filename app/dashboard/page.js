@@ -4,10 +4,10 @@ import { CodeRepoSelector } from '@/components/code-repo-selector'
 import { DateRangeSelector } from '@/components/date-range-selector'
 import { UserNav } from '@/components/user-nav'
 import { NotificationsToggle } from '@/components/notifications-toggle'
-import { ChartLeadTime } from '@/components/chart-lead-time'
-import { ChartDeploymentFrequency } from '@/components/chart-deployment-frequency'
-import { ChartChangeFailureRate } from '@/components/chart-change-failure-rate'
-import { ChartMeanTimeRecovery } from '@/components/chart-mean-time-recovery'
+import { LeadTimeForChangeChart } from '@/components/lead-time-for-change/chart'
+import { DeploymentFrequencyChart } from '@/components/deployment-frequency/chart'
+import { ChangeFailureRateChart } from '@/components/change-failure-rate/chart'
+import { MeanTimeToRecoveryChart } from '@/components/mean-time-to-recovery/chart'
 import { SearchToggle } from '@/components/search-toggle'
 
 export const metadata = {
@@ -20,7 +20,7 @@ export default function Page() {
     <div className="flex flex-col h-full">
 
       <header className="flex justify-between items-center px-16 py-16">
-        <Image src="/logos/logo--developer-intelligence.svg" alt="Red Hat Developer Intelligence logo" width={330} height={32} />
+        <Image src="/logos/logo--developer-intelligence.svg" alt="Red Hat Developer Intelligence logo" width={330} height={32} priority />
         <h1 className="visually-hidden">Red Hat Developer Intelligence</h1>
         <div className="flex justify-end items-center gap-8">
           <div className="flex justify-end items-center gap-2">
@@ -38,10 +38,10 @@ export default function Page() {
         </div>
 
         <div className="h-full grid grid-cols-2 grid-rows-2 gap-8 mt-8">
-          <ChartDeploymentFrequency />
-          <ChartLeadTime />
-          <ChartChangeFailureRate />
-          <ChartMeanTimeRecovery />
+          <DeploymentFrequencyChart />
+          <LeadTimeForChangeChart />
+          <ChangeFailureRateChart />
+          <MeanTimeToRecoveryChart />
         </div>
       </main>
     </div>
