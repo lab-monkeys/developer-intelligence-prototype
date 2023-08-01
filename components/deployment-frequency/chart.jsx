@@ -109,8 +109,8 @@ export function DeploymentFrequencyChart() {
             <Tooltip />
             <Area type="monotone" dataKey="Expected range" fill="#bfdbfe" stroke="#dbeafe" strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Blue 200 */}            
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
-            <Line type="monotone" dataKey="Rolling average" dot={false} stroke="#3b82f6" strokeWidth={3} strokeLinecap="round" animationBegin={1000} animationDuration={animationDuration} /> {/* Color: Blue 500 */}
-            <Line type="monotone" dataKey="Goal" dot={false} stroke="#f59e0b" strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Amber 500 */}
+            <Line type="monotone" dataKey="Rolling average" dot={false} stroke="#3b82f6" strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Blue 500 */}
+            <Line type="monotone" dataKey="Goal" dot={false} stroke="#f59e0b" strokeWidth={3} strokeLinecap="round" isAnimationActive={false} /> {/* Color: Amber 500 */}
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>
