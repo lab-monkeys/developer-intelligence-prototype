@@ -15,7 +15,7 @@ export default function AuthenticationPage() {
 
         <div className="relative h-full flex flex-col justify-center lg:p-8 lg:col-span-2 bg-background pattern-background">
           <div className="absolute top-16 left-16 h-10 flex z-20 flex items-center text-lg font-medium">
-            <Image src="/logos/logo--developer-intelligence.svg" alt="Red Hat Developer Intelligence logo" width={330} height={32} />
+            <Image src="/logos/logo--developer-intelligence.svg" alt="Red Hat Developer Intelligence logo" width={330} height={32} priority={true} />
             <h1 className="visually-hidden">Red Hat Developer Intelligence</h1>
           </div>
           <div className="mx-auto flex w-full flex-col space-y-6 w-3/4 2xl:w-2/4">
@@ -45,7 +45,7 @@ export default function AuthenticationPage() {
             <p className="mt-4">Elevate your development game with Red Hat Developer Intelligence and witness how this game-changing product unlocks new levels of efficiency, collaboration, and excellence in software development. Embrace the future of coding with confidence, precision, and intelligence at your fingertips.</p>
           </div>
           <div className="absolute z-20 inset-0 bg-gradient-to-t from-zinc-900 to-transparent" />
-          <Image className="relative object-cover z-10" src={SignInPhoto} alt="Authentication" placeholder="blur" fill priority />
+          <Image className="relative object-cover z-10" src={SignInPhoto} alt="Developer looking at their laptop while they work" placeholder="blur" fill={true} priority={true} />
         </div>
 
       </div>
