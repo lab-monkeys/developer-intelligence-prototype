@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
 import { MoveRight, TrendingUp, TrendingDown } from 'lucide-react'
 import { InfoTooltip } from '@/components/info-tooltip'
+import { DeploymentFrequencyRating } from './rating'
 import { DeploymentFrequencyOptions } from './options'
 
 const data = [
@@ -94,6 +95,7 @@ export function DeploymentFrequencyChart() {
             <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
           </CardDescription>
         </div>
+        <DeploymentFrequencyRating />
         {/* <DeploymentFrequencyOptions /> */}
       </CardHeader>
       <CardContent className="h-full">

@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
 import { MoveRight, TrendingUp, TrendingDown } from 'lucide-react'
 import { InfoTooltip } from '@/components/info-tooltip'
+import { MeanTimeToRecoveryRating } from './rating'
 
 const data = [
   {
@@ -93,6 +94,7 @@ export function MeanTimeToRecoveryChart() {
             <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
           </CardDescription>
         </div>
+        <MeanTimeToRecoveryRating />
       </CardHeader>
       <CardContent className="h-full">
         <ResponsiveContainer width="100%" height="100%">
