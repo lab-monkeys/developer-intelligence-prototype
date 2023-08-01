@@ -3,6 +3,7 @@ import Link from 'next/link'
 import ButtonSignInGithub from '@/components/button-signin-github'
 import ButtonSignInGoogle from '@/components/button-signin-google'
 import SignInPhoto from '@/public/images/image--sign-in.jpg'
+import BlurImage from '@/components/blur-image'
 
 export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
@@ -45,7 +46,7 @@ export default function AuthenticationPage() {
             <p className="mt-4">Elevate your development game with Red Hat Developer Intelligence and witness how this game-changing product unlocks new levels of efficiency, collaboration, and excellence in software development. Embrace the future of coding with confidence, precision, and intelligence at your fingertips.</p>
           </div>
           <div className="absolute z-20 inset-0 bg-gradient-to-t from-zinc-900 to-transparent" />
-          <Image className="relative object-cover z-10" src={SignInPhoto} alt="Developer looking at their laptop while they work" placeholder="blur" fill={true} priority={true} />
+          <BlurImage className="absolute top-0 left-0" image={SignInPhoto} alt={'Developer looking at their laptop while they work'} />
         </div>
 
       </div>
