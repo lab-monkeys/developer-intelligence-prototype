@@ -98,7 +98,6 @@ export function DeploymentFrequencyChart() {
           </CardDescription>
         </div>
         <DeploymentFrequencyRating />
-        {/* <DeploymentFrequencyOptions /> */}
       </CardHeader>
       <CardContent className="h-full">
         <ResponsiveContainer width="100%" height="100%">
