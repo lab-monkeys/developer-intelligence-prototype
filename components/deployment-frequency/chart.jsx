@@ -98,7 +98,7 @@ export function DeploymentFrequencyChart() {
       </CardHeader>
       <CardContent className="h-full">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={data}>
+          <ComposedChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke="#CFD8DC" />
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
             <YAxis style={{ fontSize: '0.75rem' }} />
