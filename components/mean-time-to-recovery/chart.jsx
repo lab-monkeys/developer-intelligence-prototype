@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
 import { MoveRight, TrendingUp, TrendingDown } from 'lucide-react'
 import { InfoTooltip } from '@/components/info-tooltip'
+import { MeanTimeToRecoveryTooltip } from './tooltip'
 import { MeanTimeToRecoveryRating } from './rating'
 import { MeanTimeToRecoveryOptions } from './options'
 
@@ -108,7 +109,7 @@ export function MeanTimeToRecoveryChart() {
             <CartesianGrid vertical={false} stroke="#CFD8DC" />
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
             <YAxis style={{ fontSize: '0.75rem' }} />
-            <Tooltip />
+            <Tooltip content={<MeanTimeToRecoveryTooltip />} />
             <Area type="monotone" dataKey="Expected range" fill="#a7f3d0" stroke="#d1fae5" strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Emerald 200 */}
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
             <Line type="monotone" dataKey="Rolling average" dot={false} stroke="#10b981" strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Emerald 500 */}

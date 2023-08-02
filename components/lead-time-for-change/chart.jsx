@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
 import { MoveRight, TrendingUp, TrendingDown } from 'lucide-react'
 import { InfoTooltip } from '@/components/info-tooltip'
+import { LeadTimeForChangeTooltip } from './tooltip'
 import { LeadTimeForChangeRating } from './rating'
 import { LeadTimeForChangeOptions } from './options'
 
@@ -108,7 +109,7 @@ export function LeadTimeForChangeChart() {
             <CartesianGrid vertical={false} stroke="#CFD8DC" />
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
             <YAxis style={{ fontSize: '0.75rem' }} tickFormatter={tick => `${tick}d`} />
-            <Tooltip />
+            <Tooltip content={<LeadTimeForChangeTooltip />} />
             <Area type="monotone" dataKey="Expected range" fill="#ddd6fe" stroke="#ede9fe" strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Violet 200 */}
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
             <Line type="monotone" dataKey="Rolling average" dot={false} stroke="#8b5cf6" strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Violet 500 */}

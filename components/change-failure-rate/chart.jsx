@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
 import { MoveRight, TrendingUp, TrendingDown } from 'lucide-react'
 import { InfoTooltip } from '@/components/info-tooltip'
+import { ChangeFailureRateTooltip } from './tooltip'
 import { ChangeFailureRateRating } from './rating'
 import { ChangeFailureRateOptions } from './options'
 
@@ -108,7 +109,7 @@ export function ChangeFailureRateChart() {
             <CartesianGrid vertical={false} stroke="#CFD8DC" />
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
             <YAxis style={{ fontSize: '0.75rem' }} tickFormatter={tick => `${tick}%`} />
-            <Tooltip />
+            <Tooltip content={<ChangeFailureRateTooltip />} />
             <Area type="monotone" dataKey="Expected range" fill="#fecdd3" stroke="#ffe4e6" strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Rose 200 */}
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
             <Line type="monotone" dataKey="Rolling average" dot={false} stroke="#f43f5e" strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Rose 500 */}
