@@ -13,9 +13,8 @@ export default function BlurImage({ className, image, alt }) {
         alt={alt}
         src={image}
         layout="fill"
-        objectFit="cover"
         className={`
-              duration-1000 ease-in-out group-hover:opacity-75
+              duration-1000 ease-in-out group-hover:opacity-75 object-cover
               ${isLoading
             ? "scale-105 blur-2xl grayscale"
             : "scale-100 blur-0 grayscale-0"
