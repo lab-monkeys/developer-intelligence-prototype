@@ -9,12 +9,21 @@ import { DeploymentFrequencyChart } from '@/components/deployment-frequency/char
 import { ChangeFailureRateChart } from '@/components/change-failure-rate/chart'
 import { MeanTimeToRecoveryChart } from '@/components/mean-time-to-recovery/chart'
 import { SearchToggle } from '@/components/search-toggle'
+import { getServerSession } from 'next-auth'
+import { options } from '../api/auth/[...nextauth]/options'
+import { redirect } from 'next/navigation'
 
 export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
 }
 
-export default function Page() {
+export default async function Page() {
+
+  const session = await getServerSession(options)
+
+  if (!session) {
+    redirect('/')
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -27,7 +36,7 @@ export default function Page() {
             <SearchToggle />
             <NotificationsToggle />
           </div>          
-          <UserNav />
+          <UserNav user={session.user} />
         </div>
       </header>
 

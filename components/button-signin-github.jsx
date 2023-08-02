@@ -7,6 +7,7 @@ import LogoGithub from '@/public/logos/logo--github.svg'
 
 // Temporarily disable authentication using useRouter. Restore using click function:
 // onClick={() => signIn('github', { callbackUrl: '/dashboard' })}
+// onClick={() => router.push('/dashboard')}
 
 export default function ButtonSignInGithub() {
 
@@ -14,7 +15,7 @@ export default function ButtonSignInGithub() {
   const router = useRouter()
 
   return (
-    <Button type="button" size="lg" onClick={() => router.push('/dashboard')}>
+    <Button type="button" size="lg" onClick={() => signIn('github', { callbackUrl: '/dashboard' })}>
       <span className="mr-2 w-4 h-4">
         <LogoGithub />
       </span>
