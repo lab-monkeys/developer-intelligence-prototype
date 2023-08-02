@@ -19,7 +19,7 @@ export default function AuthenticationPage() {
             <Image src="/logos/logo--developer-intelligence.svg" alt="Red Hat Developer Intelligence logo" width={330} height={32} priority={true} />
             <h1 className="visually-hidden">Red Hat Developer Intelligence</h1>
           </div>
-          <div className="mx-auto flex w-full flex-col space-y-6 w-3/4 2xl:w-2/4">
+          <div className="mx-auto flex w-full flex-col space-y-6 w-3/4 2xl:w-2/4 px-8 xl:px-0">
             <div className="flex flex-col mb-4 space-y-2 text-center">
               <h2 className="text-3xl	font-bold tracking-tight">Sign in</h2>
             </div>
