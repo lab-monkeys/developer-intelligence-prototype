@@ -33,10 +33,9 @@ export function CodeRepoSelector() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
-          {value
-            ? repositories.find((repository) => repository.value === value)?.label
-            : "Select repository..."}
+        <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between rounded-full">
+          {value && repositories.find((repository) => repository.value === value)?.label}
+          {!value && 'Select repository...'}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

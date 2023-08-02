@@ -46,7 +46,7 @@ export function DateRangeSelector() {
       <Badge>{getDaysBetweenDates(date.from, date.to)} days</Badge>
       <Popover>
         <PopoverTrigger asChild>
-          <Button id="date" variant={"outline"} className={cn( "w-[240px] justify-start text-left font-normal", !date && "text-muted-foreground" )}>
+          <Button id="date" variant={"outline"} className={cn( "w-[240px] justify-start text-left font-normal rounded-full", !date && "text-muted-foreground" )}>
             <CalendarIcon className="mr-2 h-4 w-4" />
             {date?.from ? (
               date.to ? (
