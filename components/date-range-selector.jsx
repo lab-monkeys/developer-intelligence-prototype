@@ -67,6 +67,7 @@ export function DateRangeSelector() {
             initialFocus
             mode="range"
             defaultMonth={date?.from}
+            toDate={new Date()}
             selected={date}
             onSelect={setDate}
             numberOfMonths={2}
