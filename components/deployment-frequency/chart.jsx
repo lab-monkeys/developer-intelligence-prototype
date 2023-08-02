@@ -97,7 +97,10 @@ export function DeploymentFrequencyChart() {
             <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
           </CardDescription>
         </div>
-        <DeploymentFrequencyRating />
+        <div className="flex items-center gap-2">
+          <DeploymentFrequencyRating />
+          <DeploymentFrequencyOptions />
+        </div>
       </CardHeader>
       <CardContent className="h-full">
         <ResponsiveContainer width="100%" height="100%">

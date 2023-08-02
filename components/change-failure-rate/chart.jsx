@@ -6,6 +6,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChar
 import { MoveRight, TrendingUp, TrendingDown } from 'lucide-react'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { ChangeFailureRateRating } from './rating'
+import { ChangeFailureRateOptions } from './options'
 
 const data = [
   {
@@ -96,7 +97,10 @@ export function ChangeFailureRateChart() {
             <Badge variant="secondary"><MoveRight className="h-4 w-4 mr-1" /> 0%</Badge>
           </CardDescription>
         </div>
-        <ChangeFailureRateRating />
+        <div className="flex items-center gap-2">
+          <ChangeFailureRateRating />
+          <ChangeFailureRateOptions />
+        </div>        
       </CardHeader>
       <CardContent className="h-full">
         <ResponsiveContainer width="100%" height="100%">
