@@ -12,7 +12,7 @@ export function LeadTimeForChangeRating(props) {
       <PopoverContent className="w-96" side="left">
         <div className="grid gap-4">
           <div className="space-y-2">
-            <h4 className="font-semibold leading-none">Rating scale</h4>
+            <h4 className="font-semibold leading-none dark:text-white">Rating scale</h4>
             <p className="text-sm text-muted-foreground">How well you are performing at this metric</p>
           </div>
           <div className="grid gap-2">
