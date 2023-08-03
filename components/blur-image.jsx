@@ -12,7 +12,7 @@ export default function BlurImage({ className, image, alt }) {
       <Image
         alt={alt}
         src={image}
-        layout="fill"
+        fill
         className={`
               duration-1000 ease-in-out group-hover:opacity-75 object-cover
               ${isLoading
