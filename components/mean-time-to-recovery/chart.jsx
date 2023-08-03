@@ -89,6 +89,15 @@ export function MeanTimeToRecoveryChart() {
 
   const { resolvedTheme } = useTheme()
 
+  // Chart colors
+  const strokeGrid = '#d4d4d4'            // Neutral 300
+  const strokeGridDark = '#404040'        // Neutral 700
+  const fillRange = '#a7f3d0'             // Emerald 200
+  const fillRangeDark = '#022c22'         // Emerald 950
+  const strokeRange = '#10b981'           // Emerald 500
+  const strokeRollingAverage = '#10b981'  // Emerald 500
+  const strokeGoal = '#f59e0b'            // Amber 500
+
   return (
     <Card className="flex flex-col h-full">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -110,14 +119,14 @@ export function MeanTimeToRecoveryChart() {
       <CardContent className="h-full">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
-            <CartesianGrid vertical={false} stroke="#CFD8DC" />
+            <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
             <YAxis style={{ fontSize: '0.75rem' }} />
             <Tooltip content={<MeanTimeToRecoveryTooltip />} />
-            <Area type="monotone" dataKey="Expected range" fill={resolvedTheme === 'dark' ? '#065f46' : '#a7f3d0'} stroke="#d1fae5" strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Emerald 200 */}
+            <Area type="monotone" dataKey="Expected range" fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Emerald 200 */}
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
-            <Line type="monotone" dataKey="Rolling average" dot={false} stroke="#10b981" strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Emerald 500 */}
-            <Line type="monotone" dataKey="Goal" dot={false} stroke="#f59e0b" strokeWidth={3} strokeLinecap="round" isAnimationActive={false} /> {/* Color: Amber 500 */}
+            <Line type="monotone" dataKey="Rolling average" dot={false} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Emerald 500 */}
+            <Line type="monotone" dataKey="Goal" dot={false} stroke={strokeGoal} strokeWidth={3} strokeLinecap="round" isAnimationActive={false} /> {/* Color: Amber 500 */}
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>
