@@ -121,7 +121,7 @@ export function MeanTimeToRecoveryChart() {
           <ComposedChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
-            <YAxis style={{ fontSize: '0.75rem' }} />
+            <YAxis style={{ fontSize: '0.75rem' }} tickFormatter={tick => `${tick}d`} />
             <Tooltip content={<MeanTimeToRecoveryTooltip />} />
             <Area type="monotone" dataKey="Expected range" fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Emerald 200 */}
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
