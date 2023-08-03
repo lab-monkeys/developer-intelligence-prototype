@@ -92,6 +92,8 @@ export function ChangeFailureRateChart() {
   // Chart colors
   const strokeGrid = '#d4d4d4'            // Neutral 300
   const strokeGridDark = '#404040'        // Neutral 700
+  const strokeCursor = '#f43f5e'          // Rose 500
+
   const fillRange = '#fecdd3'             // Rose 200
   const fillRangeDark = '#4c0519'         // Rose 950
   const strokeRange = '#f43f5e'           // Rose 500
@@ -122,11 +124,11 @@ export function ChangeFailureRateChart() {
             <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
             <YAxis style={{ fontSize: '0.75rem' }} tickFormatter={tick => `${tick}%`} />
-            <Tooltip content={<ChangeFailureRateTooltip />} />
-            <Area type="monotone" dataKey="Expected range" fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} animationDuration={animationDuration} /> {/* Color: Rose 200 */}
+            <Tooltip content={<ChangeFailureRateTooltip />} cursor={{ stroke: strokeCursor }} />
+            <Area type="monotone" dataKey="Expected range" fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} animationDuration={animationDuration} />
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
-            <Line type="monotone" dataKey="Rolling average" dot={false} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Rose 500 */}
-            <Line type="monotone" dataKey="Goal" dot={false} stroke={strokeGoal} strokeWidth={3} strokeLinecap="round" isAnimationActive={false} /> {/* Color: Amber 500 */}            
+            <Line type="monotone" dataKey="Rolling average" dot={false} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
+            <Line type="monotone" dataKey="Goal" dot={false} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />         
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>
