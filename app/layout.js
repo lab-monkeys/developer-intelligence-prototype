@@ -3,6 +3,7 @@ import './normalize.scss'
 import './globals.css'
 import './app.scss'
 import Provider from '@/components/provider'
+import { ThemeProvider } from '@/components/theme-provider'
 
 export const red_hat_display = Red_Hat_Display({
   subsets: ['latin'],
@@ -18,10 +19,12 @@ export const red_hat_text = Red_Hat_Text({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${red_hat_display.variable} ${red_hat_text.variable}`}>
+    <html lang="en" suppressHydrationWarning>
       <Provider>
-        <body className="overflow-y-hidden">
-          {children}
+        <body className="overflow-y-hidden dark:bg-black dark:text-white">
+          <ThemeProvider attribute="class" enableSystem>
+            {children}
+          </ThemeProvider>
         </body>
       </Provider>
     </html>

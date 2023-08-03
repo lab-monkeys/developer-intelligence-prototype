@@ -4,6 +4,7 @@ import ButtonSignInGithub from '@/components/button-signin-github'
 import ButtonSignInGoogle from '@/components/button-signin-google'
 import SignInPhoto from '@/public/images/image--sign-in.jpg'
 import BlurImage from '@/components/blur-image'
+import { AppLogo } from '@/components/app-logo'
 
 export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
@@ -16,7 +17,7 @@ export default function AuthenticationPage() {
 
         <div className="relative h-full flex flex-col justify-center lg:p-8 lg:col-span-2 bg-background pattern-background">
           <div className="absolute top-16 left-16 h-10 flex z-20 flex items-center text-lg font-medium">
-            <Image src="/logos/logo--developer-intelligence.svg" alt="Red Hat Developer Intelligence logo" width={330} height={32} priority={true} />
+            <AppLogo />
             <h1 className="visually-hidden">Red Hat Developer Intelligence</h1>
           </div>
           <div className="mx-auto flex w-full flex-col space-y-6 w-3/4 2xl:w-2/4 px-8 xl:px-0">

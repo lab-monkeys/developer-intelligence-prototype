@@ -1,23 +1,20 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useTheme } from 'next-themes'
 import { signIn } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import LogoGithub from '@/public/logos/logo--github.svg'
-
-// Temporarily disable authentication using useRouter. Restore using click function:
-// onClick={() => signIn('github', { callbackUrl: '/dashboard' })}
-// onClick={() => router.push('/dashboard')}
+import LogoGitHubDark from '@/public/logos/logo--github--dark.svg'
 
 export default function ButtonSignInGithub() {
 
-  // temporary
-  const router = useRouter()
+  const { resolvedTheme } = useTheme()
 
   return (
     <Button type="button" size="lg" onClick={() => signIn('github', { callbackUrl: '/dashboard' })}>
       <span className="mr-2 w-4 h-4">
-        <LogoGithub />
+        {resolvedTheme === 'dark' && <LogoGitHubDark />}
+        {resolvedTheme === 'light' && <LogoGithub />}
       </span>
       <span>Sign in with Github</span>
     </Button>
