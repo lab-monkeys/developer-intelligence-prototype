@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from "next-themes"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
@@ -85,16 +86,19 @@ const data = [
 const animationDuration = 1000
 
 export function MeanTimeToRecoveryChart() {
+
+  const { resolvedTheme } = useTheme()
+
   return (
     <Card className="flex flex-col h-full">
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
           <CardTitle className="flex items-center gap-2">
-            <span className="text-base font-normal tracking-normal text-neutral-600">Mean time to recovery</span>
+            <span className="text-base font-normal tracking-normal text-neutral-600 dark:text-neutral-400">Mean time to recovery</span>
             <InfoTooltip label={'How long does it take for an organization to recover from a failure in production'} />
           </CardTitle>
           <CardDescription className="flex items-center gap-2">
-            <strong className="text-black text-2xl font-semibold tracking-tight">7 days, 13 hours</strong>
+            <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">7 days, 13 hours</strong>
             <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
           </CardDescription>
         </div>
@@ -110,7 +114,7 @@ export function MeanTimeToRecoveryChart() {
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
             <YAxis style={{ fontSize: '0.75rem' }} />
             <Tooltip content={<MeanTimeToRecoveryTooltip />} />
-            <Area type="monotone" dataKey="Expected range" fill="#a7f3d0" stroke="#d1fae5" strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Emerald 200 */}
+            <Area type="monotone" dataKey="Expected range" fill={resolvedTheme === 'dark' ? '#065f46' : '#a7f3d0'} stroke="#d1fae5" strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Emerald 200 */}
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
             <Line type="monotone" dataKey="Rolling average" dot={false} stroke="#10b981" strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Emerald 500 */}
             <Line type="monotone" dataKey="Goal" dot={false} stroke="#f59e0b" strokeWidth={3} strokeLinecap="round" isAnimationActive={false} /> {/* Color: Amber 500 */}

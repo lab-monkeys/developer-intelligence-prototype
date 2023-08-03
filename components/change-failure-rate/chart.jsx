@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from "next-themes"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
@@ -85,16 +86,19 @@ const data = [
 const animationDuration = 1000
 
 export function ChangeFailureRateChart() {
+
+  const { resolvedTheme } = useTheme()
+
   return (
     <Card className="flex flex-col h-full">
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
           <CardTitle className="flex items-center gap-2">
-            <span className="text-base font-normal tracking-normal text-neutral-600">Change failure rate</span>
+            <span className="text-base font-normal tracking-normal text-neutral-600 dark:text-neutral-400">Change failure rate</span>
             <InfoTooltip label={'The percentage of deployments causing a failure in production'} />
           </CardTitle>
           <CardDescription className="flex items-center gap-2">
-            <strong className="text-black text-2xl font-semibold tracking-tight">25%</strong>
+            <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">25%</strong>
             <Badge variant="secondary"><MoveRight className="h-4 w-4 mr-1" /> 0%</Badge>
           </CardDescription>
         </div>
@@ -110,7 +114,7 @@ export function ChangeFailureRateChart() {
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
             <YAxis style={{ fontSize: '0.75rem' }} tickFormatter={tick => `${tick}%`} />
             <Tooltip content={<ChangeFailureRateTooltip />} />
-            <Area type="monotone" dataKey="Expected range" fill="#fecdd3" stroke="#ffe4e6" strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Rose 200 */}
+            <Area type="monotone" dataKey="Expected range" fill={resolvedTheme === 'dark' ? '#9f1239' : '#fecdd3'} stroke="#ffe4e6" strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} /> {/* Color: Rose 200 */}
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
             <Line type="monotone" dataKey="Rolling average" dot={false} stroke="#f43f5e" strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} /> {/* Color: Rose 500 */}
             <Line type="monotone" dataKey="Goal" dot={false} stroke="#f59e0b" strokeWidth={3} strokeLinecap="round" isAnimationActive={false} /> {/* Color: Amber 500 */}            
