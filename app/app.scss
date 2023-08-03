@@ -87,3 +87,7 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 100% auto;
   background-position: 0 100%;
 }
+
+[data-theme="dark"] .pattern-background {
+  background-image: url('/illustrations/illustration--sign-in--dark.svg');
+}

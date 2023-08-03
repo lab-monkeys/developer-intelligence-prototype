@@ -22,7 +22,7 @@ export default function AuthenticationPage() {
           </div>
           <div className="mx-auto flex w-full flex-col space-y-6 w-3/4 2xl:w-2/4 px-8 xl:px-0">
             <div className="flex flex-col mb-4 space-y-2 text-center">
-              <h2 className="text-3xl	font-bold tracking-tight">Sign in</h2>
+              <h2 className="text-3xl	font-bold tracking-tight dark:text-white">Sign in</h2>
             </div>
             <ButtonSignInGithub />
             <div className="relative">
