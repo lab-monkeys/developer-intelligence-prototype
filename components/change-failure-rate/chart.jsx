@@ -64,7 +64,7 @@ const data = [
     "Date": "Jul 7",
     "Average": 8,
     "Goal": 3,
-    "Rolling average": 7,
+    "Rolling average": 55,
     "Expected range": [4, 20],
   },
   {
@@ -123,7 +123,7 @@ export function ChangeFailureRateChart() {
           <ComposedChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
-            <YAxis style={{ fontSize: '0.75rem' }} tickFormatter={tick => `${tick}%`} />
+            <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 100]} tickFormatter={tick => `${tick}%`} />
             <Tooltip content={<ChangeFailureRateTooltip />} cursor={{ stroke: strokeCursor }} />
             <Area type="monotone" dataKey="Expected range" fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} animationDuration={animationDuration} />
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
