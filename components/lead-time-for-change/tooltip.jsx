@@ -8,7 +8,7 @@ export const LeadTimeForChangeTooltip = ({ active, payload, label }) => {
           {payload.map((data, index) => (
             <div key={index}>
               <div className="text-xs text-neutral-600 dark:text-neutral-400">{data.name}</div>
-              <div className="text-sm text-black font-semibold dark:text-white">{data.value instanceof Array ? data.value.join('-') : data.value}</div>              
+              <div className="text-sm text-black font-semibold dark:text-white">{data.value instanceof Array ? data.value.join('-') : data.value} days</div>              
             </div>
           ))}
         </div>
