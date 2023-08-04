@@ -93,6 +93,8 @@ export function LeadTimeForChangeChart() {
   const strokeGrid = '#d4d4d4'            // Neutral 300
   const strokeGridDark = '#404040'        // Neutral 700
   const strokeCursor = '#8b5cf6'          // Violet 500
+  const strokeActiveDot = '#ffffff'       // White
+  const strokeActiveDotDark = '#171717'   // Neutral 900
 
   const fillRange = '#ddd6fe'             // Violet 200
   const fillRangeDark = '#2e1065'         // Violet 950
@@ -128,10 +130,10 @@ export function LeadTimeForChangeChart() {
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
             <YAxis style={{ fontSize: '0.75rem' }} tickFormatter={tick => `${tick}d`} />
             <Tooltip content={<LeadTimeForChangeTooltip />} cursor={{ stroke: strokeCursor }} />
-            <Area type="monotone" dataKey="Expected range" fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={1} strokeDasharray="4 4" animationDuration={animationDuration} />
+            <Area type="monotone" dataKey="Expected range" activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={1} strokeDasharray="4 4" animationDuration={animationDuration} />
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
-            <Line type="monotone" dataKey="Rolling average" dot={false} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
-            <Line type="monotone" dataKey="Goal" dot={false} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
+            <Line type="monotone" dataKey="Rolling average" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
+            <Line type="monotone" dataKey="Goal" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>
