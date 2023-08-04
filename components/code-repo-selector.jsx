@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { Check, ChevronsUpDown, Github, Gitlab, Box } from "lucide-react"
-
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from "@/components/ui/command"
@@ -33,7 +32,7 @@ export function CodeRepoSelector() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="w-64 justify-between rounded-full">
+        <Button variant="outline" role="combobox" aria-expanded={open} className="w-80 justify-between rounded-full">
           <div className="flex items-center">
             <Box className="mr-2 h-4 w-4 shrink-0" />
             {value && applications.find((application) => application.value === value)?.label}
