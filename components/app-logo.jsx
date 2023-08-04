@@ -9,9 +9,9 @@ export function AppLogo() {
   const { resolvedTheme } = useTheme()
 
   return (
-    <>
+    <div>
       {resolvedTheme === 'light' && <Logo />}
       {resolvedTheme === 'dark' && <LogoDark />}
-    </>
+    </div>
   )
 }
