@@ -4,7 +4,7 @@ import { useTheme } from "next-themes"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
-import { MoveRight, TrendingUp, TrendingDown } from 'lucide-react'
+import { MoveRight, TrendingUp, TrendingDown, Clock4 } from 'lucide-react'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { LeadTimeForChangeTooltip } from './tooltip'
 import { LeadTimeForChangeRating } from './rating'
@@ -103,20 +103,23 @@ export function LeadTimeForChangeChart() {
   return (
     <Card className="flex flex-col h-full">
       <CardHeader className="flex flex-row items-center justify-between">
-        <div>
-          <CardTitle className="flex items-center gap-2">
-            <span className="text-base font-normal tracking-normal text-neutral-600 dark:text-neutral-400">Lead time for change</span>
-            <InfoTooltip label={'The amount of time it takes for any change to get into production'} />
-          </CardTitle>
-          <CardDescription className="flex items-center gap-2">
-            <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">7 days, 13 hours</strong>
-            <Badge variant="secondary"><TrendingUp className="h-4 w-4 mr-1" /> 16%</Badge>
-          </CardDescription>
+        <div className="flex items-center">
+          <Clock4 className="w-8 h-8 mr-6 stroke-violet-500" strokeWidth={1.5} />
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              <span className="text-base font-normal tracking-normal text-neutral-600 dark:text-neutral-400">Lead time for change</span>
+              <InfoTooltip label={'The amount of time it takes for any change to get into production'} />
+            </CardTitle>
+            <CardDescription className="flex items-center gap-2">
+              <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">7 days, 13 hours</strong>
+              <Badge variant="secondary"><TrendingUp className="h-4 w-4 mr-1" /> 16%</Badge>
+            </CardDescription>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <LeadTimeForChangeRating />
           <LeadTimeForChangeOptions />
-        </div>        
+        </div>
       </CardHeader>
       <CardContent className="h-full">
         <ResponsiveContainer width="100%" height="100%">

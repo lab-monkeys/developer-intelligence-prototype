@@ -4,7 +4,7 @@ import { useTheme } from "next-themes"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
-import { MoveRight, TrendingUp, TrendingDown } from 'lucide-react'
+import { MoveRight, TrendingUp, TrendingDown, PackageCheck } from 'lucide-react'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { MeanTimeToRecoveryTooltip } from './tooltip'
 import { MeanTimeToRecoveryRating } from './rating'
@@ -93,7 +93,7 @@ export function MeanTimeToRecoveryChart() {
   const strokeGrid = '#d4d4d4'            // Neutral 300
   const strokeGridDark = '#404040'        // Neutral 700
   const strokeCursor = '#10b981'          // Emerald 500
-  
+
   const fillRange = '#a7f3d0'             // Emerald 200
   const fillRangeDark = '#022c22'         // Emerald 950
   const strokeRange = '#10b981'           // Emerald 500
@@ -103,15 +103,18 @@ export function MeanTimeToRecoveryChart() {
   return (
     <Card className="flex flex-col h-full">
       <CardHeader className="flex flex-row items-center justify-between">
-        <div>
-          <CardTitle className="flex items-center gap-2">
-            <span className="text-base font-normal tracking-normal text-neutral-600 dark:text-neutral-400">Mean time to recovery</span>
-            <InfoTooltip label={'How long does it take for an organization to recover from a failure in production'} />
-          </CardTitle>
-          <CardDescription className="flex items-center gap-2">
-            <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">7 days, 13 hours</strong>
-            <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
-          </CardDescription>
+        <div className="flex items-center">
+          <PackageCheck className="w-8 h-8 mr-6 stroke-emerald-500" strokeWidth={1.5} />
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              <span className="text-base font-normal tracking-normal text-neutral-600 dark:text-neutral-400">Mean time to recovery</span>
+              <InfoTooltip label={'How long does it take for an organization to recover from a failure in production'} />
+            </CardTitle>
+            <CardDescription className="flex items-center gap-2">
+              <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">7 days, 13 hours</strong>
+              <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
+            </CardDescription>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <MeanTimeToRecoveryRating />

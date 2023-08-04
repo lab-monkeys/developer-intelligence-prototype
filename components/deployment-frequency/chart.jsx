@@ -4,7 +4,7 @@ import { useTheme } from "next-themes"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
-import { MoveRight, TrendingUp, TrendingDown } from 'lucide-react'
+import { MoveRight, TrendingUp, TrendingDown, Rocket } from 'lucide-react'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { DeploymentFrequencyTooltip } from './tooltip'
 import { DeploymentFrequencyRating } from './rating'
@@ -103,15 +103,18 @@ export function DeploymentFrequencyChart() {
   return (
     <Card className="flex flex-col h-full">
       <CardHeader className="flex flex-row items-center justify-between">
-        <div>
-          <CardTitle className="flex items-center gap-2">
-            <span className="text-base font-normal tracking-normal text-neutral-600 dark:text-neutral-400">Deployment frequency</span>
-            <InfoTooltip label={'How often an organization successfully releases to production'} />
-          </CardTitle>
-          <CardDescription className="flex items-center gap-2">
-            <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">0.07 per day</strong>
-            <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
-          </CardDescription>
+        <div className="flex items-center">
+          <Rocket className="w-8 h-8 mr-6 stroke-blue-500" strokeWidth={1.5} />
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              <span className="text-base font-normal tracking-normal text-neutral-600 dark:text-neutral-400">Deployment frequency</span>
+              <InfoTooltip label={'How often an organization successfully releases to production'} />
+            </CardTitle>
+            <CardDescription className="flex items-center gap-2">
+              <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">0.07 per day</strong>
+              <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
+            </CardDescription>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <DeploymentFrequencyRating />
@@ -125,7 +128,7 @@ export function DeploymentFrequencyChart() {
             <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
             <YAxis style={{ fontSize: '0.75rem' }} />
             <Tooltip content={<DeploymentFrequencyTooltip />} cursor={{ stroke: strokeCursor }} />
-            <Area type="monotone" dataKey="Expected range" fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} />           
+            <Area type="monotone" dataKey="Expected range" fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 2" animationDuration={animationDuration} />
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
             <Line type="monotone" dataKey="Rolling average" dot={false} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
             <Line type="monotone" dataKey="Goal" dot={false} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
