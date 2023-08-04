@@ -1,13 +1,13 @@
 "use client"
 
-import { Moon, Sun, Monitor } from "lucide-react"
+import { Moon, Sun, Monitor, Check } from "lucide-react"
 import { useTheme } from "next-themes"
-
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
 
 export function ThemeToggle() {
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   return (
     <DropdownMenu>
@@ -19,14 +19,26 @@ export function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>
-          <Sun className="h-4 w-4 mr-2" /> Light theme
+        <DropdownMenuItem className="flex items-center justify-between" onClick={() => setTheme('light')}>
+          <div className="flex items-center">
+            <Sun className="h-4 w-4 mr-2" />
+            <span>Light theme</span>
+          </div>
+          <Check className={cn("mx-2 h-4 w-4", theme === 'light' ? "opacity-100" : "opacity-0")} />
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>
-          <Moon className="h-4 w-4 mr-2" /> Dark theme
+        <DropdownMenuItem className="flex items-center justify-between" onClick={() => setTheme('dark')}>
+          <div className="flex items-center">
+            <Moon className="h-4 w-4 mr-2" />
+            <span>Dark theme</span>
+          </div>
+          <Check className={cn("mx-2 h-4 w-4", theme === 'dark' ? "opacity-100" : "opacity-0")} />
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>
-          <Monitor className="h-4 w-4 mr-2" /> Use device theme
+        <DropdownMenuItem className="flex items-center justify-between" onClick={() => setTheme('system')}>
+          <div className="flex items-center">
+            <Monitor className="h-4 w-4 mr-2" />
+            <span>Use device theme</span>
+          </div>
+          <Check className={cn("mx-2 h-4 w-4", theme !== 'light' && theme !== 'dark' ? "opacity-100" : "opacity-0")} />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
