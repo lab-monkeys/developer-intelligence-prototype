@@ -29,7 +29,6 @@ export default async function Page() {
 
   return (
     <div className="flex flex-col h-full">
-
       <header className="flex justify-between items-center px-16 py-16">
         <AppLogo />
         <h1 className="visually-hidden">Red Hat Developer Intelligence</h1>
