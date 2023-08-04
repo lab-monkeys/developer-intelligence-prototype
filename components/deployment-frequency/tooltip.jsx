@@ -1,7 +1,6 @@
 export const DeploymentFrequencyTooltip = ({ active, payload, label }) => {
 
   if (active && payload && payload.length) {
-    console.log(payload)
     return (
       <div className="flex flex-col gap-4 w-40 bg-white p-4 rounded-2xl shadow dark:bg-neutral-800">
         <div className="text-black text-lg font-semibold tracking-tight dark:text-white">{label}</div>
