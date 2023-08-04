@@ -1,6 +1,6 @@
 'use client'
 
-import { MoreVertical, Download, Image, Maximize2 } from "lucide-react"
+import { MoreVertical, Download, Image as ImageIcon, Maximize2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
 
@@ -19,7 +19,7 @@ export function MeanTimeToRecoveryOptions(props) {
           <span>View fullscreen</span>
         </DropdownMenuItem>
         <DropdownMenuItem disabled>
-          <Image className="mr-2 h-4 w-4" />
+          <ImageIcon className="mr-2 h-4 w-4" />
           <span>Export image</span>
         </DropdownMenuItem>
         <DropdownMenuItem disabled>
