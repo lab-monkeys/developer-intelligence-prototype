@@ -1,6 +1,4 @@
-import dynamic from 'next/dynamic'
-import Image from 'next/image'
-import { CodeRepoSelector } from '@/components/code-repo-selector'
+import { ApplicationSelector } from '@/components/application-selector'
 import { DateRangeSelector } from '@/components/date-range-selector'
 import { UserNav } from '@/components/user-nav'
 import { NotificationsToggle } from '@/components/notifications-toggle'
@@ -44,7 +42,7 @@ export default async function Page() {
 
       <main className="flex flex-col h-full p-16 pt-0">
         <div className="flex justify-between items-center">
-          <CodeRepoSelector />
+          <ApplicationSelector />
           <DateRangeSelector />
         </div>
 
