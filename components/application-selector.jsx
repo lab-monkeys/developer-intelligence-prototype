@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Check, ChevronsUpDown, Github, Gitlab, Box } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
+import { useApplicationContext } from '@/app/context/store'
 
 const applications = [
   {
@@ -25,7 +26,8 @@ const applications = [
   },
 ]
 
-export function CodeRepoSelector() {
+export function ApplicationSelector() {
+
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState()
 
@@ -41,7 +43,7 @@ export function CodeRepoSelector() {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent align={'left'} className="w-[320px] p-0">
+      <PopoverContent align={'left'} className="w-[320px] p-0 rounded-2xl overflow-hidden">
         <Command>
           <CommandInput placeholder="Search application..." />
           <CommandEmpty>No application found.</CommandEmpty>
