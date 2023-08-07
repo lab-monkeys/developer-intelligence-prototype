@@ -12,7 +12,7 @@ import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
 export function DateRangeSelector() {
-  
+
   const [date, setDate] = useState({
     from: subDays(new Date(), 28),
     to: new Date(),
@@ -23,30 +23,30 @@ export function DateRangeSelector() {
     const secondsInOneMinute = 60
     const minutesInOneHour = 60
     const hoursInOneDay = 24
-  
+
     const minutesInOneDay = hoursInOneDay * minutesInOneHour
     const secondsInOneDay = secondsInOneMinute * minutesInOneDay
     const msInOneDay = msInOneSecond * secondsInOneDay
-  
+
     return Math.ceil(ms / msInOneDay)
   }
 
   const getDaysBetweenDates = (dateOne, dateTwo) => {
     let differenceInMs = dateTwo.getTime() - dateOne.getTime()
-  
+
     if (differenceInMs < 0) {
       differenceInMs = dateOne.getTime() - dateTwo.getTime()
     }
-  
+
     return convertMsToDays(differenceInMs)
   }
 
   return (
     <div className="flex items-center gap-4">
-      <Badge>{getDaysBetweenDates(date.from, date.to)} days</Badge>
+      <Badge variant="outline">{getDaysBetweenDates(date.from, date.to)} days</Badge>
       <Popover>
         <PopoverTrigger asChild>
-          <Button id="date" variant={"outline"} className={cn( "w-[240px] justify-start text-left font-normal rounded-full", !date && "text-muted-foreground" )}>
+          <Button id="date" variant={"outline"} className={cn("w-[240px] justify-start text-left font-normal rounded-full", !date && "text-muted-foreground")}>
             <CalendarIcon className="mr-2 h-4 w-4" />
             {date?.from ? (
               date.to ? (
@@ -62,16 +62,30 @@ export function DateRangeSelector() {
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            initialFocus
-            mode="range"
-            defaultMonth={date?.from}
-            toDate={new Date()}
-            selected={date}
-            onSelect={setDate}
-            numberOfMonths={2}
-          />
+        <PopoverContent className="w-auto p-0 mr-16 rounded-2xl" align="start">
+
+          <div className="flex">
+            <div className="flex flex-col gap-2 p-4">
+              <Button variant="ghost" size="sm">Today</Button>
+              <Button variant="ghost" size="sm">Yesterday</Button>
+              <Button variant="ghost" size="sm">This week</Button>
+              <Button variant="ghost" size="sm">Last week</Button>
+              <Button variant="ghost" size="sm">Last 7 days</Button>
+              <Button variant="ghost" size="sm">Last 28 days</Button>
+              <Button variant="ghost" size="sm">Last 30 days</Button>
+              <Button variant="ghost" size="sm">Last 90 days</Button>
+              <Button variant="ghost" size="sm">Last 12 months</Button>
+            </div>
+            <Calendar initialFocus mode="range" defaultMonth={date?.from} toDate={new Date()} selected={date} onSelect={setDate} numberOfMonths={2} />
+          </div>
+          <div className="flex items-center justify-between p-4 mx-4 border-t">
+            <div className="text-sm"><strong className="font-semibold">Range:</strong> # days</div>
+            <div className="flex items-center gap-2">
+              <Button className="rounded-full" variant="secondary">Cancel</Button>
+              <Button className="rounded-full">Apply</Button>
+            </div>
+          </div>
+
         </PopoverContent>
       </Popover>
     </div>
