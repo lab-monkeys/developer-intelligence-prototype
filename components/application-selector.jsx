@@ -7,37 +7,19 @@ import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
-const applications = [
-  {
-    value: "psc-ansible",
-    label: "psc-ansible",
-    icon: Gitlab,
-  },
-  {
-    value: "pipeline-as-a-service",
-    label: "pipeline-as-a-service",
-    icon: Gitlab,
-  },
-  {
-    value: "starchiver",
-    label: "starchiver",
-    icon: Gitlab,
-  },
-]
-
-export function ApplicationSelector() {
+export function ApplicationSelector({ applications, activeApplication, changeActiveApplication }) {
 
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState()
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" role="combobox" aria-expanded={open} className="w-80 justify-between rounded-full">
           <div className="flex items-center">
-            <Box className="mr-2 h-4 w-4 shrink-0" />
-            {value && applications.find((application) => application.value === value)?.label}
-            {!value && 'Select application...'}
+            {/* <Box className="mr-2 h-4 w-4 shrink-0" /> */}
+            <Gitlab className="mr-2 w-4 h-4" />
+            {activeApplication && applications.find((application) => application.id === activeApplication)?.name}
+            {!activeApplication && 'Select application...'}
           </div>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -48,17 +30,31 @@ export function ApplicationSelector() {
           <CommandEmpty>No application found.</CommandEmpty>
           <CommandGroup>
             {applications.map((application) => (
-              <CommandItem className="flex items-center justify-between" key={application.value} onSelect={(currentValue) => {
-                setValue(currentValue === value ? "" : currentValue)
+              <CommandItem className="flex items-center justify-between" key={application.id} onSelect={(currentValue) => {
+                changeActiveApplication(currentValue)
                 setOpen(false)
               }}>
                 <div className="flex items-center">
-                  <application.icon className={cn("mr-2 w-4 h-4", application.value === value ? "opacity-100" : "opacity-40")} />
-                  {application.label}
+                  <Gitlab className={cn("mr-2 w-4 h-4", application.id === activeApplication ? "opacity-100" : "opacity-40")} />
+                  {application.name}
                 </div>
-                <Check className={cn("mr-2 h-4 w-4", value === application.value ? "opacity-100" : "opacity-0")} />
+                <Check className={cn("mr-2 h-4 w-4", activeApplication === application.id ? "opacity-100" : "opacity-0")} />
               </CommandItem>
             ))}
+            <CommandItem className="flex items-center justify-between opacity-40" key={'04'} disabled>
+              <div className="flex items-center">
+                <Github className="mr-2 w-4 h-4 opacity-40" />
+                Alchemy/QuantaShift
+              </div>
+              <Check className="mr-2 h-4 w-4 opacity-0" />
+            </CommandItem>
+            <CommandItem className="flex items-center justify-betwee opacity-40" key={'05'} disabled>
+              <div className="flex items-center">
+                <Github className="mr-2 w-4 h-4 opacity-40" />
+                SatelliteSynapse
+              </div>
+              <Check className="mr-2 h-4 w-4 opacity-0" />
+            </CommandItem>
           </CommandGroup>
         </Command>
         <div className="p-2">
