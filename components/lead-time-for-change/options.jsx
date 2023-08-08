@@ -53,7 +53,7 @@ export function LeadTimeForChangeOptions(props) {
         </DialogHeader>
         <div>
           <div className="mb-6">
-            <Label htmlFor="lead-time-for-change-goal">What is your desired deployment frequency?</Label>
+            <Label htmlFor="lead-time-for-change-goal">What is your desired speed for any change to get into production?</Label>
             <Slider id="lead-time-for-change-goal" defaultValue={[1]} max={2} step={1} className="py-4" />
             <div className="flex items-center justify-between text-xs text-neutral-500">
               <span>0</span>

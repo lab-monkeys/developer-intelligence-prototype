@@ -53,12 +53,12 @@ export function ChangeFailureRateOptions(props) {
         </DialogHeader>
         <div>
           <div className="mb-6">
-            <Label htmlFor="change-failure-rate-goal">What is your desired deployment frequency?</Label>
-            <Slider id="change-failure-rate-goal" defaultValue={[1]} max={2} step={1} className="py-4" />
+            <Label htmlFor="change-failure-rate-goal">What is your desired change failure rate?</Label>
+            <Slider id="change-failure-rate-goal" defaultValue={[25]} max={100} step={1} className="py-4" />
             <div className="flex items-center justify-between text-xs text-neutral-500">
-              <span>0</span>
-              <span>1</span>
-              <span>2</span>
+              <span>0%</span>
+              <span>50%</span>
+              <span>100%</span>
             </div>
           </div>
           <div className="mb-6">

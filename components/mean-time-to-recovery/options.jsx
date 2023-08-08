@@ -53,7 +53,7 @@ export function MeanTimeToRecoveryOptions(props) {
         </DialogHeader>
         <div>
           <div className="mb-6">
-            <Label htmlFor="mean-time-to-recovery-goal">What is your desired deployment frequency?</Label>
+            <Label htmlFor="mean-time-to-recovery-goal">What is your desired time to recover from a failure in production?</Label>
             <Slider id="mean-time-to-recovery-goal" defaultValue={[1]} max={2} step={1} className="py-4" />
             <div className="flex items-center justify-between text-xs text-neutral-500">
               <span>0</span>
