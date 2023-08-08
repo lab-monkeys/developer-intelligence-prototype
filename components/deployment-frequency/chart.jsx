@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useTheme } from "next-themes"
 import { format } from 'date-fns'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from '@/components/ui/card'
@@ -10,6 +11,7 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { DeploymentFrequencyTooltip } from './tooltip'
 import { DeploymentFrequencyRating } from './rating'
 import { DeploymentFrequencyOptions } from './options'
+import { DeploymentFrequencyReport } from "./report"
 
 const dateFormatter = date => {
   return format(new Date(date), "MMM d")
@@ -47,41 +49,54 @@ export function DeploymentFrequencyChart({ data }) {
 
   const chartMean = calculateMean(averages)
 
+  // Reports
+  const [reportDeploymentFrequencyData, setReportDeploymentFrequencyData] = useState('')
+  const [showReportDeploymentFrequencyData, setShowReportDeploymentFrequencyData] = useState(false)
+
+  function handleChartClick(event) {
+    console.log(event)
+    setReportDeploymentFrequencyData(event)
+    setShowReportDeploymentFrequencyData(true)
+  }
+
   return (
-    <Card className="flex flex-col h-full">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <div className="flex items-center">
-          <Rocket className="w-8 h-8 mr-6 stroke-blue-500" strokeWidth={1.5} />
-          <div>
-            <CardTitle className="flex items-center gap-2">
-              <span className="text-base font-normal tracking-normal text-neutral-600 dark:text-neutral-400">Deployment frequency</span>
-              <InfoTooltip label={'How often an organization successfully releases to production'} />
-            </CardTitle>
-            <CardDescription className="flex items-center gap-2">
-              <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(2)} per day</strong>
-              <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
-            </CardDescription>
+    <>
+      <Card className="flex flex-col h-full">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div className="flex items-center">
+            <Rocket className="w-8 h-8 mr-6 stroke-blue-500" strokeWidth={1.5} />
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <span className="text-base font-normal tracking-normal text-neutral-600 dark:text-neutral-400">Deployment frequency</span>
+                <InfoTooltip label={'How often an organization successfully releases to production'} />
+              </CardTitle>
+              <CardDescription className="flex items-center gap-2">
+                <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(2)} per day</strong>
+                <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
+              </CardDescription>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <DeploymentFrequencyRating />
-          <DeploymentFrequencyOptions />
-        </div>
-      </CardHeader>
-      <CardContent className="h-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
-            <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
-            <XAxis style={{ fontSize: '0.75rem' }} dataKey="date" tickFormatter={dateFormatter} />
-            <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 20]} />
-            <Tooltip content={<DeploymentFrequencyTooltip />} cursor={{ stroke: strokeCursor }} />
-            <Area type="monotone" dataKey="expectedRange" activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 4" animationDuration={animationDuration} />
-            {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
-            <Line type="monotone" dataKey="rollingAverage" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
-            <Line type="monotone" dataKey="goal" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </CardContent>
-    </Card>
+          <div className="flex items-center gap-2">
+            <DeploymentFrequencyRating />
+            <DeploymentFrequencyOptions />
+          </div>
+        </CardHeader>
+        <CardContent className="h-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <ComposedChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }} onClick={handleChartClick}>
+              <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
+              <XAxis style={{ fontSize: '0.75rem' }} dataKey="date" tickFormatter={dateFormatter} />
+              <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 20]} />
+              <Tooltip content={<DeploymentFrequencyTooltip />} cursor={{ stroke: strokeCursor }} />
+              <Area type="monotone" dataKey="expectedRange" activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 4" animationDuration={animationDuration} />
+              {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
+              <Line type="monotone" dataKey="rollingAverage" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
+              <Line type="monotone" dataKey="goal" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+      <DeploymentFrequencyReport reportDeploymentFrequencyData={reportDeploymentFrequencyData} showReportDeploymentFrequencyData={showReportDeploymentFrequencyData} setShowReportDeploymentFrequencyData={setShowReportDeploymentFrequencyData} />
+    </>
   )
 }

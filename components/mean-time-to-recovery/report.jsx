@@ -21,24 +21,24 @@ function toSentence(str) {
   }).join("")
 }
 
-export const ChangeFailureRateReport = ({ reportChangeFailureRateData, showReportChangeFailureRateData, setShowReportChangeFailureRateData }) => {
+export const MeanTimeToRecoveryReport = ({ reportMeanTimeToRecoveryData, showReportMeanTimeToRecoveryData, setShowReportMeanTimeToRecoveryData }) => {
 
   function handleClick() {
-    setShowReportChangeFailureRateData(false)
+    setShowReportMeanTimeToRecoveryData(false)
   }
 
   return (
     <>
-      <div data-state={showReportChangeFailureRateData ? 'open' : 'closed'} role="dialog" className="fixed z-50 gap-4 bg-background p-8 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 inset-y-0 top-8 right-8 h-[calc(100%-4rem)] w-3/4 rounded-2xl border-l data-[state=closed]:slide-out-to-right data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none data-[state=open]:slide-in-from-right sm:max-w-xl">
+      <div data-state={showReportMeanTimeToRecoveryData ? 'open' : 'closed'} role="dialog" className="fixed z-50 gap-4 bg-background p-8 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 inset-y-0 top-8 right-8 h-[calc(100%-4rem)] w-3/4 rounded-2xl border-l data-[state=closed]:slide-out-to-right data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none data-[state=open]:slide-in-from-right sm:max-w-xl">
         <div className="flex flex-col space-y-2 mb-8 text-center sm:text-left">
-          <h2 className="text-lg font-semibold text-foreground">Report - {reportChangeFailureRateData && format(new Date(reportChangeFailureRateData?.activeLabel), "MMM d, y")}</h2>
+          <h2 className="text-lg font-semibold text-foreground">Report - {reportMeanTimeToRecoveryData && format(new Date(reportMeanTimeToRecoveryData?.activeLabel), "MMM d, y")}</h2>
           <p className="text-sm text-muted-foreground">Detailed application report and analysis for this day</p>
         </div>
         <div className="mb-8">{`Change failure rate on this day... (tbd)`}</div>
         <div className="mb-8">
           <h3 className="mb-2 text-md font-semibold text-foreground">Details</h3>
           <div className="grid grid-cols-3 gap-2">
-            {reportChangeFailureRateData && reportChangeFailureRateData?.activePayload.map((data, index) => (
+            {reportMeanTimeToRecoveryData && reportMeanTimeToRecoveryData?.activePayload.map((data, index) => (
               <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl" key={index}>
                 <div className="text-xs text-neutral-600 dark:text-neutral-400"><span className="inline-block w-2 h-2 mr-2 rounded-full" style={{ backgroundColor: data.color }}></span>{toSentence(data.name)}</div>
                 <div className="text-sm text-black font-semibold dark:text-white">{data.value instanceof Array ? data.value.join('-') : data.value} deployments</div>
@@ -56,7 +56,7 @@ export const ChangeFailureRateReport = ({ reportChangeFailureRateData, showRepor
           <span className="sr-only">Close</span>
         </Button>
       </div>
-      <div data-state={showReportChangeFailureRateData ? 'open' : 'closed'} className="fixed inset-0 z-40 bg-background/35 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=open]:opacity-1 data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none" onClick={handleClick} />
+      <div data-state={showReportMeanTimeToRecoveryData ? 'open' : 'closed'} className="fixed inset-0 z-40 bg-background/35 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=open]:opacity-1 data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none" onClick={handleClick} />
     </>
   )
 }

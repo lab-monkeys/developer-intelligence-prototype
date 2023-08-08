@@ -50,12 +50,13 @@ export function ChangeFailureRateChart({ data }) {
   const chartMean = calculateMean(averages)
 
   // Reports
-  const [reportData, setReportData] = useState()
-  const [showReportData, setShowReportData] = useState(false)
+  const [reportChangeFailureRateData, setReportChangeFailureRateData] = useState('')
+  const [showReportChangeFailureRateData, setShowReportChangeFailureRateData] = useState(false)
 
   function handleChartClick(event) {
-    // setReportData(event)
-    // setShowReportData(true)
+    console.log(event)
+    setReportChangeFailureRateData(event)
+    setShowReportChangeFailureRateData(true)
   }
 
   const customAnomalyLabel = ({ viewBox: { x, y } }) => {
@@ -104,14 +105,11 @@ export function ChangeFailureRateChart({ data }) {
               {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
               <Line type="monotone" dataKey="rollingAverage" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
               <Line type="monotone" dataKey="goal" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
-              <ReferenceLine x={"Jul 7"} strokeWidth={1}>
-                <Label content="Anomaly" />
-              </ReferenceLine>
             </ComposedChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
-      <ChangeFailureRateReport reportData={reportData} showReportData={showReportData} setShowReportData={setShowReportData} />
+      <ChangeFailureRateReport reportChangeFailureRateData={reportChangeFailureRateData} showReportChangeFailureRateData={showReportChangeFailureRateData} setShowReportChangeFailureRateData={setShowReportChangeFailureRateData} />
     </>
   )
 }

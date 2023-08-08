@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useTheme } from "next-themes"
 import { format } from 'date-fns'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from '@/components/ui/card'
@@ -10,6 +11,7 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { MeanTimeToRecoveryTooltip } from './tooltip'
 import { MeanTimeToRecoveryRating } from './rating'
 import { MeanTimeToRecoveryOptions } from './options'
+import { MeanTimeToRecoveryReport } from "./report"
 
 const dateFormatter = date => {
   return format(new Date(date), "MMM d")
@@ -47,6 +49,16 @@ export function MeanTimeToRecoveryChart({ data }) {
 
   const chartMean = calculateMean(averages)
 
+  // Reports
+  const [reportMeanTimeToRecoveryData, setReportMeanTimeToRecoveryData] = useState('')
+  const [showReportMeanTimeToRecoveryData, setShowReportMeanTimeToRecoveryData] = useState(false)
+
+  function handleChartClick(event) {
+    console.log(event)
+    setReportMeanTimeToRecoveryData(event)
+    setShowReportMeanTimeToRecoveryData(true)
+  }
+
   return (
     <>
       <Card className="flex flex-col h-full">
@@ -71,7 +83,7 @@ export function MeanTimeToRecoveryChart({ data }) {
         </CardHeader>
         <CardContent className="h-full">
           <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
+            <ComposedChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }} onClick={handleChartClick}>
               <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
               <XAxis style={{ fontSize: '0.75rem' }} dataKey="date" tickFormatter={dateFormatter} />
               <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 28]} tickFormatter={tick => `${tick}d`} />
@@ -84,6 +96,7 @@ export function MeanTimeToRecoveryChart({ data }) {
           </ResponsiveContainer>
         </CardContent>
       </Card>
+      <MeanTimeToRecoveryReport reportMeanTimeToRecoveryData={reportMeanTimeToRecoveryData} showReportMeanTimeToRecoveryData={showReportMeanTimeToRecoveryData} setShowReportMeanTimeToRecoveryData={setShowReportMeanTimeToRecoveryData} />
     </>
   )
 }
