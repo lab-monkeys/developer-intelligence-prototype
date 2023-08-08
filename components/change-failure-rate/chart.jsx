@@ -17,6 +17,13 @@ const dateFormatter = date => {
   return format(new Date(date), "MMM d")
 }
 
+const calculateMean = data => {
+  if (data.length < 1) {
+    return
+  }
+  return data.reduce((prev, current) => prev + current) / data.length
+}
+
 export function ChangeFailureRateChart({ data }) {
 
   const { resolvedTheme } = useTheme()
@@ -35,6 +42,14 @@ export function ChangeFailureRateChart({ data }) {
   const strokeRollingAverage = '#f43f5e'  // Rose 500
   const strokeGoal = '#f59e0b'            // Amber 500
 
+  // Calculate the mean
+  const averages = data.map(function(element) {
+    return element.rollingAverage
+  })
+
+  const chartMean = calculateMean(averages)
+
+  // Reports
   const [reportData, setReportData] = useState()
   const [showReportData, setShowReportData] = useState(false)
 
@@ -68,7 +83,7 @@ export function ChangeFailureRateChart({ data }) {
                 <InfoTooltip label={'The percentage of deployments causing a failure in production'} />
               </CardTitle>
               <CardDescription className="flex items-center gap-2">
-                <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">25%</strong>
+                <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(2)}%</strong>
                 <Badge variant="secondary"><MoveRight className="h-4 w-4 mr-1" /> 0%</Badge>
               </CardDescription>
             </div>

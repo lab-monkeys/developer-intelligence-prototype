@@ -15,6 +15,13 @@ const dateFormatter = date => {
   return format(new Date(date), "MMM d")
 }
 
+const calculateMean = data => {
+  if (data.length < 1) {
+    return
+  }
+  return data.reduce((prev, current) => prev + current) / data.length
+}
+
 export function LeadTimeForChangeChart({ data }) {
 
   const { resolvedTheme } = useTheme()
@@ -33,6 +40,13 @@ export function LeadTimeForChangeChart({ data }) {
   const strokeRollingAverage = '#8b5cf6'  // Violet 500
   const strokeGoal = '#f59e0b'            // Amber 500
 
+  // Calculate the mean
+  const averages = data.map(function(element) {
+    return element.rollingAverage
+  })
+
+  const chartMean = calculateMean(averages)
+
   return (
     <Card className="flex flex-col h-full">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -44,7 +58,7 @@ export function LeadTimeForChangeChart({ data }) {
               <InfoTooltip label={'The amount of time it takes for any change to get into production'} />
             </CardTitle>
             <CardDescription className="flex items-center gap-2">
-              <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">7 days, 13 hours</strong>
+              <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(2)} days</strong>
               <Badge variant="secondary"><TrendingUp className="h-4 w-4 mr-1" /> 16%</Badge>
             </CardDescription>
           </div>
