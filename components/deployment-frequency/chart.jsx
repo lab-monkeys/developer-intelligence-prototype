@@ -41,7 +41,7 @@ export function DeploymentFrequencyChart({ data }) {
   const strokeGoal = '#f59e0b'            // Amber 500
 
   // Calculate the mean
-  const averages = data.map(function(element) {
+  const averages = data.map(element => {
     return element.rollingAverage
   })
 
