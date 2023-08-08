@@ -54,7 +54,6 @@ export function LeadTimeForChangeChart({ data }) {
   const [showReportLeadTimeForChangeData, setShowReportLeadTimeForChangeData] = useState(false)
 
   function handleChartClick(event) {
-    console.log(event)
     setReportLeadTimeForChangeData(event)
     setShowReportLeadTimeForChangeData(true)
   }

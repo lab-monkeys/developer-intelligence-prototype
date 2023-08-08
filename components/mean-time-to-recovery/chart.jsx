@@ -54,7 +54,6 @@ export function MeanTimeToRecoveryChart({ data }) {
   const [showReportMeanTimeToRecoveryData, setShowReportMeanTimeToRecoveryData] = useState(false)
 
   function handleChartClick(event) {
-    console.log(event)
     setReportMeanTimeToRecoveryData(event)
     setShowReportMeanTimeToRecoveryData(true)
   }

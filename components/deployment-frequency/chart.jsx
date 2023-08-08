@@ -54,7 +54,6 @@ export function DeploymentFrequencyChart({ data }) {
   const [showReportDeploymentFrequencyData, setShowReportDeploymentFrequencyData] = useState(false)
 
   function handleChartClick(event) {
-    console.log(event)
     setReportDeploymentFrequencyData(event)
     setShowReportDeploymentFrequencyData(true)
   }

@@ -54,7 +54,6 @@ export function ChangeFailureRateChart({ data }) {
   const [showReportChangeFailureRateData, setShowReportChangeFailureRateData] = useState(false)
 
   function handleChartClick(event) {
-    console.log(event)
     setReportChangeFailureRateData(event)
     setShowReportChangeFailureRateData(true)
   }
