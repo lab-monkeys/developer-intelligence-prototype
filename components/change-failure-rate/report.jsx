@@ -13,7 +13,7 @@ export const ChangeFailureRateReport = ({ reportData, showReportData, setShowRep
     <div data-state={showReportData ? 'open' : 'closed'} role="dialog" className="fixed z-50 gap-4 bg-background p-8 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 inset-y-0 top-8 right-8 h-[calc(100%-4rem)] w-3/4 rounded-2xl border-l data-[state=closed]:slide-out-to-right data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none data-[state=open]:slide-in-from-right sm:max-w-xl">
       <div className="flex flex-col space-y-2 text-center sm:text-left">
         <h2 className="text-lg font-semibold text-foreground">Edit profile</h2>
-        <p className="text-sm text-muted-foreground">Make changes to your profile here. Click save when you're done.</p>
+        <p className="text-sm text-muted-foreground">Make changes to your profile here. Click save when you are done.</p>
       </div>
       <div>
         <h3>Details</h3>
