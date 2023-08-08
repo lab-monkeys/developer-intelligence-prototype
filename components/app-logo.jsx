@@ -10,8 +10,8 @@ export function AppLogo() {
 
   return (
     <div>
-      {resolvedTheme === 'light' && <Logo />}
-      {resolvedTheme === 'dark' && <LogoDark />}
+      {resolvedTheme === 'light' && <Logo className="w-full h-full" />}
+      {resolvedTheme === 'dark' && <LogoDark className="w-full h-full" />}
     </div>
   )
 }
