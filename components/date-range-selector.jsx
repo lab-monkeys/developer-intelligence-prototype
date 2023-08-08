@@ -76,7 +76,7 @@ export function DateRangeSelector() {
               <Button variant="ghost" size="sm">Last 90 days</Button>
               <Button variant="ghost" size="sm">Last 12 months</Button>
             </div>
-            <Calendar initialFocus mode="range" defaultMonth={date?.from} toDate={new Date()} selected={date} onSelect={setDate} numberOfMonths={2} />
+            <Calendar initialFocus mode="range" defaultMonth={date?.from} toDate={new Date()} selected={date} onSelect={setDate} numberOfMonths={2} disabled />
           </div>
           <div className="flex items-center justify-between p-4 mx-4 border-t">
             <div className="text-sm"><strong className="font-semibold">Range:</strong> # days</div>
