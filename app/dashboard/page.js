@@ -1,25 +1,31 @@
-import { ApplicationSelector } from '@/components/application-selector'
-import { DateRangeSelector } from '@/components/date-range-selector'
 import { UserNav } from '@/components/user-nav'
 import { NotificationsToggle } from '@/components/notifications-toggle'
 import { ThemeToggle } from '@/components/theme-toggle'
-import { LeadTimeForChangeChart } from '@/components/lead-time-for-change/chart'
-import { DeploymentFrequencyChart } from '@/components/deployment-frequency/chart'
-import { ChangeFailureRateChart } from '@/components/change-failure-rate/chart'
-import { MeanTimeToRecoveryChart } from '@/components/mean-time-to-recovery/chart'
 import { SearchToggle } from '@/components/search-toggle'
 import { getServerSession } from 'next-auth'
 import { options } from '../api/auth/[...nextauth]/options'
 import { redirect } from 'next/navigation'
 import { AppLogo } from '@/components/app-logo'
+import { Dashboard } from '@/components/dashboard'
 
 export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
 }
 
+async function getData() {
+  const response = await fetch('https://api.npoint.io/ee46484033b5d4d4658e')
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch data')
+  }
+
+  return response.json()
+}
+
 export default async function Page() {
 
   const session = await getServerSession(options)
+  const data = await getData()
 
   if (!session) {
     redirect('/')
@@ -40,19 +46,7 @@ export default async function Page() {
         </div>
       </header>
 
-      <main className="flex flex-col h-full p-16 pt-0">
-        <div className="flex justify-between items-center">
-          <ApplicationSelector />
-          <DateRangeSelector />
-        </div>
-
-        <div className="h-full grid grid-cols-2 grid-rows-2 gap-8 mt-8">
-          <DeploymentFrequencyChart />
-          <LeadTimeForChangeChart />
-          <ChangeFailureRateChart />
-          <MeanTimeToRecoveryChart />
-        </div>
-      </main>
+      <Dashboard data={data} />
     </div>
   )
 }

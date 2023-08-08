@@ -1,6 +1,7 @@
 'use client'
 
 import { useTheme } from "next-themes"
+import { format } from 'date-fns'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
@@ -10,84 +11,14 @@ import { DeploymentFrequencyTooltip } from './tooltip'
 import { DeploymentFrequencyRating } from './rating'
 import { DeploymentFrequencyOptions } from './options'
 
-const data = [
-  {
-    "Date": "Jun 30",
-    "Average": 8,
-    "Goal": 3,
-    "Rolling average": 7,
-    "Expected range": [4, 20],
-  },
-  {
-    "Date": "Jul 1",
-    "Average": 8,
-    "Goal": 3,
-    "Rolling average": 9,
-    "Expected range": [6, 15],
-  },
-  {
-    "Date": "Jul 2",
-    "Average": 8,
-    "Goal": 3,
-    "Rolling average": 12,
-    "Expected range": [8, 22],
-  },
-  {
-    "Date": "Jul 3",
-    "Average": 8,
-    "Goal": 3,
-    "Rolling average": 14,
-    "Expected range": [2, 11],
-  },
-  {
-    "Date": "Jul 4",
-    "Average": 8,
-    "Goal": 3,
-    "Rolling average": 7,
-    "Expected range": [7, 13],
-  },
-  {
-    "Date": "Jul 5",
-    "Average": 8,
-    "Goal": 3,
-    "Rolling average": 12,
-    "Expected range": [10, 32],
-  },
-  {
-    "Date": "Jul 6",
-    "Average": 8,
-    "Goal": 3,
-    "Rolling average": 7,
-    "Expected range": [4, 20],
-  },
-  {
-    "Date": "Jul 7",
-    "Average": 8,
-    "Goal": 3,
-    "Rolling average": 7,
-    "Expected range": [4, 20],
-  },
-  {
-    "Date": "Jul 8",
-    "Average": 8,
-    "Goal": 3,
-    "Rolling average": 7,
-    "Expected range": [4, 20],
-  },
-  {
-    "Date": "Jul 9",
-    "Average": 8,
-    "Goal": 3,
-    "Rolling average": 7,
-    "Expected range": [4, 20],
-  },
-]
+const dateFormatter = date => {
+  return format(new Date(date), "MMM d")
+}
 
-const animationDuration = 1000
-
-export function DeploymentFrequencyChart() {
+export function DeploymentFrequencyChart({ data }) {
 
   const { resolvedTheme } = useTheme()
+  const animationDuration = 1000
 
   // Chart colors
   const strokeGrid = '#d4d4d4'            // Neutral 300
@@ -127,19 +58,16 @@ export function DeploymentFrequencyChart() {
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
-            <XAxis style={{ fontSize: '0.75rem' }} dataKey="Date" />
+            <XAxis style={{ fontSize: '0.75rem' }} dataKey="date" tickFormatter={dateFormatter} />
             <YAxis style={{ fontSize: '0.75rem' }} />
             <Tooltip content={<DeploymentFrequencyTooltip />} cursor={{ stroke: strokeCursor }} />
-            <Area type="monotone" dataKey="Expected range" activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={1} strokeDasharray="4 4" animationDuration={animationDuration} />
+            <Area type="monotone" dataKey="expectedRange" activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={1} strokeDasharray="4 4" animationDuration={animationDuration} />
             {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
-            <Line type="monotone" dataKey="Rolling average" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
-            <Line type="monotone" dataKey="Goal" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
+            <Line type="monotone" dataKey="rollingAverage" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
+            <Line type="monotone" dataKey="goal" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>
-      {/* <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter> */}
     </Card>
   )
 }
