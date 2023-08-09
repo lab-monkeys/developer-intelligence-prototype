@@ -79,7 +79,7 @@ export function MeanTimeToRecoveryChart({ data }) {
               <CardDescription className="flex items-center gap-2">
                 <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(2)} days</strong>
                 <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
-                {showAnomalyWarning && <Badge variant="outline">Anomaly detected</Badge>}
+                {showAnomalyWarning && <Badge className="text-orange-600 border-orange-600" variant="outline">Anomaly detected</Badge>}
               </CardDescription>
             </div>
           </div>
