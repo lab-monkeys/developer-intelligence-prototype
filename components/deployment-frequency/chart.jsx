@@ -84,7 +84,7 @@ export function DeploymentFrequencyChart({ data }) {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <DeploymentFrequencyRating />
+            <DeploymentFrequencyRating chartMean={chartMean} />
             <DeploymentFrequencyOptions />
           </div>
         </CardHeader>

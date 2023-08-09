@@ -3,11 +3,16 @@
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
-export function MeanTimeToRecoveryRating(props) {
+export function MeanTimeToRecoveryRating({ chartMean, props }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="gap-2 rounded-full"><span className="inline-block w-2 h-2 rounded-full bg-red-500"></span> Needs focus</Button>
+        <Button variant="outline" className="gap-2 rounded-full">
+          {chartMean < 0.04166666666 && <><span className="inline-block w-2 h-2 rounded-full bg-green-500"></span><span>Elite</span></>}
+          {chartMean >= 0.04166666666 && chartMean < 1 && <><span className="inline-block w-2 h-2 rounded-full bg-blue-500"></span><span>Strong</span></>}
+          {chartMean >= 1 && chartMean < 7 && <><span className="inline-block w-2 h-2 rounded-full bg-yellow-500"></span><span>Fair</span></>}
+          {chartMean >= 7 && <><span className="inline-block w-2 h-2 rounded-full bg-red-500"></span><span>Needs focus</span></>}
+        </Button>
       </PopoverTrigger>
       <PopoverContent className="w-96 rounded-2xl" side="left">
         <div className="grid gap-4">
@@ -16,28 +21,28 @@ export function MeanTimeToRecoveryRating(props) {
             <p className="text-sm text-muted-foreground">How well you are performing at this metric</p>
           </div>
           <div className="grid gap-2">
-            <div className="grid grid-cols-2 items-center gap-4">
+            <div className={`grid grid-cols-2 items-center gap-4 ${chartMean < 0.04166666666 ? 'font-semibold' : ''}`}>
               <span className="flex items-center gap-2">
                 <span className="inline-block w-2 h-2 rounded-full bg-green-500"></span>
                 <span>Elite</span>
               </span>
               <span>Less than 1 hour</span>
             </div>
-            <div className="grid grid-cols-2 items-center gap-4">
+            <div className={`grid grid-cols-2 items-center gap-4 ${chartMean >= 0.04166666666 && chartMean < 1 ? 'font-semibold' : ''}`}>
               <span className="flex items-center gap-2">
                 <span className="inline-block w-2 h-2 rounded-full bg-blue-500"></span>
                 <span>Strong</span>
               </span>
-              <span>Less than 1 day</span>
+              <span>1 hour - 1 day</span>
             </div>
-            <div className="grid grid-cols-2 items-center gap-4">
+            <div className={`grid grid-cols-2 items-center gap-4 ${chartMean >= 1 && chartMean < 7 ? 'font-semibold' : ''}`}>
               <span className="flex items-center gap-2">
                 <span className="inline-block w-2 h-2 rounded-full bg-yellow-500"></span>
                 <span>Fair</span>
               </span>
-              <span>Less than 1 day</span>
+              <span>1 day - 1 week</span>
             </div>
-            <div className="grid grid-cols-2 items-center gap-4 font-semibold">
+            <div className={`grid grid-cols-2 items-center gap-4 ${chartMean >= 7 ? 'font-semibold' : ''}`}>
               <span className="flex items-center gap-2">
                 <span className="inline-block w-2 h-2 rounded-full bg-red-500"></span>
                 <span>Needs focus</span>

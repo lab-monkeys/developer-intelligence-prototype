@@ -84,7 +84,7 @@ export function LeadTimeForChangeChart({ data }) {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <LeadTimeForChangeRating />
+            <LeadTimeForChangeRating chartMean={chartMean} />
             <LeadTimeForChangeOptions />
           </div>
         </CardHeader>

@@ -84,7 +84,7 @@ export function MeanTimeToRecoveryChart({ data }) {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <MeanTimeToRecoveryRating />
+            <MeanTimeToRecoveryRating chartMean={chartMean} />
             <MeanTimeToRecoveryOptions />
           </div>
         </CardHeader>
