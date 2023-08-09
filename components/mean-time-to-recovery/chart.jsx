@@ -5,7 +5,7 @@ import { useTheme } from "next-themes"
 import { format } from 'date-fns'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label } from 'recharts'
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label, ReferenceLine } from 'recharts'
 import { MoveRight, TrendingUp, TrendingDown, PackageCheck } from 'lucide-react'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { MeanTimeToRecoveryTooltip } from './tooltip'
@@ -35,6 +35,7 @@ export function MeanTimeToRecoveryChart({ data }) {
   const strokeCursor = '#10b981'          // Emerald 500
   const strokeActiveDot = '#ffffff'       // White
   const strokeActiveDotDark = '#171717'   // Neutral 900
+  const strokeAnomaly = '#f97316'         // Orange 500
 
   const fillRange = '#a7f3d0'             // Emerald 200
   const fillRangeDark = '#022c22'         // Emerald 950
@@ -50,13 +51,19 @@ export function MeanTimeToRecoveryChart({ data }) {
   const chartMean = calculateMean(averages)
 
   // Reports
-  const [reportMeanTimeToRecoveryData, setReportMeanTimeToRecoveryData] = useState('')
+  const [reportMeanTimeToRecoveryData, setReportMeanTimeToRecoveryData] = useState(null)
   const [showReportMeanTimeToRecoveryData, setShowReportMeanTimeToRecoveryData] = useState(false)
 
   function handleChartClick(event) {
     setReportMeanTimeToRecoveryData(event)
     setShowReportMeanTimeToRecoveryData(true)
   }
+
+  // Anomaly detection
+  const showAnomalyWarning = data.some((day) => {
+    if (day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1]) { return true }
+    return false
+  })
 
   return (
     <>
@@ -72,6 +79,7 @@ export function MeanTimeToRecoveryChart({ data }) {
               <CardDescription className="flex items-center gap-2">
                 <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(2)} days</strong>
                 <Badge variant="secondary"><TrendingDown className="h-4 w-4 mr-1" /> 16%</Badge>
+                {showAnomalyWarning && <Badge variant="outline">Anomaly detected</Badge>}
               </CardDescription>
             </div>
           </div>
@@ -82,15 +90,21 @@ export function MeanTimeToRecoveryChart({ data }) {
         </CardHeader>
         <CardContent className="h-full">
           <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }} onClick={handleChartClick}>
+            <ComposedChart data={data} margin={{ top: 0, left: 0, right: 4, bottom: 0 }} onClick={handleChartClick}>
               <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
-              <XAxis style={{ fontSize: '0.75rem' }} dataKey="date" tickFormatter={dateFormatter} />
-              <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 28]} tickFormatter={tick => `${tick}d`} />
+              <XAxis style={{ fontSize: '0.75rem' }} dataKey="date" axisLine={false} tickLine={false} tickFormatter={dateFormatter} />
+              <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 28]} axisLine={false} tickLine={false} tickFormatter={tick => `${tick}d`} />
               <Tooltip content={<MeanTimeToRecoveryTooltip />} cursor={{ stroke: strokeCursor }} />
               <Area type="monotone" dataKey="expectedRange" activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 4" animationDuration={animationDuration} />
               {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
               <Line type="monotone" dataKey="rollingAverage" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
               <Line type="monotone" dataKey="goal" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
+
+              {data.map((day, index) => (
+                day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1] && (
+                  <ReferenceLine key={index} x={day.date} stroke={strokeAnomaly} strokeDasharray="2 2" />
+                )
+              ))}
             </ComposedChart>
           </ResponsiveContainer>
         </CardContent>

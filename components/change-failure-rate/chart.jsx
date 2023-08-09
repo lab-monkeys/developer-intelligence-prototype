@@ -35,6 +35,7 @@ export function ChangeFailureRateChart({ data }) {
   const strokeCursor = '#f43f5e'          // Rose 500
   const strokeActiveDot = '#ffffff'       // White
   const strokeActiveDotDark = '#171717'   // Neutral 900
+  const strokeAnomaly = '#f97316'         // Orange 500
 
   const fillRange = '#fecdd3'             // Rose 200
   const fillRangeDark = '#4c0519'         // Rose 950
@@ -50,7 +51,7 @@ export function ChangeFailureRateChart({ data }) {
   const chartMean = calculateMean(averages)
 
   // Reports
-  const [reportChangeFailureRateData, setReportChangeFailureRateData] = useState('')
+  const [reportChangeFailureRateData, setReportChangeFailureRateData] = useState(null)
   const [showReportChangeFailureRateData, setShowReportChangeFailureRateData] = useState(false)
 
   function handleChartClick(event) {
@@ -58,18 +59,11 @@ export function ChangeFailureRateChart({ data }) {
     setShowReportChangeFailureRateData(true)
   }
 
-  const customAnomalyLabel = ({ viewBox: { x, y } }) => {
-    const d = 20
-    const r = d / 2
-
-    const transform = `translate(${x - r} ${y - d - 5})` 
-
-    return (
-      <g transform={transform}>
-        <AlertTriangle />
-      </g>
-    )
-  }
+  // Anomaly detection
+  const showAnomalyWarning = data.some((day) => {
+    if (day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1]) { return true }
+    return false
+  })
 
   return (
     <>
@@ -85,6 +79,7 @@ export function ChangeFailureRateChart({ data }) {
               <CardDescription className="flex items-center gap-2">
                 <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(2)}%</strong>
                 <Badge variant="secondary"><MoveRight className="h-4 w-4 mr-1" /> 0%</Badge>
+                {showAnomalyWarning && <Badge variant="outline">Anomaly detected</Badge>}
               </CardDescription>
             </div>
           </div>
@@ -95,15 +90,21 @@ export function ChangeFailureRateChart({ data }) {
         </CardHeader>
         <CardContent className="h-full">
           <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }} onClick={handleChartClick}>
+            <ComposedChart data={data} margin={{ top: 0, left: 0, right: 4, bottom: 0 }} onClick={handleChartClick}>
               <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
-              <XAxis style={{ fontSize: '0.75rem' }} dataKey="date" tickFormatter={dateFormatter} />
-              <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 100]} tickFormatter={tick => `${tick}%`} />
+              <XAxis style={{ fontSize: '0.75rem' }} dataKey="date" axisLine={false} tickLine={false} tickFormatter={dateFormatter} />
+              <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 100]} axisLine={false} tickLine={false} tickFormatter={tick => `${tick}%`} />
               <Tooltip content={<ChangeFailureRateTooltip />} cursor={{ stroke: strokeCursor }} />
               <Area type="monotone" dataKey="expectedRange" activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 4" animationDuration={animationDuration} />
               {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
               <Line type="monotone" dataKey="rollingAverage" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
               <Line type="monotone" dataKey="goal" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
+
+              {data.map((day, index) => (
+                day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1] && (
+                  <ReferenceLine key={index} x={day.date} stroke={strokeAnomaly} strokeDasharray="2 2" />
+                )
+              ))}
             </ComposedChart>
           </ResponsiveContainer>
         </CardContent>
