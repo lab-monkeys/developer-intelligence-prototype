@@ -1,16 +1,21 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import ButtonSignInGithub from '@/components/button-signin-github'
 import ButtonSignInGoogle from '@/components/button-signin-google'
 import SignInPhoto from '@/public/images/image--sign-in.jpg'
 import BlurImage from '@/components/blur-image'
 import { AppLogo } from '@/components/app-logo'
+import { getServerSession } from 'next-auth'
+import { options } from './api/auth/[...nextauth]/options'
+import { buttonVariants } from "@/components/ui/button"
 
 export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
 }
 
-export default function AuthenticationPage() {
+export default async function AuthenticationPage() {
+
+  const session = await getServerSession(options)
+
   return (
     <>
       <div className="container relative hidden h-full flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-5 lg:px-0">
@@ -21,22 +26,27 @@ export default function AuthenticationPage() {
             <h1 className="visually-hidden">Red Hat Developer Intelligence</h1>
           </div>
           <div className="mx-auto flex w-full flex-col space-y-6 w-3/4 2xl:w-2/4 px-8 xl:px-0">
-            <div className="flex flex-col mb-4 space-y-2 text-center">
-              <h2 className="text-3xl	font-bold tracking-tight dark:text-white">Sign in</h2>
-            </div>
-            <ButtonSignInGithub />
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  Or
-                </span>
-              </div>
-            </div>
-            <ButtonSignInGoogle />
-            <p className="px-8 text-center text-sm text-muted-foreground">By signing in, you agree to our <Link href="https://www.redhat.com/en/about/terms-use">terms of service</Link> and <Link href="https://www.redhat.com/en/about/privacy-policy">privacy policy</Link>.</p>          
+            {session && <Link className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-12 rounded-full px-8 py-7 bg-primary text-primary-foreground hover:bg-primary/90" href="/dashboard">Go to dashboard</Link>}
+            {!session && (
+              <>
+                <div className="flex flex-col mb-4 space-y-2 text-center">
+                  <h2 className="text-3xl	font-bold tracking-tight dark:text-white">Sign in</h2>
+                </div>
+                <ButtonSignInGithub />
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                      Or
+                    </span>
+                  </div>
+                </div>
+                <ButtonSignInGoogle />
+                <p className="px-8 text-center text-sm text-muted-foreground">By signing in, you agree to our <Link href="https://www.redhat.com/en/about/terms-use">terms of service</Link> and <Link href="https://www.redhat.com/en/about/privacy-policy">privacy policy</Link>.</p>
+              </>
+            )}
           </div>
         </div>
 
