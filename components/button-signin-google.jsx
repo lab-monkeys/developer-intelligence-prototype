@@ -16,7 +16,7 @@ export default function ButtonSignInGoogle() {
   }
 
   return (
-    <Button variant="outline" size="lg" type="button" onClick={handleClick}>
+    <Button className="w-full" variant="outline" size="lg" type="button" onClick={handleClick}>
       {loading && <Loader2 className="mr-2 h-6 w-6 animate-spin" />}
       {!loading && (
         <>

@@ -19,7 +19,7 @@ export default function ButtonSignInGithub() {
   }
 
   return (
-    <Button type="button" size="lg" onClick={handleClick}>
+    <Button className="w-full" type="button" size="lg" onClick={handleClick}>
       {loading && <Loader2 className="mr-2 h-6 w-6 animate-spin" />}
       {!loading && (
         <>

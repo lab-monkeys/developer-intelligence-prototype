@@ -7,6 +7,7 @@ import { AppLogo } from '@/components/app-logo'
 import { getServerSession } from 'next-auth'
 import { options } from './api/auth/[...nextauth]/options'
 import { buttonVariants } from "@/components/ui/button"
+import { ArrowRight } from 'lucide-react'
 
 export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
@@ -25,15 +26,24 @@ export default async function AuthenticationPage() {
             <AppLogo />
             <h1 className="visually-hidden">Red Hat Developer Intelligence</h1>
           </div>
-          <div className="mx-auto flex w-full flex-col space-y-6 w-3/4 2xl:w-2/4 px-8 xl:px-0">
-            {session && <Link className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-12 rounded-full px-8 py-7 bg-primary text-primary-foreground hover:bg-primary/90" href="/dashboard">Go to dashboard</Link>}
+          <div className="mx-auto flex w-full flex-col items-center space-y-6 w-3/4 2xl:w-2/4 px-8 xl:px-0">
+            {session && (
+              <div className="flex items-center justify-center w-96 h-96 border border-dashed border-neutral-200 dark:border-neutral-800 rounded-full">
+                <div className="flex items-center justify-center w-64 h-64 border border-neutral-200 dark:border-neutral-700 rounded-full">
+                  <Link className="w-48 h-48 flex gap-2 items-center text-center justify-center text-lg font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-full px-8 py-7 bg-primary text-primary-foreground hover:bg-primary/90" href="/dashboard">
+                    <span>Continue</span>
+                    <ArrowRight />
+                  </Link>
+                </div>
+              </div>
+            )}
             {!session && (
               <>
                 <div className="flex flex-col mb-4 space-y-2 text-center">
                   <h2 className="text-3xl	font-bold tracking-tight dark:text-white">Sign in</h2>
                 </div>
                 <ButtonSignInGithub />
-                <div className="relative">
+                <div className="relative w-full">
                   <div className="absolute inset-0 flex items-center">
                     <span className="w-full border-t" />
                   </div>
