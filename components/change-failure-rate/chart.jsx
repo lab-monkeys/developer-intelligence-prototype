@@ -65,6 +65,15 @@ export function ChangeFailureRateChart({ data }) {
     return false
   })
 
+  const customAnomalyLabel = props => {
+    return (
+      <g className="w-[32px] h-[32px] fill-none" transform={`translate(${props.viewBox.x - 16}, ${props.viewBox.y + 1})`}>
+        <rect className="fill-orange-50 stroke-orange-500 stroke-2" width="32" height="32" rx="16" />
+        <path className="fill-orange-600" d="M23.799 21.026 17.482 9.38a1.668 1.668 0 0 0-.683-.68 1.693 1.693 0 0 0-2.284.68L8.199 21.026A1.678 1.678 0 0 0 9.685 23.5h12.628a1.7 1.7 0 0 0 1.308-.615 1.671 1.671 0 0 0 .178-1.859Zm-7.8.474a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-3.5a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4Z" />
+      </g>
+    )
+  }
+
   return (
     <>
       <Card className="flex flex-col h-full">
@@ -96,13 +105,12 @@ export function ChangeFailureRateChart({ data }) {
               <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 100]} axisLine={false} tickLine={false} tickFormatter={tick => `${tick}%`} />
               <Tooltip content={<ChangeFailureRateTooltip />} cursor={{ stroke: strokeCursor }} />
               <Area type="monotone" dataKey="expectedRange" activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 4" animationDuration={animationDuration} />
-              {/* <Line type="monotone" dataKey="Average" dot={false} stroke="#263238" strokeWidth={3} strokeLinecap="round" /> */}
               <Line type="monotone" dataKey="rollingAverage" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
               <Line type="monotone" dataKey="goal" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
 
               {data.map((day, index) => (
                 day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1] && (
-                  <ReferenceLine key={index} x={day.date} stroke={strokeAnomaly} strokeDasharray="2 2" />
+                  <ReferenceLine className="anomaly-reference-line" key={index} x={day.date} stroke={strokeAnomaly} label={customAnomalyLabel} />
                 )
               ))}
             </ComposedChart>

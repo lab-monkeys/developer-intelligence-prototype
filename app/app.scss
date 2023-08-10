@@ -91,3 +91,12 @@ h1, h2, h3, h4, h5, h6 {
 [data-theme="dark"] .pattern-background {
   background-image: url('/illustrations/illustration--sign-in--dark.svg');
 }
+
+.anomaly-reference-line line {
+  stroke-dasharray: 2 4;
+  animation: dash-draw 1s linear infinite;
+}
+
+@keyframes dash-draw {
+  from { stroke-dashoffset: 30;}
+}
