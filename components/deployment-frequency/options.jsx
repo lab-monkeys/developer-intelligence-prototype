@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { cn } from "@/lib/utils"
-import { MoreVertical, Download, Image as ImageIcon, Maximize2, Goal, Calendar as CalendarIcon } from "lucide-react"
+import { MoreVertical, Download, Image as ImageIcon, Maximize2, Goal, Calendar as CalendarIcon, MoveRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
@@ -14,6 +14,7 @@ import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popove
 
 export function DeploymentFrequencyOptions(props) {
 
+  const [goal, setGoal] = useState(2)
   const [date, setDate] = useState()
 
   return (
@@ -53,12 +54,15 @@ export function DeploymentFrequencyOptions(props) {
         </DialogHeader>
         <div>
           <div className="mb-6">
-            <Label htmlFor="deployment-frequency-goal">What is your desired deployment frequency?</Label>
-            <Slider id="deployment-frequency-goal" defaultValue={[1]} max={2} step={1} className="py-4" />
-            <div className="flex items-center justify-between text-xs text-neutral-500">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="deployment-frequency-goal">How many deployments per day?</Label>
+              <span className="text-sm font-semibold">{goal} deployments</span>
+            </div>
+            <Slider id="deployment-frequency-goal" defaultValue={[0]} value={[goal]} max={20} step={1} className="py-4" onValueChange={(value) => setGoal(value)} />
+            <div className="grid grid-cols-3 items-center justify-between text-xs text-neutral-500">
               <span>0</span>
-              <span>1</span>
-              <span>2</span>
+              <span className="flex justify-center">10</span>
+              <span className="flex justify-end">20</span>
             </div>
           </div>
           <div className="mb-6">
@@ -86,11 +90,20 @@ export function DeploymentFrequencyOptions(props) {
               </PopoverContent>
             </Popover>
           </div>
-          <div className="flex items-center mb-6">
-            <div>Current</div>
-            <div>Goal</div>
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center justify-center gap-2 mb-6">
+            <div className="flex flex-col p-4 bg-neutral-100 rounded-xl">
+              <span className="mb-2 text-sm font-semibold">Current average</span>
+              <span className="text-sm">7 days</span>
+              <span className="text-neutral-700 text-xs">Today</span>
+            </div>
+            <div><MoveRight strokeWidth={1.5} /></div>
+            <div className="flex flex-col p-4 bg-neutral-100 rounded-xl">
+              <span className="mb-2 text-sm font-semibold">Goal</span>
+              <span className="text-sm">7 days</span>
+              <span className="text-neutral-700 text-xs">{date ? format(date, "PPP") : 'No date selected'}</span>
+            </div>
           </div>
-          <div className="px-4 py-2 mb-6 border border-dashed border-neutral-300 rounded-lg text-center dark:border-neutral-700">Plan of action...</div>
+          <div className="px-4 py-3 mb-6 border border-dashed border-neutral-300 rounded-lg text-sm text-center italic dark:border-neutral-700">Plan to increase deployment frequency by # per week</div>
         </div>
         <DialogFooter className="w-full flex items-center lg:justify-between">
           <Button variant="outline" className="rounded-full">Clear goal</Button>
