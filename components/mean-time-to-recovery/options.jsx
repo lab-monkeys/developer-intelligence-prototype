@@ -91,16 +91,16 @@ export function MeanTimeToRecoveryOptions(props) {
             </Popover>
           </div>
           <div className="grid grid-cols-[1fr_auto_1fr] items-center justify-center gap-2 mb-6">
-            <div className="flex flex-col p-4 bg-neutral-100 rounded-xl">
+            <div className="flex flex-col p-4 bg-neutral-100 dark:bg-neutral-900 rounded-xl">
               <span className="mb-2 text-sm font-semibold">Current average</span>
               <span className="text-sm">7 days</span>
-              <span className="text-neutral-700 text-xs">Today</span>
+              <span className="text-neutral-700 dark:text-neutral-500 text-xs">Today</span>
             </div>
             <div><MoveRight strokeWidth={1.5} /></div>
-            <div className="flex flex-col p-4 bg-neutral-100 rounded-xl">
+            <div className="flex flex-col p-4 bg-neutral-100 dark:bg-neutral-900 rounded-xl">
               <span className="mb-2 text-sm font-semibold">Goal</span>
               <span className="text-sm">7 days</span>
-              <span className="text-neutral-700 text-xs">{date ? format(date, "PPP") : 'No date selected'}</span>
+              <span className="text-neutral-700 dark:text-neutral-500 text-xs">{date ? format(date, "PPP") : 'No date selected'}</span>
             </div>
           </div>
           <div className="px-4 py-3 mb-6 border border-dashed border-neutral-300 rounded-lg text-sm text-center italic dark:border-neutral-700">Plan to decrease mean time to recovery by #days per week</div>
