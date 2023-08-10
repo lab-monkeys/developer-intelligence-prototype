@@ -38,7 +38,7 @@ export function DeploymentFrequencyChart({ data }) {
   const strokeAnomaly = '#f97316'         // Orange 500
 
   const fillRange = '#bfdbfe'             // Blue 200
-  const fillRangeDark = '#172554'         // Blue 950
+  const fillRangeDark = '#1e3a8a'         // Blue 900
   const strokeRange = '#3b82f6'           // Blue 500
   const strokeRollingAverage = '#3b82f6'  // Blue 500
   const strokeGoal = '#f59e0b'            // Amber 500

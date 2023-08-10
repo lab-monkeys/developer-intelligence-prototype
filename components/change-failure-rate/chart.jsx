@@ -38,7 +38,7 @@ export function ChangeFailureRateChart({ data }) {
   const strokeAnomaly = '#f97316'         // Orange 500
 
   const fillRange = '#fecdd3'             // Rose 200
-  const fillRangeDark = '#4c0519'         // Rose 950
+  const fillRangeDark = '#881337'         // Rose 900
   const strokeRange = '#f43f5e'           // Rose 500
   const strokeRollingAverage = '#f43f5e'  // Rose 500
   const strokeGoal = '#f59e0b'            // Amber 500

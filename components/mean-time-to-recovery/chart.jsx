@@ -38,7 +38,7 @@ export function MeanTimeToRecoveryChart({ data }) {
   const strokeAnomaly = '#f97316'         // Orange 500
 
   const fillRange = '#a7f3d0'             // Emerald 200
-  const fillRangeDark = '#022c22'         // Emerald 950
+  const fillRangeDark = '#064e3b'         // Emerald 900
   const strokeRange = '#10b981'           // Emerald 500
   const strokeRollingAverage = '#10b981'  // Emerald 500
   const strokeGoal = '#f59e0b'            // Amber 500

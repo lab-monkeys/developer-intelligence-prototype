@@ -38,7 +38,7 @@ export function LeadTimeForChangeChart({ data }) {
   const strokeAnomaly = '#f97316'         // Orange 500
 
   const fillRange = '#ddd6fe'             // Violet 200
-  const fillRangeDark = '#2e1065'         // Violet 950
+  const fillRangeDark = '#4c1d95'         // Violet 900
   const strokeRange = '#8b5cf6'           // Violet 500
   const strokeRollingAverage = '#8b5cf6'  // Violet 500
   const strokeGoal = '#f59e0b'            // Amber 500
