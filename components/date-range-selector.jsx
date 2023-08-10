@@ -14,9 +14,11 @@ import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popove
 export function DateRangeSelector() {
 
   const [date, setDate] = useState({
-    from: subDays(new Date(), 28),
-    to: new Date(),
+    from: new Date("June 29, 2023"),
+    to: new Date("July 26, 2023"),
   })
+
+  console.log(date)
 
   const convertMsToDays = ms => {
     const msInOneSecond = 1000
@@ -38,12 +40,12 @@ export function DateRangeSelector() {
       differenceInMs = dateOne.getTime() - dateTwo.getTime()
     }
 
-    return convertMsToDays(differenceInMs)
+    return convertMsToDays(differenceInMs + 1)
   }
 
   return (
     <div className="flex items-center gap-4">
-      <Badge variant="outline">{getDaysBetweenDates(date.from, date.to)} days</Badge>
+      <Badge variant="outline">Custom</Badge>
       <Popover>
         <PopoverTrigger asChild>
           <Button id="date" variant={"outline"} className={cn("w-[240px] justify-start text-left font-normal rounded-full", !date && "text-muted-foreground")}>
@@ -66,20 +68,21 @@ export function DateRangeSelector() {
 
           <div className="flex">
             <div className="flex flex-col gap-2 p-4">
-              <Button variant="ghost" size="sm">Today</Button>
-              <Button variant="ghost" size="sm">Yesterday</Button>
-              <Button variant="ghost" size="sm">This week</Button>
-              <Button variant="ghost" size="sm">Last week</Button>
-              <Button variant="ghost" size="sm">Last 7 days</Button>
-              <Button variant="ghost" size="sm">Last 28 days</Button>
-              <Button variant="ghost" size="sm">Last 30 days</Button>
-              <Button variant="ghost" size="sm">Last 90 days</Button>
-              <Button variant="ghost" size="sm">Last 12 months</Button>
+              <Button className="rounded-full" variant="ghost" size="sm">Today</Button>
+              <Button className="rounded-full" variant="ghost" size="sm">Yesterday</Button>
+              <Button className="rounded-full" variant="ghost" size="sm">This week</Button>
+              <Button className="rounded-full" variant="ghost" size="sm">Last week</Button>
+              <Button className="rounded-full" variant="ghost" size="sm">Last 7 days</Button>
+              <Button className="rounded-full" variant="ghost" size="sm">Last 28 days</Button>
+              <Button className="rounded-full" variant="ghost" size="sm">Last 30 days</Button>
+              <Button className="rounded-full" variant="ghost" size="sm">Last 90 days</Button>
+              <Button className="rounded-full" variant="ghost" size="sm">Last 12 months</Button>
+              <Button className="rounded-full" variant="ghost" size="sm">Custom</Button>
             </div>
             <Calendar initialFocus mode="range" defaultMonth={date?.from} toDate={new Date()} selected={date} onSelect={setDate} numberOfMonths={2} disabled />
           </div>
           <div className="flex items-center justify-between p-4 mx-4 border-t">
-            <div className="text-sm"><strong className="font-semibold">Range:</strong> # days</div>
+            <div className="text-sm"><strong className="font-semibold">Range:</strong> 28 days</div>
             <div className="flex items-center gap-2">
               <Button className="rounded-full" variant="secondary">Cancel</Button>
               <Button className="rounded-full">Apply</Button>
