@@ -17,9 +17,7 @@ export function DateRangeSelector() {
     from: new Date("June 29, 2023"),
     to: new Date("July 26, 2023"),
   })
-
-  console.log(date)
-
+  
   const convertMsToDays = ms => {
     const msInOneSecond = 1000
     const secondsInOneMinute = 60
