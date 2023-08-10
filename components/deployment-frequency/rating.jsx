@@ -14,7 +14,7 @@ export function DeploymentFrequencyRating({ chartMean, props }) {
           {chartMean < 0.03571428570 && <><span className="inline-block w-2 h-2 rounded-full bg-red-500"></span><span>Needs focus</span></>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-96 rounded-2xl" side="left">
+      <PopoverContent className="w-[420px] rounded-2xl" side="left">
         <div className="grid gap-4">
           <div className="space-y-2">
             <h4 className="font-semibold leading-none dark:text-white">Rating scale</h4>
