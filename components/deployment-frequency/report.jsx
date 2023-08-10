@@ -2,10 +2,11 @@
 
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { X } from 'lucide-react'
+import { X, Book, Bug } from 'lucide-react'
 import { format } from 'date-fns'
 import AlertAnomaly from '@/components/alert-anomaly'
 import AlertHealthy from '@/components/alert-healthy'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table"
 
 function toSentence(str) {
   return str.split(/([A-Z]|\d)/).map((v, i, arr) => {
@@ -31,7 +32,7 @@ export const DeploymentFrequencyReport = ({ reportDeploymentFrequencyData, showR
 
   return (
     <>
-      <div data-state={showReportDeploymentFrequencyData ? 'open' : 'closed'} role="dialog" className="fixed z-50 gap-4 bg-background p-8 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 inset-y-0 top-8 right-8 h-[calc(100%-4rem)] w-3/4 rounded-2xl border-l data-[state=closed]:slide-out-to-right data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none data-[state=open]:slide-in-from-right sm:max-w-xl">
+      <div data-state={showReportDeploymentFrequencyData ? 'open' : 'closed'} role="dialog" className="fixed z-50 gap-4 bg-background p-8 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 inset-y-0 top-8 right-8 h-[calc(100%-4rem)] w-3/4 rounded-2xl border-l data-[state=closed]:slide-out-to-right data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none data-[state=open]:slide-in-from-right sm:max-w-xl overflow-y-auto">
         <div className="flex flex-col space-y-2 mb-8 text-center sm:text-left">
           <h2 className="text-lg font-semibold text-foreground">Report - {reportDeploymentFrequencyData !== null && format(new Date(reportDeploymentFrequencyData?.activeLabel), "MMM d, y")}</h2>
           <p className="text-sm text-muted-foreground">Detailed application report and analysis for this day</p>
@@ -44,7 +45,7 @@ export const DeploymentFrequencyReport = ({ reportDeploymentFrequencyData, showR
         )}
         <div className="mb-8">
           <h3 className="mb-2 text-md font-semibold text-foreground">Details</h3>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-2 mb-4">
             {reportDeploymentFrequencyData !== null && reportDeploymentFrequencyData?.activePayload.map((data, index) => (
               <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl" key={index}>
                 <div className="text-xs text-neutral-600 dark:text-neutral-400"><span className="inline-block w-2 h-2 mr-2 rounded-full" style={{ backgroundColor: data.color }}></span>{toSentence(data.name)}</div>
@@ -52,6 +53,54 @@ export const DeploymentFrequencyReport = ({ reportDeploymentFrequencyData, showR
               </div>
             ))}
           </div>
+          <Table>
+            <TableHeader>
+              <TableRow className="border-primary">
+                <TableHead>Name</TableHead>
+                <TableHead>Date range</TableHead>
+                <TableHead className="text-right">Lead time</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="flex items-center gap-2 font-medium"><Book className="w-4 h-4" /> feature-name-01</TableCell>
+                <TableCell>Aug 16 - Aug 29</TableCell>
+                <TableCell className="text-right">13 days</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="flex items-center gap-2 font-medium"><Book className="w-4 h-4" /> feature-name-02</TableCell>
+                <TableCell>Aug 17 - Aug 29</TableCell>
+                <TableCell className="text-right">12.5 days</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="flex items-center gap-2 font-medium"><Book className="w-4 h-4" /> feature-name-03</TableCell>
+                <TableCell>Aug 18 - Aug 29</TableCell>
+                <TableCell className="text-right">11 days</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="flex items-center gap-2 font-medium"><Book className="w-4 h-4" /> feature-name-04</TableCell>
+                <TableCell>Aug 18 - Aug 29</TableCell>
+                <TableCell className="text-right">9.2 days</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="flex items-center gap-2 font-medium"><Bug className="w-4 h-4" /> bug-name-01</TableCell>
+                <TableCell>Aug 20 - Aug 29</TableCell>
+                <TableCell className="text-right">8.6 days</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="flex items-center gap-2 font-medium"><Book className="w-4 h-4" /> feature-name-05</TableCell>
+                <TableCell>Aug 21 - Aug 29</TableCell>
+                <TableCell className="text-right">6 days</TableCell>
+              </TableRow>
+            </TableBody>
+            <TableFooter className="bg-transparent border-t border-primary text-primary">
+              <TableRow className="border-0">
+                <TableCell></TableCell>
+                <TableCell>Average</TableCell>
+                <TableCell className="text-right">11 days</TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
         </div>
         <div>
           <h3 className="flex items-center mb-2 text-md font-semibold text-foreground">Analysis <Badge className="ml-1 font-bold">AI</Badge></h3>
