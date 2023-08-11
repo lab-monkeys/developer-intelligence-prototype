@@ -6,6 +6,7 @@ import { X } from 'lucide-react'
 import { format } from 'date-fns'
 import AlertAnomaly from '@/components/alert-anomaly'
 import AlertHealthy from '@/components/alert-healthy'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table"
 
 function toSentence(str) {
   return str.split(/([A-Z]|\d)/).map((v, i, arr) => {
@@ -31,7 +32,7 @@ export const MeanTimeToRecoveryReport = ({ reportMeanTimeToRecoveryData, showRep
 
   return (
     <>
-      <div data-state={showReportMeanTimeToRecoveryData ? 'open' : 'closed'} role="dialog" className="fixed z-50 gap-4 bg-background p-8 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 inset-y-0 top-8 right-8 h-[calc(100%-4rem)] w-3/4 rounded-2xl border-l data-[state=closed]:slide-out-to-right data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none data-[state=open]:slide-in-from-right sm:max-w-xl">
+      <div data-state={showReportMeanTimeToRecoveryData ? 'open' : 'closed'} role="dialog" className="fixed z-50 gap-4 bg-background p-8 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 inset-y-0 top-8 right-8 h-[calc(100%-4rem)] w-3/4 rounded-2xl border-l data-[state=closed]:slide-out-to-right data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none data-[state=open]:slide-in-from-right sm:max-w-xl overflow-y-auto">
         <div className="flex flex-col space-y-2 mb-8 text-center sm:text-left">
           <h2 className="text-lg font-semibold text-foreground">Report - {reportMeanTimeToRecoveryData !== null && format(new Date(reportMeanTimeToRecoveryData?.activeLabel), "MMM d, y")}</h2>
           <p className="text-sm text-muted-foreground">Detailed application report and analysis for this day</p>
@@ -52,6 +53,84 @@ export const MeanTimeToRecoveryReport = ({ reportMeanTimeToRecoveryData, showRep
               </div>
             ))}
           </div>
+          <Table>
+            <TableHeader>
+              <TableRow className="border-primary">
+                <TableHead>Bug reported</TableHead>
+                <TableHead>Deployment resolved</TableHead>
+                <TableHead className="text-right">Lead time</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold">ZUUL-27</span>
+                    <span className="text-xs">Jun 24, 2023</span>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold">6A5BneYGwzxbVzLk79Uzi16GAUAW</span>
+                    <span className="text-xs">Jul 1, 2023</span>
+                  </div>
+                </TableCell>
+                <TableCell className="text-right">8 days</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold">SAT-18333</span>
+                    <span className="text-xs">Jun 24, 2023</span>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold">AefjBjm8dPwUxCthrQt8QvAS1uaX</span>
+                    <span className="text-xs">Jul 1, 2023</span>
+                  </div>
+                </TableCell>
+                <TableCell className="text-right">8 days</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold">RHCEPH-7191</span>
+                    <span className="text-xs">Jun 24, 2023</span>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold">CVVqzemmu76gmfFytnaMkc9yoUxT</span>
+                    <span className="text-xs">Jul 1, 2023</span>
+                  </div>
+                </TableCell>
+                <TableCell className="text-right">8 days</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold">CNV-29918</span>
+                    <span className="text-xs">Jun 24, 2023</span>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold">AvxMnGcQdP3MqgcttDC8LmdsuqJP</span>
+                    <span className="text-xs">Jul 1, 2023</span>
+                  </div>
+                </TableCell>
+                <TableCell className="text-right">8 days</TableCell>
+              </TableRow>
+            </TableBody>
+            <TableFooter className="bg-transparent border-t border-primary text-primary">
+              <TableRow className="border-0">
+                <TableCell></TableCell>
+                <TableCell>Average</TableCell>
+                <TableCell className="text-right">8 days</TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
         </div>
         <div>
           <h3 className="flex items-center mb-2 text-md font-semibold text-foreground">Analysis <Badge className="ml-1 font-bold">AI</Badge></h3>
