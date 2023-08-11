@@ -16,8 +16,7 @@ export function ApplicationSelector({ applications, activeApplication, changeAct
       <PopoverTrigger asChild>
         <Button variant="outline" role="combobox" aria-expanded={open} className="w-80 justify-between rounded-full">
           <div className="flex items-center">
-            {/* <Box className="mr-2 h-4 w-4 shrink-0" /> */}
-            <Gitlab className="mr-2 w-4 h-4 fill-orange-500 stroke-orange-500" />
+            <Box className="mr-2 w-4 h-4" />
             {activeApplication && applications.find((application) => application.id === activeApplication)?.name}
             {!activeApplication && 'Select application...'}
           </div>
@@ -35,7 +34,7 @@ export function ApplicationSelector({ applications, activeApplication, changeAct
                 setOpen(false)
               }}>
                 <div className="flex items-center">
-                  <Gitlab className={cn("mr-2 w-4 h-4 fill-orange-500 stroke-orange-500", application.id === activeApplication ? "opacity-100" : "opacity-40")} />
+                  <Box className={cn("mr-2 w-4 h-4", application.id === activeApplication ? "opacity-100" : "opacity-40")} />
                   <span className={`${activeApplication === application.id ? 'font-semibold' : 'font-base'}`}>{application.name}</span>
                 </div>
                 <Check className={cn("mr-2 h-4 w-4", activeApplication === application.id ? "opacity-100" : "opacity-0")} />
@@ -43,14 +42,14 @@ export function ApplicationSelector({ applications, activeApplication, changeAct
             ))}
             <CommandItem className="flex items-center justify-between opacity-40" key={'04'} disabled>
               <div className="flex items-center">
-                <Github className="mr-2 w-4 h-4 fill-black dark:fill-white opacity-40" />
+                <Box className="mr-2 w-4 h-4 opacity-40" />
                 Alchemy/QuantaShift
               </div>
               <Check className="mr-2 h-4 w-4 opacity-0" />
             </CommandItem>
             <CommandItem className="flex items-center justify-betwee opacity-40" key={'05'} disabled>
               <div className="flex items-center">
-                <Github className="mr-2 w-4 h-4 fill-black dark:fill-white opacity-40" />
+                <Box className="mr-2 w-4 h-4 opacity-40" />
                 SatelliteSynapse
               </div>
               <Check className="mr-2 h-4 w-4 opacity-0" />
