@@ -8,7 +8,7 @@ export function InfoTooltip(props) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <Info className="w-4 h-4" />
+          <Info className="w-4 h-4 dark:stroke-white" />
         </TooltipTrigger>
         <TooltipContent>
           {props.label}
