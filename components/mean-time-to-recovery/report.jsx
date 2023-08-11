@@ -45,7 +45,7 @@ export const MeanTimeToRecoveryReport = ({ reportMeanTimeToRecoveryData, showRep
         )}
         <div className="mb-8">
           <h3 className="mb-2 text-md font-semibold text-foreground">Details</h3>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-2 mb-4">
             {reportMeanTimeToRecoveryData !== null && reportMeanTimeToRecoveryData?.activePayload.map((data, index) => (
               <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl" key={index}>
                 <div className="text-xs text-neutral-600 dark:text-neutral-400"><span className="inline-block w-2 h-2 mr-2 rounded-full" style={{ backgroundColor: data.color }}></span>{toSentence(data.name)}</div>
@@ -58,7 +58,7 @@ export const MeanTimeToRecoveryReport = ({ reportMeanTimeToRecoveryData, showRep
               <TableRow className="border-primary">
                 <TableHead>Bug reported</TableHead>
                 <TableHead>Deployment resolved</TableHead>
-                <TableHead className="text-right">Lead time</TableHead>
+                <TableHead className="text-right">Duration</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
