@@ -7,10 +7,18 @@ import { AppLogo } from '@/components/app-logo'
 import { getServerSession } from 'next-auth'
 import { options } from './api/auth/[...nextauth]/options'
 import { buttonVariants } from "@/components/ui/button"
-import { ArrowRight } from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
 
 export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
+}
+
+function getInitials(name) {
+  const nameArray = name.split(" ")
+  const firstName = nameArray[0].charAt(0).toUpperCase()
+  const lastName = nameArray[nameArray.length - 1].charAt(0).toUpperCase()
+  return firstName + lastName
 }
 
 export default async function AuthenticationPage() {
@@ -30,9 +38,15 @@ export default async function AuthenticationPage() {
             {session && (
               <div className="flex items-center justify-center w-96 h-96 border border-dashed border-neutral-200 dark:border-neutral-800 rounded-full">
                 <div className="flex items-center justify-center w-64 h-64 border border-neutral-200 dark:border-neutral-700 rounded-full">
-                  <Link className="w-48 h-48 flex gap-2 items-center text-center justify-center text-lg font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-full px-8 py-7 bg-primary text-primary-foreground hover:bg-primary/90" href="/dashboard">
-                    <span>Continue</span>
-                    <ArrowRight />
+                  <Link className="relative w-32 h-32 flex gap-2 items-center text-center justify-center text-lg font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-full px-8 py-7 bg-primary text-primary-foreground hover:bg-primary/90" href="/dashboard">
+                    <Avatar className="w-32 h-32">
+                      <AvatarImage src={session.user.image} alt={`${session.user.name} avatar`} />
+                      <AvatarFallback className="bg-violet-700 text-white">{getInitials(session.user.name)}</AvatarFallback>
+                    </Avatar>
+                    <div className="absolute top-[calc(100%+16px)] flex items-center gap-2 pl-2 pr-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded-full whitespace-nowrap">
+                      <CheckCircle2 className="h-6 w-6 fill-orange-500 stroke-neutral-100 dark:stroke-neutral-800" />
+                      <span className="text-sm text-foreground">{session.user.name}</span>
+                    </div>
                   </Link>
                 </div>
               </div>
