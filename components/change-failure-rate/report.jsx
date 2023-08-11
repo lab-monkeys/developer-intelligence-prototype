@@ -6,6 +6,7 @@ import { X } from 'lucide-react'
 import { format } from 'date-fns'
 import AlertAnomaly from '@/components/alert-anomaly'
 import AlertHealthy from '@/components/alert-healthy'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table"
 
 function toSentence(str) {
   return str.split(/([A-Z]|\d)/).map((v, i, arr) => {
@@ -31,7 +32,7 @@ export const ChangeFailureRateReport = ({ reportChangeFailureRateData, showRepor
 
   return (
     <>
-      <div data-state={showReportChangeFailureRateData ? 'open' : 'closed'} role="dialog" className="fixed z-50 gap-4 bg-background p-8 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 inset-y-0 top-8 right-8 h-[calc(100%-4rem)] w-3/4 rounded-2xl border-l data-[state=closed]:slide-out-to-right data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none data-[state=open]:slide-in-from-right sm:max-w-xl">
+      <div data-state={showReportChangeFailureRateData ? 'open' : 'closed'} role="dialog" className="fixed z-50 gap-4 bg-background p-8 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 inset-y-0 top-8 right-8 h-[calc(100%-4rem)] w-3/4 rounded-2xl border-l data-[state=closed]:slide-out-to-right data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none data-[state=open]:slide-in-from-right sm:max-w-xl overflow-y-auto">
         <div className="flex flex-col space-y-2 mb-8 text-center sm:text-left">
           <h2 className="text-lg font-semibold text-foreground">Report - {reportChangeFailureRateData !== null && format(new Date(reportChangeFailureRateData?.activeLabel), "MMM d, y")}</h2>
           <p className="text-sm text-muted-foreground">Detailed application report and analysis for this day</p>
@@ -44,7 +45,7 @@ export const ChangeFailureRateReport = ({ reportChangeFailureRateData, showRepor
         )}
         <div className="mb-8">
           <h3 className="mb-2 text-md font-semibold text-foreground">Details</h3>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-2 mb-4">
             {reportChangeFailureRateData !== null && reportChangeFailureRateData?.activePayload.map((data, index) => (
               <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl" key={index}>
                 <div className="text-xs text-neutral-600 dark:text-neutral-400"><span className="inline-block w-2 h-2 mr-2 rounded-full" style={{ backgroundColor: data.color }}></span>{toSentence(data.name)}</div>
@@ -52,6 +53,49 @@ export const ChangeFailureRateReport = ({ reportChangeFailureRateData, showRepor
               </div>
             ))}
           </div>
+          <Table>
+            <TableHeader>
+              <TableRow className="border-primary">
+                <TableHead>Deployment</TableHead>
+                <TableHead>Result</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium truncate">FWuNp6oDwF27WiYD7FsjmZmXdA1A</TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                    <span>Success</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium truncate">HUJn6HHjuLsw7CcLEFJwaB4XQNnE</TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                    <span>Error</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium truncate">HyipXu9qHywVUsa9CTeVxa4AYAhd</TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                    <span>Error</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+            <TableFooter className="bg-transparent border-t border-primary text-primary">
+              <TableRow className="border-0">
+                <TableCell></TableCell>
+                <TableCell>33%</TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
         </div>
         <div>
           <h3 className="flex items-center mb-2 text-md font-semibold text-foreground">Analysis <Badge className="ml-1 font-bold">AI</Badge></h3>
