@@ -43,7 +43,7 @@ export function DateRangeSelector() {
 
   return (
     <div className="flex items-center gap-4">
-      <Badge variant="outline">Custom</Badge>
+      {/* <Badge variant="outline">Custom</Badge> */}
       <Popover>
         <PopoverTrigger asChild>
           <Button id="date" variant={"outline"} className={cn("w-[240px] justify-start text-left font-normal rounded-full", !date && "text-muted-foreground")}>

@@ -7,7 +7,7 @@ export function DeploymentFrequencyRating({ chartMean, props }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="gap-2 rounded-full">
+        <Button variant="outline" className="gap-2 h-fit rounded-full">
           {chartMean >= 2 && <><span className="inline-block w-2 h-2 rounded-full bg-green-500"></span><span>Elite</span></>}
           {chartMean < 2 && chartMean >= 0.14285714285 && <><span className="inline-block w-2 h-2 rounded-full bg-blue-500"></span><span>Strong</span></>}
           {chartMean < 0.14285714285 && chartMean >= 0.03571428570 && <><span className="inline-block w-2 h-2 rounded-full bg-yellow-500"></span><span>Fair</span></>}

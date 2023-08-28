@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${red_hat_display.variable} ${red_hat_text.variable}`} suppressHydrationWarning>
       <Provider>
-        <body className="overflow-y-hidden dark:bg-black dark:text-white">
+        <body className="dark:bg-black dark:text-white">
           <ThemeProvider attribute="class" enableSystem>
             {children}
           </ThemeProvider>
