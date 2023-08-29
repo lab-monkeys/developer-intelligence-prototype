@@ -3,15 +3,8 @@
 import { useState } from 'react'
 import { format } from 'date-fns'
 import { useTheme } from "next-themes"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label, ReferenceLine } from 'recharts'
-import { MoveRight, TrendingUp, TrendingDown, XCircle, AlertTriangle } from 'lucide-react'
-import { InfoTooltip } from '@/components/info-tooltip'
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Area, Line, ReferenceLine } from 'recharts'
 import { ChangeFailureRateTooltip } from './tooltip'
-import { ChangeFailureRateRating } from './rating'
-import { ChangeFailureRateOptions } from './options'
-import { ChangeFailureRateReport } from './report'
 
 const dateFormatter = date => {
   return format(new Date(date), "MMM d")

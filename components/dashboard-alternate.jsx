@@ -3,33 +3,16 @@
 import { useState } from 'react'
 import { ApplicationSelector } from '@/components/application-selector'
 import { DateRangeSelector } from '@/components/date-range-selector'
-import { LeadTimeForChangeChart } from '@/components/lead-time-for-change/chart'
-import { DeploymentFrequencyChart } from '@/components/deployment-frequency/chart'
-import { ChangeFailureRateChart } from '@/components/change-failure-rate/chart'
-import { MeanTimeToRecoveryChart } from '@/components/mean-time-to-recovery/chart'
-import { Rocket, Clock4, XCircle, PackageCheck, TrendingDown, LayoutGrid, TableIcon } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
+import { LayoutGrid, TableIcon } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { InfoTooltip } from '@/components/info-tooltip'
 
-import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend, Area, Line, Label, ReferenceLine } from 'recharts'
 import { IsolatedDeploymentFrequencyChart } from '@/components/deployment-frequency/iso-chart'
 import { IsolatedLeadTimeForChangeChart } from '@/components/lead-time-for-change/iso-chart'
 import { IsolatedChangeFailureRateChart } from '@/components/change-failure-rate/iso-chart'
@@ -172,14 +155,6 @@ export function Dashboard({ data }) {
           </Tabs>
         </CardContent>
       </Card>
-
-
-      {/* <div className="h-full grid grid-cols-2 grid-rows-2 gap-8 mt-8">
-        <DeploymentFrequencyChart data={dataDeploymentFrequency} />
-        <LeadTimeForChangeChart data={dataLeadTimeForChange} />
-        <ChangeFailureRateChart data={dataChangeFailureRate} />
-        <MeanTimeToRecoveryChart data={dataMeanTimeToRecovery} />
-      </div> */}
     </main>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts'
+import { AreaChart, Area, ResponsiveContainer, ReferenceLine } from 'recharts'
 import { useTheme } from "next-themes"
 
 export function ScorecardTrend({ data }) {
