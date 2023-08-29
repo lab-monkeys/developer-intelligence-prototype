@@ -31,7 +31,7 @@ export function DeploymentFrequencyTabTrigger({ data }) {
     <>
       <div className="flex items-center justify-between w-full mb-2">
         <Rocket className="w-6 h-6 stroke-blue-500" />
-        {showAnomalyWarning && <Badge className="text-orange-600 border-orange-600" variant="outline">Anomaly detected</Badge>}
+        {showAnomalyWarning && <Badge className="text-orange-700 bg-orange-50 border-orange-700 dark:text-orange-400 dark:bg-orange-950 dark:border-orange-400" variant="outline">Anomaly detected</Badge>}
       </div>
       <h2 className="flex items-center gap-2">
         <span className="font-semibold text-base dark:text-white">Deployment frequency</span>
