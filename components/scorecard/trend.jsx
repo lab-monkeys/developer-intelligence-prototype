@@ -1,6 +1,6 @@
 'use client'
 
-import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts'
 import { useTheme } from "next-themes"
 
 export function ScorecardTrend({ data }) {
@@ -17,6 +17,9 @@ export function ScorecardTrend({ data }) {
               <stop offset="95%" stopColor={resolvedTheme === 'dark' ? "#172554" : "#eff6ff"} stopOpacity={0.25} />
             </linearGradient>
           </defs>
+          <ReferenceLine y={100} stroke={resolvedTheme === 'dark' ? "#1d4ed8" : "#93c5fd"} strokeDasharray="2 2" />
+          <ReferenceLine y={50} stroke={resolvedTheme === 'dark' ? "#1d4ed8" : "#93c5fd"} strokeDasharray="2 2" />
+          <ReferenceLine y={0} stroke={resolvedTheme === 'dark' ? "#1d4ed8" : "#93c5fd"} strokeDasharray="2 2" />
           <Area type="monotone" dataKey="projected" stroke="#3b82f6" strokeWidth={2} strokeDasharray="4 4" fill="none" />
           <Area type="monotone" dataKey="score" stroke="#3b82f6" strokeWidth={2} fill="url(#colorUv)" />
         </AreaChart>
