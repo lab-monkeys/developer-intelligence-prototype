@@ -86,7 +86,7 @@ export function Dashboard({ data }) {
       </div>
 
 
-      <Card className="flex flex-col h-64">
+      <Card className="flex flex-col min-h-64">
         <CardHeader>
           <CardTitle className="dark:text-white">Software delivery performance</CardTitle>
           <CardDescription>Summary of how your application is performing</CardDescription>
