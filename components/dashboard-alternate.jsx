@@ -128,7 +128,7 @@ export function Dashboard({ data }) {
               <div className="mt-8">
                 <h2 className="flex items-center gap-2 mb-4 font-semibold dark:text-white">
                   <TableIcon />
-                  List of deployments
+                  Deployments
                 </h2>
                 <DeploymentFrequencyTable />
               </div>
@@ -140,7 +140,7 @@ export function Dashboard({ data }) {
               <div className="mt-8">
                 <h2 className="flex items-center gap-2 mb-4 font-semibold dark:text-white">
                   <TableIcon />
-                  List of pull requests
+                  Pull requests
                 </h2>
                 <LeadTimeForChangeTable />
               </div>
@@ -152,7 +152,7 @@ export function Dashboard({ data }) {
               <div className="mt-8">
                 <h2 className="flex items-center gap-2 mb-4 font-semibold dark:text-white">
                   <TableIcon />
-                  List of deployments
+                  Failed deployments
                 </h2>
                 <ChangeFailureRateTable />
               </div>
@@ -164,7 +164,7 @@ export function Dashboard({ data }) {
               <div className="mt-8">
                 <h2 className="flex items-center gap-2 mb-4 font-semibold dark:text-white">
                   <TableIcon />
-                  List of pull requests
+                  Pull requests
                 </h2>
                 <MeanTimeToRecoveryTable />
               </div>

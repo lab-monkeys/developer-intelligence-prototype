@@ -44,7 +44,7 @@ export function ChangeFailureRateTable({ data }) {
               Jul 26, 2023
             </div>
           </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
+          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-rose-500 rounded-full"></div> Error</div></TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">
@@ -67,7 +67,7 @@ export function ChangeFailureRateTable({ data }) {
               Jul 26, 2023
             </div>
           </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
+          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-rose-500 rounded-full"></div> Error</div></TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">
@@ -90,7 +90,7 @@ export function ChangeFailureRateTable({ data }) {
               Jul 26, 2023
             </div>
           </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
+          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-rose-500 rounded-full"></div> Error</div></TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">
@@ -113,7 +113,7 @@ export function ChangeFailureRateTable({ data }) {
               Jul 26, 2023
             </div>
           </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
+          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-rose-500 rounded-full"></div> Error</div></TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">
@@ -136,7 +136,7 @@ export function ChangeFailureRateTable({ data }) {
               Jul 26, 2023
             </div>
           </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
+          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-rose-500 rounded-full"></div> Error</div></TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">
@@ -159,7 +159,7 @@ export function ChangeFailureRateTable({ data }) {
               Jul 26, 2023
             </div>
           </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
+          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-rose-500 rounded-full"></div> Error</div></TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">
@@ -182,7 +182,7 @@ export function ChangeFailureRateTable({ data }) {
               Jul 26, 2023
             </div>
           </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
+          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-rose-500 rounded-full"></div> Error</div></TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">
@@ -205,7 +205,7 @@ export function ChangeFailureRateTable({ data }) {
               Jul 26, 2023
             </div>
           </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
+          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-rose-500 rounded-full"></div> Error</div></TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">
@@ -228,7 +228,7 @@ export function ChangeFailureRateTable({ data }) {
               Jul 26, 2023
             </div>
           </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
+          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-rose-500 rounded-full"></div> Error</div></TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">
@@ -251,7 +251,7 @@ export function ChangeFailureRateTable({ data }) {
               Jul 26, 2023
             </div>
           </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
+          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-rose-500 rounded-full"></div> Error</div></TableCell>
         </TableRow>
       </TableBody>
     </Table>
