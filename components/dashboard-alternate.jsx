@@ -95,7 +95,7 @@ export function Dashboard({ data }) {
           <div className="h-full p-6 bg-blue-500 rounded-xl dark:bg-blue-500 text-white">
             <div className="relative w-full h-full"><ScorecardScore data={dataScorecard} /></div>
           </div>
-          <div className="h-full p-6 bg-blue-50 rounded-xl dark:bg-blue-950"><ScorecardTrend data={dataScorecard} /></div>
+          <div className="h-full p-6 bg-blue-50 rounded-xl dark:bg-blue-950/50"><ScorecardTrend data={dataScorecard} /></div>
           <div className="flex items-center h-full p-6 col-span-2 bg-neutral-50 rounded-xl dark:bg-neutral-900"><ScorecardAnalysis data={dataScorecard} /></div>
         </CardContent>
       </Card>
