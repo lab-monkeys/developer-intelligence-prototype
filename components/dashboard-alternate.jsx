@@ -31,12 +31,12 @@ import { ScorecardScore } from './scorecard/score'
 import { ScorecardAnalysis } from './scorecard/analysis'
 import { ScorecardTrend } from './scorecard/trend'
 import { MeanTimeToRecoveryTabTrigger } from './mean-time-to-recovery/tab-trigger'
+import { getApps, getData } from '../app/api/pelorus-api'
 
-
-export function Dashboard({ data }) {
+export function Dashboard({ data, appList }) {
 
   const applicationsList = data.applications
-  const [activeApplication, setActiveApplication] = useState(applicationsList[0].id)
+  const [activeApplication, setActiveApplication] = useState(appList[0].app)
   const [activeDateRange, setActiveDateRange] = useState('')
 
   const [dataScorecard, setDataScorecard] = useState(applicationsList[0].scorecard[0])
@@ -63,7 +63,7 @@ export function Dashboard({ data }) {
         </div>
 
         <div className="flex justify-end items-center gap-4">
-          <ApplicationSelector applications={applicationsList} activeApplication={activeApplication} changeActiveApplication={changeActiveApplication} />
+          <ApplicationSelector applications={appList} activeApplication={activeApplication} changeActiveApplication={changeActiveApplication} />
           <DateRangeSelector activeDateRange={activeDateRange} />
         </div>
       </div>
@@ -89,19 +89,19 @@ export function Dashboard({ data }) {
           <CardDescription>Key metrics that impact software delivery performance</CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          <Tabs defaultValue="dora-df" className="">
+          <Tabs defaultValue="dora-ltfc" className="">
             <TabsList className="justify-start w-full h-fit p-0 rounded-none">
-              <TabsTrigger value="dora-df" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-blue-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <DeploymentFrequencyTabTrigger data={dataDeploymentFrequency} />
-              </TabsTrigger>
               <TabsTrigger value="dora-ltfc" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-violet-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
                 <LeadTimeForChangeTabTrigger data={dataLeadTimeForChange} />
               </TabsTrigger>
-              <TabsTrigger value="dora-cfr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-rose-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <ChangeFailureRateTabTrigger data={dataChangeFailureRate} />
+              <TabsTrigger value="dora-df" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-blue-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
+                <DeploymentFrequencyTabTrigger data={dataDeploymentFrequency} />
               </TabsTrigger>
               <TabsTrigger value="dora-mttr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-emerald-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
                 <MeanTimeToRecoveryTabTrigger data={dataMeanTimeToRecovery} />
+              </TabsTrigger>
+              <TabsTrigger value="dora-cfr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-rose-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
+                <ChangeFailureRateTabTrigger data={dataChangeFailureRate} />
               </TabsTrigger>
             </TabsList>
             <TabsContent value="dora-df" className="p-6 mt-8">

@@ -1,3 +1,0 @@
-interface Application {
-    app: string;
-}
