@@ -4,8 +4,9 @@ import { Clock4, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { LeadTimeForChangeRating } from './rating'
+import { getLTFC } from '@/app/api/pelorus-api'
 
-export function LeadTimeForChangeTabTrigger({ data }) {
+export function LeadTimeForChangeTabTrigger({ data, appName }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -19,7 +20,7 @@ export function LeadTimeForChangeTabTrigger({ data }) {
     return element.rollingAverage
   })
 
-  const chartMean = calculateMean(averages)
+  const chartMean = getLTFC( { appName } ).ltfc
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ApplicationSelector } from '@/components/application-selector'
+import { AppSelector } from '@/components/app-selector'
 import { DateRangeSelector } from '@/components/date-range-selector'
 import { LayoutGrid, TableIcon } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -31,12 +32,13 @@ import { ScorecardScore } from './scorecard/score'
 import { ScorecardAnalysis } from './scorecard/analysis'
 import { ScorecardTrend } from './scorecard/trend'
 import { MeanTimeToRecoveryTabTrigger } from './mean-time-to-recovery/tab-trigger'
-import { getApps, getData } from '../app/api/pelorus-api'
+import { getApps, getLTFC, getDF, getData } from '../app/api/pelorus-api'
 
 export function Dashboard({ data, appList }) {
 
   const applicationsList = data.applications
-  const [activeApplication, setActiveApplication] = useState(appList[0].app)
+  const [activeApp, setActiveApp] = useState( appList[0].app )
+  const [activeApplication, setActiveApplication] = useState(applicationsList[0].id)
   const [activeDateRange, setActiveDateRange] = useState('')
 
   const [dataScorecard, setDataScorecard] = useState(applicationsList[0].scorecard[0])
@@ -44,6 +46,10 @@ export function Dashboard({ data, appList }) {
   const [dataLeadTimeForChange, setDataLeadTimeForChange] = useState(applicationsList[0].metrics[2].data)
   const [dataChangeFailureRate, setDataChangeFailureRate] = useState(applicationsList[0].metrics[0].data)
   const [dataMeanTimeToRecovery, setDataMeanTimeToRecovery] = useState(applicationsList[0].metrics[3].data)
+
+  function changeActiveApp(app) {
+    setActiveApp(app)
+  }
 
   function changeActiveApplication(id) {
     setActiveApplication(id)
@@ -63,7 +69,8 @@ export function Dashboard({ data, appList }) {
         </div>
 
         <div className="flex justify-end items-center gap-4">
-          <ApplicationSelector applications={appList} activeApplication={activeApplication} changeActiveApplication={changeActiveApplication} />
+          <AppSelector applications={appList} activeApplication={activeApp} changeActiveApplication={changeActiveApp} />
+          <ApplicationSelector applications={applicationsList} activeApplication={activeApplication} changeActiveApplication={changeActiveApplication} />
           <DateRangeSelector activeDateRange={activeDateRange} />
         </div>
       </div>
@@ -92,7 +99,7 @@ export function Dashboard({ data, appList }) {
           <Tabs defaultValue="dora-ltfc" className="">
             <TabsList className="justify-start w-full h-fit p-0 rounded-none">
               <TabsTrigger value="dora-ltfc" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-violet-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <LeadTimeForChangeTabTrigger data={dataLeadTimeForChange} />
+                <LeadTimeForChangeTabTrigger data={dataLeadTimeForChange} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-df" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-blue-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
                 <DeploymentFrequencyTabTrigger data={dataDeploymentFrequency} />
