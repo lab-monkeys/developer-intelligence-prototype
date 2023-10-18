@@ -4,9 +4,9 @@ import { Rocket, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { DeploymentFrequencyRating } from '@/components/deployment-frequency/rating'
-import { getDF } from '@/app/api/pelorus-api'
+import { useState } from "react"
 
-export function DeploymentFrequencyTabTrigger({ data, dora }) {
+export function DeploymentFrequencyTabTrigger({ data, appName }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -20,7 +20,9 @@ export function DeploymentFrequencyTabTrigger({ data, dora }) {
     return element.rollingAverage
   })
 
-  const chartMean = dora.df
+  const [response, setResponse] = useState('')
+  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/deployment_frequency/${appName}?range=1w`).then((test) => test.json()).then((data) => {setResponse(data)}).catch((error) => { console.log(error) })
+  const chartMean = response.df
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {

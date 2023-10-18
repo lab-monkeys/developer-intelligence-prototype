@@ -4,9 +4,9 @@ import { PackageCheck, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { MeanTimeToRecoveryRating } from './rating'
-import { getMTTR } from '@/app/api/pelorus-api'
+import { useState } from "react"
 
-export function MeanTimeToRecoveryTabTrigger({ data, dora }) {
+export function MeanTimeToRecoveryTabTrigger({ data, appName }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -20,7 +20,9 @@ export function MeanTimeToRecoveryTabTrigger({ data, dora }) {
     return element.rollingAverage
   })
 
-  const chartMean = dora.mttr / 86400
+  const [response, setResponse] = useState('')
+  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/mean_time_to_restore/${appName}?range=1w`).then((test) => test.json()).then((data) => {setResponse(data)}).catch((error) => { console.log(error) })
+  const chartMean = response.mttr / 86400
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {

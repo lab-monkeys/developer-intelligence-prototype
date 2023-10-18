@@ -4,9 +4,9 @@ import { Clock4, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { LeadTimeForChangeRating } from './rating'
-import { getLTFC } from '@/app/api/pelorus-api'
+import { useState } from "react"
 
-export function LeadTimeForChangeTabTrigger({ data, dora }) {
+export function LeadTimeForChangeTabTrigger({ data, appName }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -20,7 +20,9 @@ export function LeadTimeForChangeTabTrigger({ data, dora }) {
     return element.rollingAverage
   })
 
-  const chartMean = dora.ltfc / 86400
+  const [response, setResponse] = useState('')
+  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}?range=1w`).then((test) => test.json()).then((data) => {setResponse(data)}).catch((error) => { console.log(error) })
+  const chartMean = response.ltfc / 86400
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {

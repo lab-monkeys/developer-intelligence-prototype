@@ -32,11 +32,9 @@ import { ScorecardScore } from './scorecard/score'
 import { ScorecardAnalysis } from './scorecard/analysis'
 import { ScorecardTrend } from './scorecard/trend'
 import { MeanTimeToRecoveryTabTrigger } from './mean-time-to-recovery/tab-trigger'
-import { getCFR, getDF, getLTFC, getMTTR } from '@/app/api/pelorus-api'
 
 export function Dashboard({ data, appList }) {
 
-  const [dora, setDora] = useState({mttr: 0, cfr: 0, df: 0, ltfc: 0})
   const applicationsList = data.applications
   const [activeApp, setActiveApp] = useState( appList[0].app )
   const [activeApplication, setActiveApplication] = useState(applicationsList[0].id)
@@ -46,19 +44,9 @@ export function Dashboard({ data, appList }) {
   const [dataLeadTimeForChange, setDataLeadTimeForChange] = useState(applicationsList[0].metrics[2].data)
   const [dataChangeFailureRate, setDataChangeFailureRate] = useState(applicationsList[0].metrics[0].data)
   const [dataMeanTimeToRecovery, setDataMeanTimeToRecovery] = useState(applicationsList[0].metrics[3].data)
-  const [leadTimeForChange, setLeadTimeForChange] = useState( dora.ltfc )
-
-  // useEffect(() => {getCFR(activeApp).then((data) => {dora.cfr = data.cfr})}, [])
 
   function changeActiveApp(app) {
-    // const new_dora = {mttr: 0, cfr: 0, df: 0, ltfc: 0}
-    console.log(app)
     setActiveApp(app)
-    // getCFR(app).then((data) => {dora.cfr = data.cfr})
-    // getDF(app).then((data) => {dora.df = data.df})
-    // getMTTR(app).then((data) => {dora.mttr = data.mttr})
-    // getLTFC(app).then((data) => {dora.ltfc = data.ltfc})
-    // setDora(dora)
   }
 
   function changeActiveApplication(id) {
@@ -109,13 +97,13 @@ export function Dashboard({ data, appList }) {
           <Tabs defaultValue="dora-ltfc" className="">
             <TabsList className="justify-start w-full h-fit p-0 rounded-none">
               <TabsTrigger value="dora-ltfc" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-violet-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <LeadTimeForChangeTabTrigger data={dataLeadTimeForChange} dora={dora} />
+                <LeadTimeForChangeTabTrigger data={dataLeadTimeForChange} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-df" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-blue-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <DeploymentFrequencyTabTrigger data={dataDeploymentFrequency} dora={dora} />
+                <DeploymentFrequencyTabTrigger data={dataDeploymentFrequency} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-mttr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-emerald-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <MeanTimeToRecoveryTabTrigger data={dataMeanTimeToRecovery} dora={dora} />
+                <MeanTimeToRecoveryTabTrigger data={dataMeanTimeToRecovery} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-cfr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-rose-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
                 <ChangeFailureRateTabTrigger data={dataChangeFailureRate} appName={activeApp} />
