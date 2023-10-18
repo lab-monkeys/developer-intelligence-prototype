@@ -4,8 +4,9 @@ import { XCircle, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { ChangeFailureRateRating } from './rating'
+import { getCFR } from '@/app/api/pelorus-api'
 
-export function ChangeFailureRateTabTrigger({ data }) {
+export function ChangeFailureRateTabTrigger({ data, appName }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -19,7 +20,8 @@ export function ChangeFailureRateTabTrigger({ data }) {
     return element.rollingAverage
   })
 
-  const chartMean = calculateMean(averages)
+  const response = getCFR( { appName } )
+  const chartMean = response.cfr * 100
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {

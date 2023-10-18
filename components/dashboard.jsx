@@ -69,7 +69,7 @@ export function Dashboard({ data, appList }) {
         </div>
 
         <div className="flex justify-end items-center gap-4">
-          <AppSelector applications={appList} activeApplication={activeApp} changeActiveApplication={changeActiveApp} />
+          <AppSelector appList={appList} activeApp={activeApp} changeActiveApp={changeActiveApp} />
           <ApplicationSelector applications={applicationsList} activeApplication={activeApplication} changeActiveApplication={changeActiveApplication} />
           <DateRangeSelector activeDateRange={activeDateRange} />
         </div>
@@ -102,13 +102,13 @@ export function Dashboard({ data, appList }) {
                 <LeadTimeForChangeTabTrigger data={dataLeadTimeForChange} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-df" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-blue-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <DeploymentFrequencyTabTrigger data={dataDeploymentFrequency} />
+                <DeploymentFrequencyTabTrigger data={dataDeploymentFrequency} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-mttr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-emerald-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <MeanTimeToRecoveryTabTrigger data={dataMeanTimeToRecovery} />
+                <MeanTimeToRecoveryTabTrigger data={dataMeanTimeToRecovery} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-cfr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-rose-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <ChangeFailureRateTabTrigger data={dataChangeFailureRate} />
+                <ChangeFailureRateTabTrigger data={dataChangeFailureRate} appName={activeApp} />
               </TabsTrigger>
             </TabsList>
             <TabsContent value="dora-df" className="p-6 mt-8">

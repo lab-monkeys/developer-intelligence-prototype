@@ -20,7 +20,8 @@ export function LeadTimeForChangeTabTrigger({ data, appName }) {
     return element.rollingAverage
   })
 
-  const chartMean = getLTFC( { appName } ).ltfc
+  const response = getLTFC( { appName } )
+  const chartMean = response.ltfc / 86400
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {

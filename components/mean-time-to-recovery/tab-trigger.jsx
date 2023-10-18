@@ -4,8 +4,9 @@ import { PackageCheck, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { MeanTimeToRecoveryRating } from './rating'
+import { getMTTR } from '@/app/api/pelorus-api'
 
-export function MeanTimeToRecoveryTabTrigger({ data }) {
+export function MeanTimeToRecoveryTabTrigger({ data, appName }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -19,7 +20,8 @@ export function MeanTimeToRecoveryTabTrigger({ data }) {
     return element.rollingAverage
   })
 
-  const chartMean = calculateMean(averages)
+  const response = getMTTR( { appName } )
+  const chartMean = response.mttr / 86400
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {

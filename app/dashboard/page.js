@@ -9,7 +9,7 @@ import { AppIcon } from '@/components/app-icon'
 import { Dashboard } from '@/components/dashboard'
 import { Cog, FileText, LayoutGrid, Users, Search, Bell, GitBranch } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { getApps, getData } from '../api/pelorus-api'
+import { getApps, getData } from '../api/old-api'
 
 export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'

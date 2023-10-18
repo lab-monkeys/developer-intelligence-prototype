@@ -4,8 +4,9 @@ import { Rocket, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { DeploymentFrequencyRating } from '@/components/deployment-frequency/rating'
+import { getDF } from '@/app/api/pelorus-api'
 
-export function DeploymentFrequencyTabTrigger({ data }) {
+export function DeploymentFrequencyTabTrigger({ data, appName }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -19,7 +20,8 @@ export function DeploymentFrequencyTabTrigger({ data }) {
     return element.rollingAverage
   })
 
-  const chartMean = calculateMean(averages)
+  const response = getDF( { appName } )
+  const chartMean = response.df
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {

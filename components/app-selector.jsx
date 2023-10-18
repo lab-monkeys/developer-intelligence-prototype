@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
-export function AppSelector({ applications, activeApplication, changeActiveApplication }) {
+export function AppSelector({ appList, activeApp, changeActiveApp }) {
 
   const [open, setOpen] = useState(false)
 
@@ -17,8 +17,8 @@ export function AppSelector({ applications, activeApplication, changeActiveAppli
         <Button variant="outline" role="combobox" aria-expanded={open} className="w-80 justify-between rounded-full">
           <div className="flex items-center">
             <Box className="mr-2 w-4 h-4" />
-            {activeApplication && applications.find((application) => application.app === activeApplication)?.app}
-            {!activeApplication && 'Select application...'}
+            {activeApp && appList.find((application) => application.app === activeApp)?.app}
+            {!activeApp && 'Select application...'}
           </div>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -28,16 +28,16 @@ export function AppSelector({ applications, activeApplication, changeActiveAppli
           <CommandInput placeholder="Search application..." />
           <CommandEmpty>No application found.</CommandEmpty>
           <CommandGroup>
-            {applications.map((application) => (
+            {appList.map((application) => (
               <CommandItem className="flex items-center justify-between" key={application.app} onSelect={(currentValue) => {
-                changeActiveApplication(currentValue)
+                changeActiveApp(currentValue)
                 setOpen(false)
               }}>
                 <div className="flex items-center">
-                  <Box className={cn("mr-2 w-4 h-4", application.app === activeApplication ? "opacity-100" : "opacity-40")} />
-                  <span className={`${activeApplication === application.app ? 'font-semibold' : 'font-base'}`}>{application.app}</span>
+                  <Box className={cn("mr-2 w-4 h-4", application.app === activeApp ? "opacity-100" : "opacity-40")} />
+                  <span className={`${activeApp === application.app ? 'font-semibold' : 'font-base'}`}>{application.app}</span>
                 </div>
-                <Check className={cn("mr-2 h-4 w-4", activeApplication === application.app ? "opacity-100" : "opacity-0")} />
+                <Check className={cn("mr-2 h-4 w-4", activeApp === application.app ? "opacity-100" : "opacity-0")} />
               </CommandItem>
             ))}
           </CommandGroup>
