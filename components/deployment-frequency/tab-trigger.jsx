@@ -6,7 +6,7 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { DeploymentFrequencyRating } from '@/components/deployment-frequency/rating'
 import { getDF } from '@/app/api/pelorus-api'
 
-export function DeploymentFrequencyTabTrigger({ data, appName }) {
+export function DeploymentFrequencyTabTrigger({ data, dora }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -20,8 +20,7 @@ export function DeploymentFrequencyTabTrigger({ data, appName }) {
     return element.rollingAverage
   })
 
-  const response = getDF( { appName } )
-  const chartMean = response.df
+  const chartMean = dora.df
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {

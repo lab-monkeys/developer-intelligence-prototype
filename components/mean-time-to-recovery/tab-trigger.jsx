@@ -6,7 +6,7 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { MeanTimeToRecoveryRating } from './rating'
 import { getMTTR } from '@/app/api/pelorus-api'
 
-export function MeanTimeToRecoveryTabTrigger({ data, appName }) {
+export function MeanTimeToRecoveryTabTrigger({ data, dora }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -20,8 +20,7 @@ export function MeanTimeToRecoveryTabTrigger({ data, appName }) {
     return element.rollingAverage
   })
 
-  const response = getMTTR( { appName } )
-  const chartMean = response.mttr / 86400
+  const chartMean = dora.mttr / 86400
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {

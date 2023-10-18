@@ -6,7 +6,7 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { LeadTimeForChangeRating } from './rating'
 import { getLTFC } from '@/app/api/pelorus-api'
 
-export function LeadTimeForChangeTabTrigger({ data, appName }) {
+export function LeadTimeForChangeTabTrigger({ data, dora }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -20,8 +20,7 @@ export function LeadTimeForChangeTabTrigger({ data, appName }) {
     return element.rollingAverage
   })
 
-  const response = getLTFC( { appName } )
-  const chartMean = response.ltfc / 86400
+  const chartMean = dora.ltfc / 86400
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {

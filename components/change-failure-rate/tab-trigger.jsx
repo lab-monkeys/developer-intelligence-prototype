@@ -4,7 +4,7 @@ import { XCircle, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { ChangeFailureRateRating } from './rating'
-import { getCFR } from '@/app/api/pelorus-api'
+import { useState, useEffect } from "react"
 
 export function ChangeFailureRateTabTrigger({ data, appName }) {
 
@@ -20,7 +20,10 @@ export function ChangeFailureRateTabTrigger({ data, appName }) {
     return element.rollingAverage
   })
 
-  const response = getCFR( { appName } )
+  const [response, setResponse] = useState('')
+  useEffect(() => {
+  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/change_failure_rate/${appName}?range=1w`).then((test) => test.json()).then((data) => {setResponse(data)}).catch((error) => { console.log(error) })
+  }, []);
   const chartMean = response.cfr * 100
 
   // Anomaly detection
