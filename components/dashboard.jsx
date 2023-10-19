@@ -45,10 +45,6 @@ export function Dashboard({ data, appList }) {
   const [dataChangeFailureRate, setDataChangeFailureRate] = useState(applicationsList[0].metrics[0].data)
   const [dataMeanTimeToRecovery, setDataMeanTimeToRecovery] = useState(applicationsList[0].metrics[3].data)
 
-  function changeActiveApp(app) {
-    setActiveApp(app)
-  }
-
   function changeActiveApplication(id) {
     setActiveApplication(id)
     setDataScorecard(applicationsList.find((application) => application.id === id)?.scorecard[0])
@@ -63,11 +59,11 @@ export function Dashboard({ data, appList }) {
       <div className="flex items-center justify-between gap-2 py-16">
         <div className="flex items-center gap-2">
           <LayoutGrid className="w-8 h-8" />
-          <h1 className="font-bold text-2xl text-foreground">Dashboard</h1>
+          <h1 className="font-bold text-2xl text-foreground">{activeApp} Dashboard</h1>
         </div>
 
         <div className="flex justify-end items-center gap-4">
-          <AppSelector appList={appList} activeApp={activeApp} changeActiveApp={changeActiveApp} />
+          <AppSelector appList={appList} activeApp={activeApp} setActiveApp={setActiveApp} />
           <ApplicationSelector applications={applicationsList} activeApplication={activeApplication} changeActiveApplication={changeActiveApplication} />
           <DateRangeSelector activeDateRange={activeDateRange} />
         </div>
