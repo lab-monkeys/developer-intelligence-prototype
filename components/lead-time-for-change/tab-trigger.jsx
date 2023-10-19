@@ -4,7 +4,7 @@ import { Clock4, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { LeadTimeForChangeRating } from './rating'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export function LeadTimeForChangeTabTrigger({ data, appName }) {
 
@@ -21,7 +21,20 @@ export function LeadTimeForChangeTabTrigger({ data, appName }) {
   })
 
   const [response, setResponse] = useState('')
-  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}?range=1w`).then((test) => test.json()).then((data) => {setResponse(data)}).catch((error) => { console.log(error) })
+  const [isLoading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}?range=1w`)
+      .then((test) => test.json())
+      .then((response) => {
+        setResponse(response)
+        setLoading(false)
+      })
+  }, [appName]);
+
+  if (isLoading) return <p>Loading...</p>
+  if (!response) return <p>No cfr data!</p>
+
   const chartMean = response.ltfc / 86400
 
   // Anomaly detection
@@ -37,7 +50,7 @@ export function LeadTimeForChangeTabTrigger({ data, appName }) {
         {showAnomalyWarning && <Badge className="text-orange-700 bg-orange-50 border-orange-700 dark:text-orange-400 dark:bg-orange-950 dark:border-orange-400" variant="outline">Anomaly detected</Badge>}
       </div>
       <h2 className="flex items-center gap-2">
-        <span className="font-semibold text-base dark:text-white">Lead time for change</span>
+        <span className="font-semibold text-base dark:text-white">Lead time for change ({appName})</span>
         <InfoTooltip label={'The amount of time it takes for any change to get into production'} />
       </h2>
       <div className="flex items-center justify-between w-full">

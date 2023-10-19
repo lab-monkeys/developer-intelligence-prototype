@@ -4,7 +4,7 @@ import { Rocket, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { DeploymentFrequencyRating } from '@/components/deployment-frequency/rating'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export function DeploymentFrequencyTabTrigger({ data, appName }) {
 
@@ -21,7 +21,20 @@ export function DeploymentFrequencyTabTrigger({ data, appName }) {
   })
 
   const [response, setResponse] = useState('')
-  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/deployment_frequency/${appName}?range=1w`).then((test) => test.json()).then((data) => {setResponse(data)}).catch((error) => { console.log(error) })
+  const [isLoading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/deployment_frequency/${appName}?range=1w`)
+      .then((test) => test.json())
+      .then((response) => {
+        setResponse(response)
+        setLoading(false)
+      })
+  }, [appName]);
+
+  if (isLoading) return <p>Loading...</p>
+  if (!response) return <p>No cfr data!</p>
+
   const chartMean = response.df
 
   // Anomaly detection

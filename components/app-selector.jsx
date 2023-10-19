@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
-export function AppSelector({ appList, activeApp, changeActiveApp }) {
+export function AppSelector({ appList, activeApp, setActiveApp }) {
 
   const [open, setOpen] = useState(false)
 
@@ -30,7 +30,7 @@ export function AppSelector({ appList, activeApp, changeActiveApp }) {
           <CommandGroup>
             {appList.map((application) => (
               <CommandItem className="flex items-center justify-between" key={application.app} onSelect={(currentValue) => {
-                changeActiveApp(currentValue)
+                setActiveApp(currentValue)
                 setOpen(false)
               }}>
                 <div className="flex items-center">

@@ -4,7 +4,7 @@ import { PackageCheck, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { MeanTimeToRecoveryRating } from './rating'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export function MeanTimeToRecoveryTabTrigger({ data, appName }) {
 
@@ -21,7 +21,19 @@ export function MeanTimeToRecoveryTabTrigger({ data, appName }) {
   })
 
   const [response, setResponse] = useState('')
-  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/mean_time_to_restore/${appName}?range=1w`).then((test) => test.json()).then((data) => {setResponse(data)}).catch((error) => { console.log(error) })
+  const [isLoading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/mean_time_to_restore/${appName}?range=1w`)
+      .then((test) => test.json())
+      .then((response) => {
+        setResponse(response)
+        setLoading(false)
+      })
+  }, [appName]);
+
+  if (isLoading) return <p>Loading...</p>
+  if (!response) return <p>No cfr data!</p>
   const chartMean = response.mttr / 86400
 
   // Anomaly detection
