@@ -126,7 +126,7 @@ export function Dashboard({ data, appList }) {
                   <TableIcon />
                   Pull requests
                 </h2>
-                <LeadTimeForChangeTable />
+                <LeadTimeForChangeTable appName={activeApp} />
               </div>
             </TabsContent>
             <TabsContent value="dora-cfr" className="p-6 mt-8">

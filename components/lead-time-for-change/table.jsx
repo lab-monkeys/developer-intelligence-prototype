@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import {
   Table,
   TableBody,
@@ -11,288 +12,46 @@ import {
 } from "@/components/ui/table"
 import { Calendar, GitBranch, GitCommit, Globe, Timer } from "lucide-react"
 
-export function LeadTimeForChangeTable({ data }) {
+export function LeadTimeForChangeTable({ appName }) {
+  
+  const [ltfcData, setLtfcData] = useState('')
+  useEffect(() => {
+  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=1w`)
+      .then((response) => response.json()).then((data) => data.sort((d1, d2) => (d1.timestamp > d2.timestamp) ? 1 : (d1.timestamp < d2.timestamp) ? -1 : 0 ))
+      .then((sortedData) => {
+        setLtfcData(sortedData)
+      })
+  }, [appName])
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>First commit</TableHead>
-          <TableHead>Deployment</TableHead>
+          <TableHead>Commit SHA</TableHead>
+          <TableHead>Commit Date</TableHead>
           <TableHead>Lead time</TableHead>
-          <TableHead>Status</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Feature/authentication
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <GitCommit className="w-4 h-4" /> <span className="font-medium">0577e50</span> Commit name description
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 19, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Main
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <Globe className="w-4 h-4" /> project-crimson-prototype-q6yb8whv
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 26, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Timer className="w-4 h-4" />
-              8 days
-            </div>
-          </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Feature/authentication
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <GitCommit className="w-4 h-4" /> <span className="font-medium">0577e50</span> Commit name description
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 19, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Main
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <Globe className="w-4 h-4" /> project-crimson-prototype-q6yb8whv
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 26, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Timer className="w-4 h-4" />
-              8 days
-            </div>
-          </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Feature/authentication
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <GitCommit className="w-4 h-4" /> <span className="font-medium">0577e50</span> Commit name description
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 19, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Main
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <Globe className="w-4 h-4" /> project-crimson-prototype-q6yb8whv
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 26, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Timer className="w-4 h-4" />
-              8 days
-            </div>
-          </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Feature/authentication
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <GitCommit className="w-4 h-4" /> <span className="font-medium">0577e50</span> Commit name description
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 19, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Main
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <Globe className="w-4 h-4" /> project-crimson-prototype-q6yb8whv
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 26, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Timer className="w-4 h-4" />
-              8 days
-            </div>
-          </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Feature/authentication
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <GitCommit className="w-4 h-4" /> <span className="font-medium">0577e50</span> Commit name description
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 19, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Main
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <Globe className="w-4 h-4" /> project-crimson-prototype-q6yb8whv
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 26, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Timer className="w-4 h-4" />
-              8 days
-            </div>
-          </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Feature/authentication
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <GitCommit className="w-4 h-4" /> <span className="font-medium">0577e50</span> Commit name description
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 19, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Main
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <Globe className="w-4 h-4" /> project-crimson-prototype-q6yb8whv
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 26, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Timer className="w-4 h-4" />
-              8 days
-            </div>
-          </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Feature/authentication
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <GitCommit className="w-4 h-4" /> <span className="font-medium">0577e50</span> Commit name description
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 19, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Main
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <Globe className="w-4 h-4" /> project-crimson-prototype-q6yb8whv
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 26, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Timer className="w-4 h-4" />
-              8 days
-            </div>
-          </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Feature/authentication
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <GitCommit className="w-4 h-4" /> <span className="font-medium">0577e50</span> Commit name description
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 19, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Main
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <Globe className="w-4 h-4" /> project-crimson-prototype-q6yb8whv
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 26, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Timer className="w-4 h-4" />
-              8 days
-            </div>
-          </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Feature/authentication
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <GitCommit className="w-4 h-4" /> <span className="font-medium">0577e50</span> Commit name description
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 19, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Main
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <Globe className="w-4 h-4" /> project-crimson-prototype-q6yb8whv
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 26, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Timer className="w-4 h-4" />
-              8 days
-            </div>
-          </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Feature/authentication
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <GitCommit className="w-4 h-4" /> <span className="font-medium">0577e50</span> Commit name description
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 19, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <GitBranch className="w-4 h-4" /> Main
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <Globe className="w-4 h-4" /> project-crimson-prototype-q6yb8whv
-            </div>
-            <div className="mt-2 text-neutral-700">Jul 26, 2023</div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Timer className="w-4 h-4" />
-              8 days
-            </div>
-          </TableCell>
-          <TableCell><div className="flex items-center gap-2"><div className="w-2 h-2 bg-emerald-500 rounded-full"></div> Ready</div></TableCell>
-        </TableRow>
+        {/* {ltfcData.map((ltfc) => (
+          <TableRow>
+            <TableCell>
+              <div className="flex items-center gap-2">
+                <GitBranch className="w-4 h-4" /> {ltfc.commit}
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4" /> {ltfc.timestamp}
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="flex items-center gap-2">
+                <Timer className="w-4 h-4" /> {ltfc.lead_time}
+              </div>
+            </TableCell>
+          </TableRow>
+        ))} */}
       </TableBody>
     </Table>
   )

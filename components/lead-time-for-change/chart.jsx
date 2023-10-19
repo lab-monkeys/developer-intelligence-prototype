@@ -74,7 +74,6 @@ export function LeadTimeForChangeChart( { appName } ) {
           <Line type="monotone" dataKey="lead_time" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
         </ComposedChart>
       </ResponsiveContainer>
-      {/* <LeadTimeForChangeReport reportLeadTimeForChangeData={reportLeadTimeForChangeData} showReportLeadTimeForChangeData={showReportLeadTimeForChangeData} setShowReportLeadTimeForChangeData={setShowReportLeadTimeForChangeData} /> */}
     </>
   )
 }
