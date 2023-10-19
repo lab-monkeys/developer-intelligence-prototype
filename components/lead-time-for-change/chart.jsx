@@ -39,9 +39,9 @@ export function LeadTimeForChangeChart( { appName } ) {
   const [ltfcData, setLtfcData] = useState('')
   useEffect(() => {
   fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=1w`)
-      .then((test) => test.json())
-      .then((response) => {
-        setLtfcData(response)
+      .then((response) => response.json()).then((data) => data.sort((d1, d2) => (d1.timestamp > d2.timestamp) ? 1 : (d1.timestamp < d2.timestamp) ? -1 : 0 ))
+      .then((sortedData) => {
+        setLtfcData(sortedData)
       })
   }, [appName])
 
