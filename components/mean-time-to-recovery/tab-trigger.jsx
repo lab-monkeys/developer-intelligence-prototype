@@ -20,7 +20,7 @@ export function MeanTimeToRecoveryTabTrigger({ data, appName }) {
     return element.rollingAverage
   })
 
-  const [response, setResponse] = useState('')
+  const [response, setResponse] = useState([])
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {

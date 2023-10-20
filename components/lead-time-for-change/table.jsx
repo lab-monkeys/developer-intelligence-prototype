@@ -25,7 +25,7 @@ const dayFormatter = seconds => {
 
 export function LeadTimeForChangeTable({ appName }) {
   
-  const [ltfcData, setLtfcData] = useState( [])
+  const [ltfcData, setLtfcData] = useState([])
   useEffect(() => {
   fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=1w`)
       .then((response) => response.json()).then((data) => data.sort((d1, d2) => (d1.timestamp > d2.timestamp) ? 1 : (d1.timestamp < d2.timestamp) ? -1 : 0 ))
@@ -45,7 +45,7 @@ export function LeadTimeForChangeTable({ appName }) {
       </TableHeader>
       <TableBody>
         {ltfcData.map (({ commit, timestamp, lead_time }) => (
-          <TableRow>
+          <TableRow key={commit}>
             <TableCell>
               <div className="flex items-center gap-2">
                 <GitBranch className="w-4 h-4" /> {commit}
