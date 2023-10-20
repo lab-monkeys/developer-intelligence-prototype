@@ -36,7 +36,7 @@ export function LeadTimeForChangeChart( { appName } ) {
   const strokeRollingAverage = '#8b5cf6'  // Violet 500
   const strokeGoal = '#f59e0b'            // Amber 500
 
-  const [ltfcData, setLtfcData] = useState('')
+  const [ltfcData, setLtfcData] = useState([])
   useEffect(() => {
   fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=1w`)
       .then((response) => response.json()).then((data) => data.sort((d1, d2) => (d1.timestamp > d2.timestamp) ? 1 : (d1.timestamp < d2.timestamp) ? -1 : 0 ))
