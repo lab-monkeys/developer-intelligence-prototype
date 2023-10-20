@@ -16,8 +16,8 @@ jobs:
 # application using the source to image build strategy,
 # and pushes the image to quay.io.
     env:
-      IMAGE_NAME: my-java-app
-      TAGS: v1 ${{ github.sha }}
+      IMAGE_NAME: pelorus-dashboard
+      TAGS: ${{ github.sha }}
 
     steps:
 
@@ -41,6 +41,6 @@ jobs:
         with:
           image: ${{ steps.build_image.outputs.image }}
           tags: ${{ steps.build_image.outputs.tags }}
-          registry: quay.io/${{ secrets.QUAY_USERNAME }}
+          registry: quay.io/${{ env.QUAY_NAMESPACE }}
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
