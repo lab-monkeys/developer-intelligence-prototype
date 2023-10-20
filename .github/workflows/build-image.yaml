@@ -17,7 +17,7 @@ jobs:
 # and pushes the image to quay.io.
     env:
       IMAGE_NAME: pelorus-dashboard
-      TAGS: ${{ github.sha }}
+      TAGS: dev ${{ github.sha }}
 
     steps:
 
