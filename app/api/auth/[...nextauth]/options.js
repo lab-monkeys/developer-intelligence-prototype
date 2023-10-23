@@ -9,7 +9,18 @@ export const options = {
       id: "openshift",
       name: "OpenShift",
       type: "oauth",
-      wellKnown: "https://oauth-openshift.openshift-authentication.svc.cluster.local/.well-known/openid-configuration",
+      issuer: "https://oauth-openshift.apps.sno-2.clg.lab",
+      authorization: {
+        url: "https://oauth-openshift.apps.sno-2.clg.lab/oauth/authorize",
+        params: { scope: "user:full"}
+      },
+      token: "https://oauth-openshift.apps.sno-2.clg.lab/oauth/token",
+      userinfo: "https://api.sno-2.clg.lab:6443/apis/user.openshift.io/v1/users/~",
+      async profile(profile) {
+        return {
+          id: profile.metadata.name,
+          name: profile.metadata.name
+        }},
       clientId: process.env.OPENSHIFT_ID,
       clientSecret: process.env.OPENSHIFT_SECRET
     },
