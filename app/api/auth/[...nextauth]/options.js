@@ -9,16 +9,12 @@ export const options = {
       id: "openshift",
       name: "OpenShift",
       type: "oauth",
-      // issuer: "https://oauth-openshift.apps.sno-2.clg.lab",
       issuer: process.env.OPENSHIFT_OAUTH_ISSUER_URL,
       authorization: {
-        // url: "https://oauth-openshift.apps.sno-2.clg.lab/oauth/authorize",
         url: process.env.OPENSHIFT_OAUTH_AUTH_URL,
         params: { scope: "user:full"}
       },
-      // token: "https://oauth-openshift.apps.sno-2.clg.lab/oauth/token",
       token: process.env.OPENSHIFT_OAUTH_TOKEN_URL,
-      // userinfo: "https://api.sno-2.clg.lab:6443/apis/user.openshift.io/v1/users/~",
       userinfo: process.env.OPENSHIFT_OAUTH_USERINFO_URL,
       async profile(profile) {
         return {
