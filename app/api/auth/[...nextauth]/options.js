@@ -12,7 +12,7 @@ export const options = {
       issuer: process.env.OPENSHIFT_OAUTH_ISSUER_URL,
       authorization: {
         url: process.env.OPENSHIFT_OAUTH_AUTH_URL,
-        params: { scope: "user:full"}
+        params: { scope: "user:info"}
       },
       token: process.env.OPENSHIFT_OAUTH_TOKEN_URL,
       userinfo: process.env.OPENSHIFT_OAUTH_USERINFO_URL,
