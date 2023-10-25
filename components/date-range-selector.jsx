@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { addDays, subDays, format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
-import { DateRange } from "react-day-picker"
+import { DateRange, DayPicker } from "react-day-picker"
+import 'react-day-picker/dist/style.css';
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -11,35 +12,49 @@ import { Badge } from "@/components/ui/badge"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
-export function DateRangeSelector() {
+export function getDaysBetweenDates(dateRange) {
+  let differenceInMs = dateRange?.from ? (
+    dateRange.to ? (
+      dateRange.to.getTime() - dateRange.from.getTime()
+    ) : (
+      0
+    )
+  ) : (
+    0
+  )
 
-  const [date, setDate] = useState({
-    from: new Date("June 29, 2023"),
-    to: new Date("July 26, 2023"),
-  })
-  
-  const convertMsToDays = ms => {
-    const msInOneSecond = 1000
-    const secondsInOneMinute = 60
-    const minutesInOneHour = 60
-    const hoursInOneDay = 24
+  return convertMsToDays(differenceInMs + 1)
+}
 
-    const minutesInOneDay = hoursInOneDay * minutesInOneHour
-    const secondsInOneDay = secondsInOneMinute * minutesInOneDay
-    const msInOneDay = msInOneSecond * secondsInOneDay
+function convertMsToDays(ms) {
+  const msInOneSecond = 1000
+  const secondsInOneMinute = 60
+  const minutesInOneHour = 60
+  const hoursInOneDay = 24
 
-    return Math.ceil(ms / msInOneDay)
-  }
+  const minutesInOneDay = hoursInOneDay * minutesInOneHour
+  const secondsInOneDay = secondsInOneMinute * minutesInOneDay
+  const msInOneDay = msInOneSecond * secondsInOneDay
 
-  const getDaysBetweenDates = (dateOne, dateTwo) => {
-    let differenceInMs = dateTwo.getTime() - dateOne.getTime()
+  return Math.ceil(ms / msInOneDay)
+}
 
-    if (differenceInMs < 0) {
-      differenceInMs = dateOne.getTime() - dateTwo.getTime()
-    }
 
-    return convertMsToDays(differenceInMs + 1)
-  }
+export function DateRangeSelector({date, setDate}) {
+
+  // const [date, setDate] = useState({ from: new Date(), to: subDays(new Date(), defaultDaysAgo)})
+
+  // To calculate the time difference of two dates 
+  //var Difference_In_Time = date.to.getTime() - date.from.getTime();
+      
+  // To calculate the no. of days between two dates 
+  //var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+ 
+  //To display the final no. of days (result) 
+  // console.log("Total number of days between dates  <br>"
+  //            + date.from + "<br> and <br>" 
+  //            + date.to + " is: <br> " 
+  //            + Difference_In_Days); 
 
   return (
     <div className="flex items-center gap-4">
@@ -77,10 +92,10 @@ export function DateRangeSelector() {
               <Button className="rounded-full" variant="ghost" size="sm">Last 12 months</Button>
               <Button className="rounded-full" variant="secondary" size="sm">Custom</Button>
             </div>
-            <Calendar initialFocus mode="range" defaultMonth={date?.from} toDate={new Date()} selected={date} onSelect={setDate} numberOfMonths={2} disabled />
+            <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={1} />
           </div>
           <div className="flex items-center justify-between p-4 mx-4 border-t">
-            <div className="text-sm"><strong className="font-semibold">Range:</strong> 28 days</div>
+            <div className="text-sm"><strong className="font-semibold">Range:</strong> {getDaysBetweenDates(date)} days</div>
             <div className="flex items-center gap-2">
               <Button className="rounded-full" variant="secondary">Cancel</Button>
               <Button className="rounded-full">Apply</Button>

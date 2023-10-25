@@ -5,8 +5,9 @@ import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { MeanTimeToRecoveryRating } from './rating'
 import { useState, useEffect } from "react"
+import { getDaysBetweenDates } from '@/components/date-range-selector'
 
-export function MeanTimeToRecoveryTabTrigger({ data, appName }) {
+export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -24,13 +25,13 @@ export function MeanTimeToRecoveryTabTrigger({ data, appName }) {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/mean_time_to_restore/${appName}?range=1w`)
+    fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/mean_time_to_restore/${appName}?range=${getDaysBetweenDates(dateRange)}d`)
       .then((test) => test.json())
       .then((response) => {
         setResponse(response)
         setLoading(false)
       })
-  }, [appName]);
+  }, [dateRange, appName]);
 
   if (isLoading) return <p>Loading...</p>
   if (!response) return <p>No cfr data!</p>
