@@ -55,7 +55,7 @@ export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
       </h2>
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-2">
-          <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(2)} days</strong>
+          <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(5)} days</strong>
           <Badge variant="outline" className="px-1.5 bg-emerald-50 border-0 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"><ArrowDown className="h-4 w-4 mr-1 stroke-emerald-700 dark:stroke-emerald-300" /> 16%</Badge>
         </div>
         <MeanTimeToRecoveryRating chartMean={chartMean} />
