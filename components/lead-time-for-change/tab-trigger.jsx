@@ -25,7 +25,7 @@ export function LeadTimeForChangeTabTrigger({ dateRange, data, appName }) {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}?range=${getDaysBetweenDates(dateRange)}d`)
+    fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`)
       .then((test) => test.json())
       .then((response) => {
         setResponse(response)
