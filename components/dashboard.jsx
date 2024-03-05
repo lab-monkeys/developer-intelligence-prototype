@@ -67,7 +67,7 @@ export function Dashboard({ data, appList }) {
         <div className="flex justify-end items-center gap-4">
           <AppSelector appList={appList} activeApp={activeApp} setActiveApp={setActiveApp} />
           <ApplicationSelector applications={applicationsList} activeApplication={activeApplication} changeActiveApplication={changeActiveApplication} />
-          <DateRangeSelector date={activeDateRange} setDate={setActiveDateRange} />
+          <DateRangeSelector dashDate={activeDateRange} setDashDate={setActiveDateRange} />
         </div>
       </div>
 

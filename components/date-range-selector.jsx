@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from 'react'
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 import 'react-day-picker/dist/style.css';
@@ -47,25 +48,28 @@ function isComplete(date) {
   return false
 }
 
-export function DateRangeSelector({date, setDate}) {
+export function DateRangeSelector({dashDate, setDashDate}) {
 
-  let footer = <p>Please pick the first day.</p>;
-  if (date?.from) {
-    if (!date.to) {
-      footer = <p>{format(date.from, 'PPP')}</p>;
-    } else if (date.to) {
-      footer = (
-        <p>
-          {format(date.from, 'PPP')}–{format(date.to, 'PPP')}
-        </p>
-      );
-    }
-  }
+  const [date, setDate] = useState(dashDate);
+
+
+  // let footer = <p>Please pick the first day.</p>;
+  // if (date?.from) {
+  //   if (!date.to) {
+  //     footer = <p>{format(date.from, 'PPP')}</p>;
+  //   } else if (date.to) {
+  //     footer = (
+  //       <p>
+  //         {format(date.from, 'PPP')}–{format(date.to, 'PPP')}
+  //       </p>
+  //     );
+  //   }
+  // }
 
   // This handler will prevent errors when only 'to' or 'from' are selected
-  const handleDateSelect = function (date) {
+  const handleApplyClick = function () {
     if (isComplete(date)) {
-      setDate(date)
+      setDashDate(date);
     }
   };
 
@@ -76,8 +80,8 @@ export function DateRangeSelector({date, setDate}) {
         <PopoverTrigger asChild>
           <Button id="date" variant={"outline"} className={cn("w-[240px] justify-start text-left font-normal rounded-full", !date && "text-muted-foreground")}>
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {footer}
-            {/* {date?.from ? (
+            {/* {footer} */}
+            {date?.from ? (
               date.to ? (
                 <>
                   {format(date.from, "LLL dd, y")} -{" "}
@@ -88,7 +92,7 @@ export function DateRangeSelector({date, setDate}) {
               )
             ) : (
               <span>Pick a date</span>
-            )} */}
+            )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0 mr-16 rounded-2xl" align="start">
@@ -106,13 +110,13 @@ export function DateRangeSelector({date, setDate}) {
               <Button className="rounded-full" variant="ghost" size="sm">Last 12 months</Button>
               <Button className="rounded-full" variant="secondary" size="sm">Custom</Button>
             </div> */}
-            <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={handleDateSelect} numberOfMonths={1} min={2} />
+            <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={1} min={2} />
           </div>
           <div className="flex items-center justify-between p-4 mx-4 border-t">
             <div className="text-sm"><strong className="font-semibold">Range:</strong> {getDaysBetweenDates(date)} days</div>
             <div className="flex items-center gap-2">
               <Button className="rounded-full" variant="secondary">Cancel</Button>
-              <Button className="rounded-full" onClick={setDate}>Apply</Button>
+              <Button className="rounded-full" onClick={handleApplyClick}>Apply</Button>
             </div>
           </div>
 
