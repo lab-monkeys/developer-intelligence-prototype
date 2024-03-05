@@ -5,6 +5,7 @@ import { useTheme } from "next-themes"
 import { format } from 'date-fns'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Area, Line, ReferenceLine } from 'recharts'
 import { LeadTimeForChangeTooltip } from './tooltip'
+import { getDaysBetweenDates } from '@/components/date-range-selector'
 
 
 const dateFormatter = epoch => {
@@ -17,7 +18,7 @@ const dayFormatter = seconds => {
   return days + "d"
 }
 
-export function LeadTimeForChangeChart( { appName } ) {
+export function LeadTimeForChangeChart( { dateRange, appName } ) {
 
   const { resolvedTheme } = useTheme()
   const animationDuration = 1000
@@ -38,12 +39,12 @@ export function LeadTimeForChangeChart( { appName } ) {
 
   const [ltfcData, setLtfcData] = useState([])
   useEffect(() => {
-  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=1w`)
+  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`)
       .then((response) => response.json()).then((data) => data.sort((d1, d2) => (d1.timestamp > d2.timestamp) ? 1 : (d1.timestamp < d2.timestamp) ? -1 : 0 ))
       .then((sortedData) => {
         setLtfcData(sortedData)
       })
-  }, [appName])
+  }, [dateRange, appName])
 
   // Reports
   const [reportLeadTimeForChangeData, setReportLeadTimeForChangeData] = useState(null)

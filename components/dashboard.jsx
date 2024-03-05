@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { subDays } from "date-fns"
 import { ApplicationSelector } from '@/components/application-selector'
 import { AppSelector } from '@/components/app-selector'
@@ -121,14 +121,14 @@ export function Dashboard({ data, appList }) {
             </TabsContent>
             <TabsContent value="dora-ltfc" className="p-6 mt-8">
               <div className="h-64">
-                <LeadTimeForChangeChart appName={activeApp} />
+                <LeadTimeForChangeChart dateRange={activeDateRange} appName={activeApp} />
               </div>
               <div className="mt-8">
                 <h2 className="flex items-center gap-2 mb-4 font-semibold dark:text-white">
                   <TableIcon />
                   Pull requests
                 </h2>
-                <LeadTimeForChangeTable appName={activeApp} />
+                <LeadTimeForChangeTable dateRange={activeDateRange} appName={activeApp} />
               </div>
             </TabsContent>
             <TabsContent value="dora-cfr" className="p-6 mt-8">

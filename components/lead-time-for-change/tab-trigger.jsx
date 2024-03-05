@@ -23,7 +23,6 @@ export function LeadTimeForChangeTabTrigger({ dateRange, data, appName }) {
 
   const [response, setResponse] = useState([])
   const [isLoading, setLoading] = useState(true)
-
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`)
       .then((test) => test.json())
@@ -31,7 +30,7 @@ export function LeadTimeForChangeTabTrigger({ dateRange, data, appName }) {
         setResponse(response)
         setLoading(false)
       })
-  }, [dateRange, appName]);
+  }, [dateRange, appName]);  
 
   if (isLoading) return <p>Loading...</p>
   if (!response) return <p>No cfr data!</p>

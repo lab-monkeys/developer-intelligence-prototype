@@ -1,14 +1,11 @@
 "use client"
 
-import { useState } from 'react'
-import { addDays, subDays, format } from "date-fns"
+import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
-import { DateRange, DayPicker } from "react-day-picker"
 import 'react-day-picker/dist/style.css';
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
@@ -39,22 +36,38 @@ function convertMsToDays(ms) {
   return Math.ceil(ms / msInOneDay)
 }
 
+function isComplete(date) {
+  if (date?.from) {
+    if (date.to) {
+      console.log("Date is complete")
+      return true
+    }
+  }
+  console.log("Date is not complete")
+  return false
+}
 
 export function DateRangeSelector({date, setDate}) {
 
-  // const [date, setDate] = useState({ from: new Date(), to: subDays(new Date(), defaultDaysAgo)})
+  let footer = <p>Please pick the first day.</p>;
+  if (date?.from) {
+    if (!date.to) {
+      footer = <p>{format(date.from, 'PPP')}</p>;
+    } else if (date.to) {
+      footer = (
+        <p>
+          {format(date.from, 'PPP')}–{format(date.to, 'PPP')}
+        </p>
+      );
+    }
+  }
 
-  // To calculate the time difference of two dates 
-  //var Difference_In_Time = date.to.getTime() - date.from.getTime();
-      
-  // To calculate the no. of days between two dates 
-  //var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
- 
-  //To display the final no. of days (result) 
-  // console.log("Total number of days between dates  <br>"
-  //            + date.from + "<br> and <br>" 
-  //            + date.to + " is: <br> " 
-  //            + Difference_In_Days); 
+  // This handler will prevent errors when only 'to' or 'from' are selected
+  const handleDateSelect = function (date) {
+    if (isComplete(date)) {
+      setDate(date)
+    }
+  };
 
   return (
     <div className="flex items-center gap-4">
@@ -63,7 +76,8 @@ export function DateRangeSelector({date, setDate}) {
         <PopoverTrigger asChild>
           <Button id="date" variant={"outline"} className={cn("w-[240px] justify-start text-left font-normal rounded-full", !date && "text-muted-foreground")}>
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {date?.from ? (
+            {footer}
+            {/* {date?.from ? (
               date.to ? (
                 <>
                   {format(date.from, "LLL dd, y")} -{" "}
@@ -74,13 +88,13 @@ export function DateRangeSelector({date, setDate}) {
               )
             ) : (
               <span>Pick a date</span>
-            )}
+            )} */}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0 mr-16 rounded-2xl" align="start">
 
           <div className="flex">
-            <div className="flex flex-col gap-2 p-4">
+            {/* <div className="flex flex-col gap-2 p-4">
               <Button className="rounded-full" variant="ghost" size="sm">Today</Button>
               <Button className="rounded-full" variant="ghost" size="sm">Yesterday</Button>
               <Button className="rounded-full" variant="ghost" size="sm">This week</Button>
@@ -91,14 +105,14 @@ export function DateRangeSelector({date, setDate}) {
               <Button className="rounded-full" variant="ghost" size="sm">Last 90 days</Button>
               <Button className="rounded-full" variant="ghost" size="sm">Last 12 months</Button>
               <Button className="rounded-full" variant="secondary" size="sm">Custom</Button>
-            </div>
-            <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={1} />
+            </div> */}
+            <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={handleDateSelect} numberOfMonths={1} min={2} />
           </div>
           <div className="flex items-center justify-between p-4 mx-4 border-t">
             <div className="text-sm"><strong className="font-semibold">Range:</strong> {getDaysBetweenDates(date)} days</div>
             <div className="flex items-center gap-2">
               <Button className="rounded-full" variant="secondary">Cancel</Button>
-              <Button className="rounded-full">Apply</Button>
+              <Button className="rounded-full" onClick={setDate}>Apply</Button>
             </div>
           </div>
 
