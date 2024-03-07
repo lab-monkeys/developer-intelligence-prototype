@@ -11,18 +11,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Calendar, GitBranch, GitCommit, Globe, Timer } from "lucide-react"
-import { format } from 'date-fns'
 import { getDaysBetweenDates } from '@/components/date-range-selector'
-
-const dateFormatter = epoch => {
-  const date = new Date(epoch * 1000)
-  return format(new Date(date), "MMM d")
-}
-
-const dayFormatter = seconds => {
-  const days = parseFloat(seconds / 86400).toFixed(2)
-  return days + "d"
-}
+import {dateFormatter, dayFormatter} from '@/lib/date-funcs';
 
 export function LeadTimeForChangeTable({ dateRange, appName }) {
   
