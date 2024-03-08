@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table"
 import { Orbit, FileCode, Clock } from "lucide-react"
 import useDeploymentFrequencyData from './deploymentFrequency';
-import {dateFormatter, dayFormatter} from '@/lib/date-funcs';
+import { dateFormatter } from '@/lib/date-funcs';
 
 export function DeploymentFrequencyTable({ dateRange, appName }) {
 

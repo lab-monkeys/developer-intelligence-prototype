@@ -6,16 +6,8 @@ import { format } from 'date-fns'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Area, Line, ReferenceLine } from 'recharts'
 import { DeploymentFrequencyTooltip } from './tooltip'
 import { getDaysBetweenDates } from '@/components/date-range-selector'
-
-const dateFormatter = epoch => {
-  const date = new Date(epoch * 1000)
-  return format(new Date(date), "MMM d")
-}
-
-const dayFormatter = seconds => {
-  const days = parseFloat(seconds / 86400).toFixed(2)
-  return days + "d"
-}
+import useDeploymentFrequencyData from './deploymentFrequency';
+import { dateFormatter, dayFormatter } from '@/lib/date-funcs';
 
 const calculateMean = data => {
   if (data.length < 1) {
@@ -74,15 +66,12 @@ export function DeploymentFrequencyChart({ dateRange, appName }) {
   const strokeRollingAverage = '#3b82f6'  // Blue 500
   const strokeGoal = '#f59e0b'            // Amber 500
 
-  const [dfData, setDfData] = useState([])
-  console.log(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/deployment_frequency/${appName}/data?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`)
-  useEffect(() => {
-  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/deployment_frequency/${appName}/data?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`)
-      .then((response) => response.json()).then((data) => data.sort((d1, d2) => (d1.timestamp > d2.timestamp) ? 1 : (d1.timestamp < d2.timestamp) ? -1 : 0 ))
-      .then((sortedData) => {
-        setDfData(sortedData)
-      })
-  }, [dateRange, appName])
+  const { dfData, loading } = useDeploymentFrequencyData(appName, dateRange);
+  console.log(dfData)
+
+  if (loading) {
+    return <div>Loading...</div>; // Render loading state while data is being fetched
+  }
 
   var countPerDay = deploymentsPerDay(dfData);
 
@@ -93,14 +82,14 @@ export function DeploymentFrequencyChart({ dateRange, appName }) {
 
   const chartMean = calculateMean(averages)
 
-  // Reports
-  const [reportDeploymentFrequencyData, setReportDeploymentFrequencyData] = useState(null)
-  const [showReportDeploymentFrequencyData, setShowReportDeploymentFrequencyData] = useState(false)
+  // // Reports
+  // const [reportDeploymentFrequencyData, setReportDeploymentFrequencyData] = useState(null)
+  // const [showReportDeploymentFrequencyData, setShowReportDeploymentFrequencyData] = useState(false)
 
-  function handleChartClick(event) {
-    setReportDeploymentFrequencyData(event)
-    setShowReportDeploymentFrequencyData(true)
-  }
+  // function handleChartClick(event) {
+  //   setReportDeploymentFrequencyData(event)
+  //   setShowReportDeploymentFrequencyData(true)
+  // }
 
   // // Anomaly detection
   // const showAnomalyWarning = dfData.some((day) => {
@@ -120,7 +109,7 @@ export function DeploymentFrequencyChart({ dateRange, appName }) {
   return (
     <>
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={countPerDay} margin={{ top: 0, left: 0, right: 4, bottom: 0 }} onClick={handleChartClick}>
+        <ComposedChart data={countPerDay} margin={{ top: 0, left: 0, right: 4, bottom: 0 }} /*onClick={handleChartClick}*/>
           <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
           <XAxis style={{ fontSize: '0.75rem' }} dataKey="day_epoch" axisLine={false} tickLine={false} tickFormatter={dateFormatter} />
           <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 20]} axisLine={false} tickLine={false} tickFormatter={dayFormatter} />
