@@ -5,8 +5,9 @@ import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { ChangeFailureRateRating } from './rating'
 import { useState, useEffect } from "react"
+import { getDaysBetweenDates } from '@/components/date-range-selector'
 
-export function ChangeFailureRateTabTrigger({ data, appName }) {
+export function ChangeFailureRateTabTrigger({ dateRange, data, appName }) {
 
   // Calculate the mean
   const calculateMean = data => {
@@ -24,13 +25,13 @@ export function ChangeFailureRateTabTrigger({ data, appName }) {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/change_failure_rate/${appName}?range=1w`)
+    fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/change_failure_rate/${appName}?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`)
       .then((test) => test.json())
       .then((response) => {
         setResponse(response)
         setLoading(false)
       })
-  }, [appName]);
+  }, [dateRange, appName]);
 
   if (isLoading) return <p>Loading...</p>
   if (!response) return <p>No cfr data!</p>

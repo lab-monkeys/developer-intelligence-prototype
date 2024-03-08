@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table"
 import { Calendar, GitBranch, GitCommit, Globe, Timer } from "lucide-react"
 import { format } from 'date-fns'
+import { getDaysBetweenDates } from '@/components/date-range-selector'
 
 const dateFormatter = epoch => {
   const date = new Date(epoch * 1000)
@@ -23,16 +24,16 @@ const dayFormatter = seconds => {
   return days + "d"
 }
 
-export function LeadTimeForChangeTable({ appName }) {
+export function LeadTimeForChangeTable({ dateRange, appName }) {
   
   const [ltfcData, setLtfcData] = useState([])
   useEffect(() => {
-  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=1w`)
+  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`)
       .then((response) => response.json()).then((data) => data.sort((d1, d2) => (d1.timestamp > d2.timestamp) ? 1 : (d1.timestamp < d2.timestamp) ? -1 : 0 ))
       .then((sortedData) => {
         setLtfcData(sortedData)
       })
-  }, [appName])
+  }, [dateRange, appName])
 
   return (
     <Table>

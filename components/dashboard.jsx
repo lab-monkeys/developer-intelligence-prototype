@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { subDays } from "date-fns"
 import { ApplicationSelector } from '@/components/application-selector'
 import { AppSelector } from '@/components/app-selector'
 import { DateRangeSelector } from '@/components/date-range-selector'
@@ -35,10 +36,36 @@ import { MeanTimeToRecoveryTabTrigger } from './mean-time-to-recovery/tab-trigge
 
 export function Dashboard({ data, appList }) {
 
-  const applicationsList = data.applications
+  const applicationsList = data.applications;
+  // This code initializes the date range that the dashboard will show data from.
+  // We start by checking if a previously selected date is cached in the browser.
+  // If not, we default to the past 7 days
+  const [activeDateRange, setActiveDateRange] = useState(() => {
+    console.log('Initializing activeDateRange');
+    const storedDateRange = localStorage.getItem('dateRange');
+    if (storedDateRange) {
+      console.log('Using stored date range');
+      // Parse the stored dateRange and convert dates back to Date objects
+      const parsedDateRange = JSON.parse(storedDateRange, (key, value) => {
+        if (key === 'from' || key === 'to') {
+          return new Date(value);
+        }
+        return value;
+      });
+      return parsedDateRange;
+    } else {
+      console.log('No stored date range found, using default');
+      const defaultDaysAgo = 7;
+      return {
+        from: subDays(new Date(), defaultDaysAgo),
+        to: new Date()
+      };
+    }
+  });
+  console.log('Date Range after initialization:', activeDateRange);
+
   const [activeApp, setActiveApp] = useState( appList[0].app )
   const [activeApplication, setActiveApplication] = useState(applicationsList[0].id)
-  const [activeDateRange, setActiveDateRange] = useState('')
   const [dataScorecard, setDataScorecard] = useState(applicationsList[0].scorecard[0])
   const [dataDeploymentFrequency, setDataDeploymentFrequency] = useState(applicationsList[0].metrics[1].data)
   const [dataLeadTimeForChange, setDataLeadTimeForChange] = useState(applicationsList[0].metrics[2].data)
@@ -65,7 +92,7 @@ export function Dashboard({ data, appList }) {
         <div className="flex justify-end items-center gap-4">
           <AppSelector appList={appList} activeApp={activeApp} setActiveApp={setActiveApp} />
           <ApplicationSelector applications={applicationsList} activeApplication={activeApplication} changeActiveApplication={changeActiveApplication} />
-          <DateRangeSelector activeDateRange={activeDateRange} />
+          <DateRangeSelector activeDateRange={activeDateRange} setActiveDateRange={setActiveDateRange} />
         </div>
       </div>
 
@@ -93,16 +120,16 @@ export function Dashboard({ data, appList }) {
           <Tabs defaultValue="dora-ltfc" className="">
             <TabsList className="justify-start w-full h-fit p-0 rounded-none">
               <TabsTrigger value="dora-ltfc" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-violet-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <LeadTimeForChangeTabTrigger data={dataLeadTimeForChange} appName={activeApp} />
+                <LeadTimeForChangeTabTrigger dateRange={activeDateRange} data={dataLeadTimeForChange} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-df" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-blue-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <DeploymentFrequencyTabTrigger data={dataDeploymentFrequency} appName={activeApp} />
+                <DeploymentFrequencyTabTrigger dateRange={activeDateRange} data={dataDeploymentFrequency} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-mttr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-emerald-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <MeanTimeToRecoveryTabTrigger data={dataMeanTimeToRecovery} appName={activeApp} />
+                <MeanTimeToRecoveryTabTrigger dateRange={activeDateRange} data={dataMeanTimeToRecovery} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-cfr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-rose-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <ChangeFailureRateTabTrigger data={dataChangeFailureRate} appName={activeApp} />
+                <ChangeFailureRateTabTrigger dateRange={activeDateRange} data={dataChangeFailureRate} appName={activeApp} />
               </TabsTrigger>
             </TabsList>
             <TabsContent value="dora-df" className="p-6 mt-8">
@@ -119,14 +146,14 @@ export function Dashboard({ data, appList }) {
             </TabsContent>
             <TabsContent value="dora-ltfc" className="p-6 mt-8">
               <div className="h-64">
-                <LeadTimeForChangeChart appName={activeApp} />
+                <LeadTimeForChangeChart dateRange={activeDateRange} appName={activeApp} />
               </div>
               <div className="mt-8">
                 <h2 className="flex items-center gap-2 mb-4 font-semibold dark:text-white">
                   <TableIcon />
                   Pull requests
                 </h2>
-                <LeadTimeForChangeTable appName={activeApp} />
+                <LeadTimeForChangeTable dateRange={activeDateRange} appName={activeApp} />
               </div>
             </TabsContent>
             <TabsContent value="dora-cfr" className="p-6 mt-8">
