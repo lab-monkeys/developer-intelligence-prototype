@@ -37,6 +37,9 @@ import { MeanTimeToRecoveryTabTrigger } from './mean-time-to-recovery/tab-trigge
 export function Dashboard({ data, appList }) {
 
   const applicationsList = data.applications;
+  // This code initializes the date range that the dashboard will show data from.
+  // We start by checking if a previously selected date is cached in the browser.
+  // If not, we default to the past 7 days
   const [activeDateRange, setActiveDateRange] = useState(() => {
     console.log('Initializing activeDateRange');
     const storedDateRange = localStorage.getItem('dateRange');

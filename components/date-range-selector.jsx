@@ -51,6 +51,7 @@ export function DateRangeSelector({activeDateRange, setActiveDateRange}) {
 
   const [dateRange, setDateRange] = useState(() => activeDateRange || null);
 
+  // when dateRange is updated, cache it in the browser so that the selected range survives a restart
   useEffect(() => {
     if (dateRange && typeof window !== 'undefined') {
       localStorage.setItem('dateRange', JSON.stringify(dateRange));
