@@ -37,10 +37,32 @@ import { MeanTimeToRecoveryTabTrigger } from './mean-time-to-recovery/tab-trigge
 export function Dashboard({ data, appList }) {
 
   const applicationsList = data.applications;
-  const defaultDaysAgo = 7;
+  const [activeDateRange, setActiveDateRange] = useState(() => {
+    console.log('Initializing activeDateRange');
+    const storedDateRange = localStorage.getItem('dateRange');
+    if (storedDateRange) {
+      console.log('Using stored date range');
+      // Parse the stored dateRange and convert dates back to Date objects
+      const parsedDateRange = JSON.parse(storedDateRange, (key, value) => {
+        if (key === 'from' || key === 'to') {
+          return new Date(value);
+        }
+        return value;
+      });
+      return parsedDateRange;
+    } else {
+      console.log('No stored date range found, using default');
+      const defaultDaysAgo = 7;
+      return {
+        from: subDays(new Date(), defaultDaysAgo),
+        to: new Date()
+      };
+    }
+  });
+  console.log('Date Range after initialization:', activeDateRange);
+
   const [activeApp, setActiveApp] = useState( appList[0].app )
   const [activeApplication, setActiveApplication] = useState(applicationsList[0].id)
-  const [activeDateRange, setActiveDateRange] = useState({ from: subDays(new Date(), defaultDaysAgo), to: new Date()})
   const [dataScorecard, setDataScorecard] = useState(applicationsList[0].scorecard[0])
   const [dataDeploymentFrequency, setDataDeploymentFrequency] = useState(applicationsList[0].metrics[1].data)
   const [dataLeadTimeForChange, setDataLeadTimeForChange] = useState(applicationsList[0].metrics[2].data)
@@ -67,7 +89,7 @@ export function Dashboard({ data, appList }) {
         <div className="flex justify-end items-center gap-4">
           <AppSelector appList={appList} activeApp={activeApp} setActiveApp={setActiveApp} />
           <ApplicationSelector applications={applicationsList} activeApplication={activeApplication} changeActiveApplication={changeActiveApplication} />
-          <DateRangeSelector dashDate={activeDateRange} setDashDate={setActiveDateRange} />
+          <DateRangeSelector activeDateRange={activeDateRange} setActiveDateRange={setActiveDateRange} />
         </div>
       </div>
 
