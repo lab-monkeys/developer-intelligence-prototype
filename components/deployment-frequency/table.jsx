@@ -17,7 +17,7 @@ import { dateFormatter } from '@/lib/date-funcs';
 export function DeploymentFrequencyTable({ dateRange, appName }) {
 
   const { dfData, loading } = useDeploymentFrequencyData(appName, dateRange);
-  console.log(dfData)
+  console.log('Table dfData: ', dfData)
 
   if (loading) {
     return <div>Loading...</div>; // Render loading state while data is being fetched

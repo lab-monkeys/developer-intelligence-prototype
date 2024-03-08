@@ -1,11 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useTheme } from "next-themes"
-import { format } from 'date-fns'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Area, Line, ReferenceLine } from 'recharts'
 import { DeploymentFrequencyTooltip } from './tooltip'
-import { getDaysBetweenDates } from '@/components/date-range-selector'
 import useDeploymentFrequencyData from './deploymentFrequency';
 import { dateFormatter, dayFormatter } from '@/lib/date-funcs';
 
@@ -25,7 +22,7 @@ function deploymentsPerDay(data) {
       // Convert timestamp to Date object and extract the date
       const date = new Date(item.timestamp * 1000);
       // Format the date to YYYY-MM-DD
-      const formattedDate = date.toISOString().split('T')[0];
+      const formattedDate = date.toLocaleDateString().split('T')[0];
 
       // Increment the count of deployments for the corresponding date
       if (deploymentsCountPerDay[formattedDate]) {
@@ -67,13 +64,14 @@ export function DeploymentFrequencyChart({ dateRange, appName }) {
   const strokeGoal = '#f59e0b'            // Amber 500
 
   const { dfData, loading } = useDeploymentFrequencyData(appName, dateRange);
-  console.log(dfData)
+  console.log('Chart dfData: ', dfData)
 
   if (loading) {
     return <div>Loading...</div>; // Render loading state while data is being fetched
   }
 
   var countPerDay = deploymentsPerDay(dfData);
+  console.log('Count per day', countPerDay)
 
   // Calculate the mean
   const averages = dfData.map(element => {
@@ -112,7 +110,7 @@ export function DeploymentFrequencyChart({ dateRange, appName }) {
         <ComposedChart data={countPerDay} margin={{ top: 0, left: 0, right: 4, bottom: 0 }} /*onClick={handleChartClick}*/>
           <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
           <XAxis style={{ fontSize: '0.75rem' }} dataKey="day_epoch" axisLine={false} tickLine={false} tickFormatter={dateFormatter} />
-          <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 20]} axisLine={false} tickLine={false} tickFormatter={dayFormatter} />
+          <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 20]} axisLine={false} tickLine={false} />
           <Tooltip content={<DeploymentFrequencyTooltip />} cursor={{ stroke: strokeCursor }} />
           <Area type="monotone" dataKey="expectedRange" activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 4" animationDuration={animationDuration} />
           <Line type="monotone" dataKey="count" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
