@@ -52,20 +52,6 @@ export function DateRangeSelector({dashDate, setDashDate}) {
 
   const [date, setDate] = useState(dashDate);
 
-
-  // let footer = <p>Please pick the first day.</p>;
-  // if (date?.from) {
-  //   if (!date.to) {
-  //     footer = <p>{format(date.from, 'PPP')}</p>;
-  //   } else if (date.to) {
-  //     footer = (
-  //       <p>
-  //         {format(date.from, 'PPP')}–{format(date.to, 'PPP')}
-  //       </p>
-  //     );
-  //   }
-  // }
-
   // This handler will prevent errors when only 'to' or 'from' are selected
   const handleApplyClick = function () {
     if (isComplete(date)) {
