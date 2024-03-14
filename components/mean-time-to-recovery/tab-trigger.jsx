@@ -24,8 +24,10 @@ export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
   const [response, setResponse] = useState([])
   const [isLoading, setLoading] = useState(true)
 
+  var req = `${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/mean_time_to_restore/${appName}?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`
+  console.log(req)
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/mean_time_to_restore/${appName}?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`)
+    fetch(req)
       .then((test) => test.json())
       .then((response) => {
         setResponse(response)
@@ -35,7 +37,9 @@ export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
 
   if (isLoading) return <p>Loading...</p>
   if (!response) return <p>No cfr data!</p>
+
   const chartMean = response.mttr / 86400
+  const percentChange = Math.round((1 - (response.mttr / response.last)) * 100)
 
   // Anomaly detection
   const showAnomalyWarning = data.some((day) => {
@@ -56,7 +60,7 @@ export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-2">
           <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(5)} days</strong>
-          <Badge variant="outline" className="px-1.5 bg-emerald-50 border-0 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"><ArrowDown className="h-4 w-4 mr-1 stroke-emerald-700 dark:stroke-emerald-300" /> 16%</Badge>
+          <Badge variant="outline" className="px-1.5 bg-emerald-50 border-0 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"><ArrowDown className="h-4 w-4 mr-1 stroke-emerald-700 dark:stroke-emerald-300" />{percentChange}%</Badge>
         </div>
         <MeanTimeToRecoveryRating chartMean={chartMean} />
       </div>
