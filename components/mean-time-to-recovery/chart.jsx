@@ -1,14 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { format } from 'date-fns'
 import { useTheme } from "next-themes"
+import { format } from 'date-fns'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Area, Line, ReferenceLine } from 'recharts'
-import { ChangeFailureRateTooltip } from './tooltip'
-
-const dateFormatter = date => {
-  return format(new Date(date), "MMM d")
-}
+import { MeanTimeToRecoveryTooltip } from './tooltip'
+import useMeanTimeToRestore from './meantimetorestore'
+import { dateFormatter, dayFormatter } from '@/lib/date-funcs';
 
 const calculateMean = data => {
   if (data.length < 1) {
@@ -17,7 +15,7 @@ const calculateMean = data => {
   return data.reduce((prev, current) => prev + current) / data.length
 }
 
-export function IsolatedChangeFailureRateChart({ data }) {
+export function MeanTimeToRecoveryChart({ appName, dateRange }) {
 
   const { resolvedTheme } = useTheme()
   const animationDuration = 1000
@@ -25,38 +23,45 @@ export function IsolatedChangeFailureRateChart({ data }) {
   // Chart colors
   const strokeGrid = '#d4d4d4'            // Neutral 300
   const strokeGridDark = '#404040'        // Neutral 700
-  const strokeCursor = '#f43f5e'          // Rose 500
+  const strokeCursor = '#10b981'          // Emerald 500
   const strokeActiveDot = '#ffffff'       // White
   const strokeActiveDotDark = '#171717'   // Neutral 900
   const strokeAnomaly = '#f97316'         // Orange 500
 
-  const fillRange = '#fecdd3'             // Rose 200
-  const fillRangeDark = '#881337'         // Rose 900
-  const strokeRange = '#f43f5e'           // Rose 500
-  const strokeRollingAverage = '#f43f5e'  // Rose 500
+  const fillRange = '#a7f3d0'             // Emerald 200
+  const fillRangeDark = '#064e3b'         // Emerald 900
+  const strokeRange = '#10b981'           // Emerald 500
+  const strokeRollingAverage = '#10b981'  // Emerald 500
   const strokeGoal = '#f59e0b'            // Amber 500
 
+  const { mttrData, loading } = useMeanTimeToRestore(appName, dateRange);
+  console.log('Chart mttrData: ', mttrData)
+
+  if (loading) {
+    return <div>Loading...</div>; // Render loading state while data is being fetched
+  }
+
   // Calculate the mean
-  const averages = data.map(element => {
+  const averages = mttrData.map(element => {
     return element.rollingAverage
   })
 
   const chartMean = calculateMean(averages)
 
-  // Reports
-  const [reportChangeFailureRateData, setReportChangeFailureRateData] = useState(null)
-  const [showReportChangeFailureRateData, setShowReportChangeFailureRateData] = useState(false)
+  // // Reports
+  // const [reportMeanTimeToRecoveryData, setReportMeanTimeToRecoveryData] = useState(null)
+  // const [showReportMeanTimeToRecoveryData, setShowReportMeanTimeToRecoveryData] = useState(false)
 
-  function handleChartClick(event) {
-    setReportChangeFailureRateData(event)
-    setShowReportChangeFailureRateData(true)
-  }
+  // function handleChartClick(event) {
+  //   setReportMeanTimeToRecoveryData(event)
+  //   setShowReportMeanTimeToRecoveryData(true)
+  // }
 
-  // Anomaly detection
-  const showAnomalyWarning = data.some((day) => {
-    if (day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1]) { return true }
-    return false
-  })
+  // // Anomaly detection
+  // const showAnomalyWarning = data.some((day) => {
+  //   if (day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1]) { return true }
+  //   return false
+  // })
 
   const customAnomalyLabel = props => {
     return (
@@ -70,23 +75,23 @@ export function IsolatedChangeFailureRateChart({ data }) {
   return (
     <>
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={data} margin={{ top: 0, left: 0, right: 4, bottom: 0 }} onClick={handleChartClick}>
+        <ComposedChart data={mttrData} margin={{ top: 0, left: 0, right: 4, bottom: 0 }}>
           <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
-          <XAxis style={{ fontSize: '0.75rem' }} dataKey="date" axisLine={false} tickLine={false} tickFormatter={dateFormatter} />
-          <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 100]} axisLine={false} tickLine={false} tickFormatter={tick => `${tick}%`} />
-          <Tooltip content={<ChangeFailureRateTooltip />} cursor={{ stroke: strokeCursor }} />
+          <XAxis style={{ fontSize: '0.75rem' }} dataKey="timestamp" axisLine={false} tickLine={false} tickFormatter={dateFormatter} />
+          <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 28]} axisLine={false} tickLine={false} tickFormatter={dayFormatter} />
+          <Tooltip content={<MeanTimeToRecoveryTooltip />} cursor={{ stroke: strokeCursor }} />
           <Area type="monotone" dataKey="expectedRange" activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 4" animationDuration={animationDuration} />
-          <Line type="monotone" dataKey="rollingAverage" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
+          <Line type="monotone" dataKey="time_to_resolve" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />
           <Line type="monotone" dataKey="goal" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeGoal} strokeWidth={2} strokeDasharray="4 4" strokeLinecap="round" isAnimationActive={false} />
 
-          {data.map((day, index) => (
+          {/* {data.map((day, index) => (
             day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1] && (
               <ReferenceLine className="anomaly-reference-line" key={index} x={day.date} stroke={strokeAnomaly} label={customAnomalyLabel} />
             )
-          ))}
+          ))} */}
         </ComposedChart>
       </ResponsiveContainer>
-      {/* <ChangeFailureRateReport reportChangeFailureRateData={reportChangeFailureRateData} showReportChangeFailureRateData={showReportChangeFailureRateData} setShowReportChangeFailureRateData={setShowReportChangeFailureRateData} /> */}
+      {/* <MeanTimeToRecoveryReport reportMeanTimeToRecoveryData={reportMeanTimeToRecoveryData} showReportMeanTimeToRecoveryData={showReportMeanTimeToRecoveryData} setShowReportMeanTimeToRecoveryData={setShowReportMeanTimeToRecoveryData} /> */}
     </>
   )
 }
