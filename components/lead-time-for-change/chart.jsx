@@ -1,11 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useTheme } from "next-themes"
 import { format } from 'date-fns'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Area, Line, ReferenceLine } from 'recharts'
 import { LeadTimeForChangeTooltip } from './tooltip'
-import { getDaysBetweenDates } from '@/components/date-range-selector'
+import fetchLeadTimeForChangeData from './leadTimeForChange'
 
 
 const dateFormatter = epoch => {
@@ -37,23 +36,21 @@ export function LeadTimeForChangeChart( { dateRange, appName } ) {
   const strokeRollingAverage = '#8b5cf6'  // Violet 500
   const strokeGoal = '#f59e0b'            // Amber 500
 
-  const [ltfcData, setLtfcData] = useState([])
-  useEffect(() => {
-  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`)
-      .then((response) => response.json()).then((data) => data.sort((d1, d2) => (d1.timestamp > d2.timestamp) ? 1 : (d1.timestamp < d2.timestamp) ? -1 : 0 ))
-      .then((sortedData) => {
-        setLtfcData(sortedData)
-      })
-  }, [dateRange, appName])
+  const { ltfcData, loading } = fetchLeadTimeForChangeData(appName, dateRange);
+  console.log('Chart ltfcData: ', ltfcData)
 
-  // Reports
-  const [reportLeadTimeForChangeData, setReportLeadTimeForChangeData] = useState(null)
-  const [showReportLeadTimeForChangeData, setShowReportLeadTimeForChangeData] = useState(false)
-
-  function handleChartClick(event) {
-    setReportLeadTimeForChangeData(event)
-    setShowReportLeadTimeForChangeData(true)
+  if (loading) {
+    return <div>Loading...</div>; // Render loading state while data is being fetched
   }
+
+  // // Reports
+  // const [reportLeadTimeForChangeData, setReportLeadTimeForChangeData] = useState(null)
+  // const [showReportLeadTimeForChangeData, setShowReportLeadTimeForChangeData] = useState(false)
+
+  // function handleChartClick(event) {
+  //   setReportLeadTimeForChangeData(event)
+  //   setShowReportLeadTimeForChangeData(true)
+  // }
 
   const customAnomalyLabel = props => {
     return (
@@ -67,7 +64,7 @@ export function LeadTimeForChangeChart( { dateRange, appName } ) {
   return (
     <>
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={ltfcData} margin={{ top: 0, left: 0, right: 4, bottom: 0 }} onClick={handleChartClick}>
+        <ComposedChart data={ltfcData} margin={{ top: 0, left: 0, right: 4, bottom: 0 }}>
           <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
           <XAxis style={{ fontSize: '0.75rem' }} dataKey="timestamp" axisLine={false} tickLine={false} tickFormatter={dateFormatter} />
           <YAxis style={{ fontSize: '0.75rem' }} axisLine={false} tickLine={false} tickFormatter={dayFormatter} />

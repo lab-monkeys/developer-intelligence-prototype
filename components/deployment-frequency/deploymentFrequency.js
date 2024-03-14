@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { getDaysBetweenDates } from '@/components/date-range-selector'
 
-export default function useDeploymentFrequencyData(appName, dateRange) {
+export default function fetchDeploymentFrequencyData(appName, dateRange) {
     const [dfData, setDfData] = useState([]);
     const [loading, setLoading] = useState(true); // Add loading state
 
@@ -25,4 +25,28 @@ export default function useDeploymentFrequencyData(appName, dateRange) {
     }, [appName, dateRange]);
 
     return { dfData, loading }; // Return loading state along with dfData
+}
+
+export function fetchDeploymentFrequency(appName, dateRange) {
+    const [response, setResponse] = useState([])
+    const [loading, setLoading] = useState(true)
+  
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const req = `${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/deployment_frequency/${appName}?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`;
+                const response = await fetch(req);
+                const data = await response.json()
+                setResponse(data)
+            } catch(error) {
+                console.error('Error fetching deployment frequency data:', error);
+            } finally {
+                setLoading(false)
+            }
+        };
+
+        fetchData();
+    }, [dateRange, appName]);
+  
+    return { response, loading }; // Return loading state along with cfrData
 }
