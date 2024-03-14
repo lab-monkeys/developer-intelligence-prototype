@@ -15,7 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-import { IsolatedDeploymentFrequencyChart } from '@/components/deployment-frequency/iso-chart'
+import { DeploymentFrequencyChart } from '@/components/deployment-frequency/chart'
 import { LeadTimeForChangeChart } from '@/components/lead-time-for-change/chart'
 import { IsolatedChangeFailureRateChart } from '@/components/change-failure-rate/iso-chart'
 import { IsolatedMeanTimeToRecoveryChart } from '@/components/mean-time-to-recovery/iso-chart'
@@ -134,14 +134,14 @@ export function Dashboard({ data, appList }) {
             </TabsList>
             <TabsContent value="dora-df" className="p-6 mt-8">
               <div className="h-64">
-                <IsolatedDeploymentFrequencyChart data={dataDeploymentFrequency} />
+                <DeploymentFrequencyChart dateRange={activeDateRange} appName={activeApp} />
               </div>
               <div className="mt-8">
                 <h2 className="flex items-center gap-2 mb-4 font-semibold dark:text-white">
                   <TableIcon />
                   Deployments
                 </h2>
-                <DeploymentFrequencyTable />
+                <DeploymentFrequencyTable dateRange={activeDateRange} appName={activeApp} />
               </div>
             </TabsContent>
             <TabsContent value="dora-ltfc" className="p-6 mt-8">

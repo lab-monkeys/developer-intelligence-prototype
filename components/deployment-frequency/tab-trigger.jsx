@@ -36,7 +36,7 @@ export function DeploymentFrequencyTabTrigger({ dateRange, data, appName }) {
   if (isLoading) return <p>Loading...</p>
   if (!response) return <p>No cfr data!</p>
 
-  const chartMean = response.df
+  const chartMean = response.df / getDaysBetweenDates(dateRange)
   const percentChange = Math.round((response.df / response.last) * 100)
 
   // Anomaly detection
