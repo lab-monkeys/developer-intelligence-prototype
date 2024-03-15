@@ -33,7 +33,7 @@ export function MeanTimeToRecoveryTable({ dateRange, appName }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-      {mttrData.map (({ issue_id, time_to_resolve, timestamp }) => (
+        {mttrData.map (({ issue_id, time_to_resolve, timestamp }) => (
           <TableRow key={issue_id}>
             <TableCell>
               <div className="flex items-center gap-2">
