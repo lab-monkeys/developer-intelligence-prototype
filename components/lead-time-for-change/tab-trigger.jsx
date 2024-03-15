@@ -6,6 +6,7 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { LeadTimeForChangeRating } from './rating'
 import { useState, useEffect } from "react"
 import { getDaysBetweenDates } from '@/components/date-range-selector'
+import { fetchLeadTimeForChange } from './leadTimeForChange'
 
 export function LeadTimeForChangeTabTrigger({ dateRange, data, appName }) {
 
@@ -21,20 +22,12 @@ export function LeadTimeForChangeTabTrigger({ dateRange, data, appName }) {
     return element.rollingAverage
   })
 
-  const [response, setResponse] = useState([])
-  const [isLoading, setLoading] = useState(true)
-  useEffect(() => {
-    console.log('LTFC date range: ', dateRange)
-    fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`)
-      .then((test) => test.json())
-      .then((response) => {
-        setResponse(response)
-        setLoading(false)
-      })
-  }, [dateRange, appName]);  
+  const { response, loading } = fetchLeadTimeForChange(appName, dateRange);
+  console.log('LTFC Tab: ', response)
 
-  if (isLoading) return <p>Loading...</p>
-  if (!response) return <p>No cfr data!</p>
+  if (loading) {
+    return <div>Loading...</div>; // Render loading state while data is being fetched
+  }
 
   const chartMean = response.ltfc / 86400
   const percentChange = Math.round((1 - (response.ltfc / response.last)) * 100)
@@ -60,7 +53,7 @@ export function LeadTimeForChangeTabTrigger({ dateRange, data, appName }) {
           <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(2)} days</strong>
           <Badge variant="outline" className="px-1.5 bg-emerald-50 border-0 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"><ArrowDown className="h-4 w-4 mr-1 stroke-emerald-700 dark:stroke-emerald-300" />{percentChange}%</Badge>
         </div>
-        <LeadTimeForChangeRating chartMean={chartMean} />
+        {/* <LeadTimeForChangeRating chartMean={chartMean} /> */}
       </div>
     </>
   )

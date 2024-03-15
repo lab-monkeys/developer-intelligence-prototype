@@ -110,7 +110,7 @@ export function DeploymentFrequencyChart({ dateRange, appName }) {
         <ComposedChart data={countPerDay} margin={{ top: 0, left: 0, right: 4, bottom: 0 }} /*onClick={handleChartClick}*/>
           <CartesianGrid vertical={false} stroke={resolvedTheme === 'dark' ? strokeGridDark : strokeGrid} />
           <XAxis style={{ fontSize: '0.75rem' }} dataKey="day_epoch" axisLine={false} tickLine={false} tickFormatter={dateFormatter} />
-          <YAxis style={{ fontSize: '0.75rem' }} domain={[0, 20]} axisLine={false} tickLine={false} />
+          <YAxis style={{ fontSize: '0.75rem' }} axisLine={false} tickLine={false} />
           <Tooltip content={<DeploymentFrequencyTooltip />} cursor={{ stroke: strokeCursor }} />
           <Area type="monotone" dataKey="expectedRange" activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} fill={resolvedTheme === 'dark' ? fillRangeDark : fillRange} stroke={strokeRange} strokeWidth={0} strokeDasharray="4 4" animationDuration={animationDuration} />
           <Line type="monotone" dataKey="count" dot={false} activeDot={resolvedTheme === 'dark' ? { stroke: strokeActiveDotDark } : { stroke: strokeActiveDot }} stroke={strokeRollingAverage} strokeWidth={3} strokeLinecap="round" animationDuration={animationDuration} />

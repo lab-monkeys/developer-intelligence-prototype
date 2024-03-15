@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import {
   Table,
   TableBody,
@@ -11,19 +10,17 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Calendar, GitCommit, GitGraph, Timer } from "lucide-react"
-import { getDaysBetweenDates } from '@/components/date-range-selector'
 import {dateFormatter, dayFormatter} from '@/lib/date-funcs';
+import fetchLeadTimeForChangeData from './leadTimeForChange'
 
 export function LeadTimeForChangeTable({ dateRange, appName }) {
   
-  const [ltfcData, setLtfcData] = useState([])
-  useEffect(() => {
-  fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`)
-      .then((response) => response.json()).then((data) => data.sort((d1, d2) => (d1.timestamp > d2.timestamp) ? 1 : (d1.timestamp < d2.timestamp) ? -1 : 0 ))
-      .then((sortedData) => {
-        setLtfcData(sortedData)
-      })
-  }, [dateRange, appName])
+  const { ltfcData, loading } = fetchLeadTimeForChangeData(appName, dateRange);
+  console.log('Chart ltfcData: ', ltfcData)
+
+  if (loading) {
+    return <div>Loading...</div>; // Render loading state while data is being fetched
+  }
 
   return (
     <Table>

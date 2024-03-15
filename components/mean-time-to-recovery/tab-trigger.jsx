@@ -6,6 +6,7 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { MeanTimeToRecoveryRating } from './rating'
 import { useState, useEffect } from "react"
 import { getDaysBetweenDates } from '@/components/date-range-selector'
+import { fetchMeanTimeToRestore } from './meantimetorestore'
 
 export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
 
@@ -21,22 +22,12 @@ export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
     return element.rollingAverage
   })
 
-  const [response, setResponse] = useState([])
-  const [isLoading, setLoading] = useState(true)
+  const { response, loading } = fetchMeanTimeToRestore(appName, dateRange);
+  console.log('MTTR Tab: ', response)
 
-  var req = `${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/mean_time_to_restore/${appName}?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`
-  console.log(req)
-  useEffect(() => {
-    fetch(req)
-      .then((test) => test.json())
-      .then((response) => {
-        setResponse(response)
-        setLoading(false)
-      })
-  }, [dateRange, appName]);
-
-  if (isLoading) return <p>Loading...</p>
-  if (!response) return <p>No cfr data!</p>
+  if (loading) {
+    return <div>Loading...</div>; // Render loading state while data is being fetched
+  }
 
   const chartMean = response.mttr / 86400
   const percentChange = Math.round((1 - (response.mttr / response.last)) * 100)
@@ -62,7 +53,7 @@ export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
           <strong className="text-black text-2xl font-semibold tracking-tight dark:text-white">{parseFloat(chartMean).toFixed(5)} days</strong>
           <Badge variant="outline" className="px-1.5 bg-emerald-50 border-0 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"><ArrowDown className="h-4 w-4 mr-1 stroke-emerald-700 dark:stroke-emerald-300" />{percentChange}%</Badge>
         </div>
-        <MeanTimeToRecoveryRating chartMean={chartMean} />
+        {/* <MeanTimeToRecoveryRating chartMean={chartMean} /> */}
       </div>
     </>
   )
