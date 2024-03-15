@@ -65,6 +65,9 @@ export function DateRangeSelector({activeDateRange, setActiveDateRange}) {
   // This handler will prevent errors when only 'to' or 'from' are selected
   const handleApplyClick = function () {
     if (isComplete(dateRange) && isValidDateRange(dateRange)) { // Add isValidDateRange check
+      console.log("Handle Apply Click", dateRange)
+      // Set "to" date to end of day (23:59:59,999) instead of start
+      dateRange.to.setHours(23, 59, 59, 999)
       setActiveDateRange(dateRange);
     }
   };
