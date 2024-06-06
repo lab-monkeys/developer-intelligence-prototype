@@ -58,19 +58,6 @@ export default async function AuthenticationPage() {
                 <div className="flex flex-col mb-4 space-y-2 text-center">
                   <h2 className="text-3xl	font-bold tracking-tight dark:text-white">Sign in</h2>
                 </div>
-                <ButtonSignInGithub />
-                <div className="relative w-full">
-                  <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                      Or
-                    </span>
-                  </div>
-                </div>
-                <ButtonSignInGoogle />
-                <ButtonSignInKeyCloak />
                 <ButtonSignInOpenShift />
                 <p className="px-8 text-center text-sm text-muted-foreground">By signing in, you agree to our <Link href="https://www.redhat.com/en/about/terms-use">terms of service</Link> and <Link href="https://www.redhat.com/en/about/privacy-policy">privacy policy</Link>.</p>
               </>

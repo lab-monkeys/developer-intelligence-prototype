@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
-import LogoOpenShift from '@/public/logos/openshift-logo.svg'
+import LogoOpenShift from '@/public/logos/openshift.svg'
 import { Loader2 } from "lucide-react"
 
 export default function ButtonSignInOpenShift() {
