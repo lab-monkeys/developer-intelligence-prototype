@@ -4,7 +4,7 @@ import { useTheme } from "next-themes"
 import { format } from 'date-fns'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Area, Line, ReferenceLine } from 'recharts'
 import { LeadTimeForChangeTooltip } from './tooltip'
-import fetchLeadTimeForChangeData from './leadTimeForChange'
+import useLeadTimeForChangeData from './leadTimeForChange'
 
 
 const dateFormatter = epoch => {
@@ -36,7 +36,7 @@ export function LeadTimeForChangeChart( { dateRange, appName } ) {
   const strokeRollingAverage = '#8b5cf6'  // Violet 500
   const strokeGoal = '#f59e0b'            // Amber 500
 
-  const { ltfcData, loading } = fetchLeadTimeForChangeData(appName, dateRange);
+  const { ltfcData, loading } = useLeadTimeForChangeData(appName, dateRange);
   console.log('Chart ltfcData: ', ltfcData)
 
   if (loading) {

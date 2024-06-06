@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { getDaysBetweenDates } from '@/components/date-range-selector'
 
-export default function fetchMeanTimeToRestoreData(appName, dateRange) {
+export default function useMeanTimeToRestoreData(appName, dateRange) {
     const [mttrData, setMttrData] = useState([]);
     const [loading, setLoading] = useState(true); // Add loading state
 
@@ -28,7 +28,7 @@ export default function fetchMeanTimeToRestoreData(appName, dateRange) {
     return { mttrData, loading }; // Return loading state along with dfData
 }
 
-export function fetchMeanTimeToRestore(appName, dateRange) {
+export function useMeanTimeToRestore(appName, dateRange) {
     const [response, setResponse] = useState([])
     const [loading, setLoading] = useState(true)
   

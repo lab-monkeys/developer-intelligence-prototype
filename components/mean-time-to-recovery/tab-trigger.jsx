@@ -6,7 +6,7 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { MeanTimeToRecoveryRating } from './rating'
 import { useState, useEffect } from "react"
 import { getDaysBetweenDates } from '@/components/date-range-selector'
-import { fetchMeanTimeToRestore } from './meantimetorestore'
+import { useMeanTimeToRestore } from './meantimetorestore'
 
 export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
 
@@ -22,7 +22,7 @@ export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
     return element.rollingAverage
   })
 
-  const { response, loading } = fetchMeanTimeToRestore(appName, dateRange);
+  const { response, loading } = useMeanTimeToRestore(appName, dateRange);
   console.log('MTTR Tab: ', response)
 
   if (loading) {

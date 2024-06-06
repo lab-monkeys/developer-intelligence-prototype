@@ -6,7 +6,7 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { DeploymentFrequencyRating } from '@/components/deployment-frequency/rating'
 import { useState, useEffect } from "react"
 import { getDaysBetweenDates } from '@/components/date-range-selector'
-import { fetchDeploymentFrequency } from './deploymentFrequency'
+import { useDeploymentFrequency } from './deploymentFrequency'
 
 export function DeploymentFrequencyTabTrigger({ dateRange, data, appName }) {
 
@@ -22,7 +22,7 @@ export function DeploymentFrequencyTabTrigger({ dateRange, data, appName }) {
     return element.rollingAverage
   })
 
-  const { response, loading } = fetchDeploymentFrequency(appName, dateRange);
+  const { response, loading } = useDeploymentFrequency(appName, dateRange);
   console.log('DF Tab: ', response)
 
   if (loading) {

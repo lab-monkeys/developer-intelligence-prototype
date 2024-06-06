@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { getDaysBetweenDates } from '@/components/date-range-selector'
 
-export default function fetchChangeFailureRateData(appName, dateRange) {
+export default function useChangeFailureRateData(appName, dateRange) {
     const [cfrData, setCfrData] = useState([]);
     const [loading, setLoading] = useState(true); // Add loading state
 
@@ -27,7 +27,7 @@ export default function fetchChangeFailureRateData(appName, dateRange) {
     return { cfrData, loading }; // Return loading state along with cfrData
 }
 
-export function fetchChangeFailureRate(appName, dateRange) {
+export function useChangeFailureRate(appName, dateRange) {
     const [response, setResponse] = useState([])
     const [loading, setLoading] = useState(true)
   

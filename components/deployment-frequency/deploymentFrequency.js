@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { getDaysBetweenDates } from '@/components/date-range-selector'
 
-export default function fetchDeploymentFrequencyData(appName, dateRange) {
+export default function useDeploymentFrequencyData(appName, dateRange) {
     const [dfData, setDfData] = useState([]);
     const [loading, setLoading] = useState(true); // Add loading state
 
@@ -27,7 +27,7 @@ export default function fetchDeploymentFrequencyData(appName, dateRange) {
     return { dfData, loading }; // Return loading state along with dfData
 }
 
-export function fetchDeploymentFrequency(appName, dateRange) {
+export function useDeploymentFrequency(appName, dateRange) {
     const [response, setResponse] = useState([])
     const [loading, setLoading] = useState(true)
   

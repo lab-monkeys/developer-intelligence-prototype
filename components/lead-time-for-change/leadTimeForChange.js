@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { getDaysBetweenDates } from '@/components/date-range-selector'
 
-export default function fetchLeadTimeForChangeData(appName, dateRange) {
+export default function useLeadTimeForChangeData(appName, dateRange) {
     const [ltfcData, setLtfcData] = useState([]);
     const [loading, setLoading] = useState(true); // Add loading state
 
@@ -27,7 +27,7 @@ export default function fetchLeadTimeForChangeData(appName, dateRange) {
     return { ltfcData, loading }; // Return loading state along with dfData
 }
 
-export function fetchLeadTimeForChange(appName, dateRange) {
+export function useLeadTimeForChange(appName, dateRange) {
     const [response, setResponse] = useState([])
     const [loading, setLoading] = useState(true)
   

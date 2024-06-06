@@ -6,7 +6,7 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { LeadTimeForChangeRating } from './rating'
 import { useState, useEffect } from "react"
 import { getDaysBetweenDates } from '@/components/date-range-selector'
-import { fetchLeadTimeForChange } from './leadTimeForChange'
+import { useLeadTimeForChange } from './leadTimeForChange'
 
 export function LeadTimeForChangeTabTrigger({ dateRange, data, appName }) {
 
@@ -22,7 +22,7 @@ export function LeadTimeForChangeTabTrigger({ dateRange, data, appName }) {
     return element.rollingAverage
   })
 
-  const { response, loading } = fetchLeadTimeForChange(appName, dateRange);
+  const { response, loading } = useLeadTimeForChange(appName, dateRange);
   console.log('LTFC Tab: ', response)
 
   if (loading) {

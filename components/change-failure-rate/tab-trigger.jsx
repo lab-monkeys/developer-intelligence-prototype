@@ -6,7 +6,7 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { ChangeFailureRateRating } from './rating'
 import { useState, useEffect } from "react"
 import { getDaysBetweenDates } from '@/components/date-range-selector'
-import { fetchChangeFailureRate } from './changeFailureRate'
+import { useChangeFailureRate } from './changeFailureRate'
 
 export function ChangeFailureRateTabTrigger({ dateRange, data, appName }) {
 
@@ -22,7 +22,7 @@ export function ChangeFailureRateTabTrigger({ dateRange, data, appName }) {
     return element.rollingAverage
   })
 
-  const { response, loading } = fetchChangeFailureRate(appName, dateRange);
+  const { response, loading } = useChangeFailureRate(appName, dateRange);
   console.log('Chart cfr: ', response)
 
   if (loading) {
