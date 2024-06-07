@@ -1,0 +1,9 @@
+# Recommended to have .dockerignore file with the following content
+Containerfile
+Dockerfile
+.dockerignore
+node_modules
+npm-debug.log
+README.md
+.next
+.git
