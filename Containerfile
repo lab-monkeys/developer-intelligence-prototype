@@ -53,5 +53,6 @@ USER 1001
 EXPOSE 3000
 
 ENV PORT 3000
+ENV NEXT_PUBLIC_PELORUS_API_URL https://pelorus-api.pelorus-api.svc.cluster.local
 
 CMD ["node", "server.js"]

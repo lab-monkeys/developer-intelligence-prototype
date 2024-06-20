@@ -1,0 +1,25 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: pelorus-ui
+    app.kubernetes.io/component: pelorus-ui
+    app.kubernetes.io/instance: pelorus-ui
+    app.kubernetes.io/name: pelorus-ui
+    app.kubernetes.io/part-of: pelorus-ui
+    app.openshift.io/runtime-version: dev
+  name: pelorus-ui
+  namespace: pelorus-api
+spec:
+  host: pelorus-ui-pelorus-api.apps.cluster-275jd.dynamic.redhatworkshops.io
+  port:
+    targetPort: 3000-tcp
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: pelorus-ui
+    weight: 100
+  wildcardPolicy: None

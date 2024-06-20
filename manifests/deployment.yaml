@@ -1,0 +1,58 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"pelorus-ui:dev","namespace":"pelorus-api"},"fieldPath":"spec.template.spec.containers[?(@.name==\"pelorus-ui\")].image","paused":"false"}]'
+  labels:
+    app: pelorus-ui
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/instance: pelorus-ui
+    app.kubernetes.io/name: pelorus-ui
+    app.kubernetes.io/part-of: pelorus
+    app.openshift.io/runtime-namespace: pelorus-api
+  name: pelorus-ui
+  namespace: pelorus-api
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: pelorus-ui
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+      creationTimestamp: null
+      labels:
+        app: pelorus-ui
+        deployment: pelorus-ui
+    spec:
+      containers:
+      - name: pelorus-ui
+        env:
+        - name: NEXTAUTH_SECRET
+          value: +03/pWr4sFvxrcm29hwnXLREWjFfmW2toTCUyNcLytc=
+        - name: NEXTAUTH_URL
+          value: https://pelorus-ui-pelorus-api.apps.cluster-275jd.dynamic.redhatworkshops.io/
+        image: image-registry.openshift-image-registry.svc:5000/pelorus-api/pelorus-ui@sha256:25e853da5f61cacee240c521b255e3d724c645603c1dc1451bba08c3c439219f
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

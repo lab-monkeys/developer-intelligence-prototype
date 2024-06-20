@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { React, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
-import LogoOpenShift from '@/public/logos/openshift.svg'
+import Logo from './icons/openshift.svg';
 import { Loader2 } from "lucide-react"
 
 export default function ButtonSignInOpenShift() {
@@ -21,11 +21,11 @@ export default function ButtonSignInOpenShift() {
       {!loading && (
         <>
           <span className="mr-2 w-4 h-4">
-            <LogoOpenShift />
+            <img src={Logo.src} alt="OpenShift Logo" />
           </span>
           <span>Sign in with OpenShift</span>
         </>
       )}
     </Button>
-  )
+  );
 }

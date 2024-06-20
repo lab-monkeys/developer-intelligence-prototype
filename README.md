@@ -41,11 +41,15 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Sign in
 
-The following sign in providers are supported:
+## Building the Code
 
-- `GitHub`
-- `Google (Red Hat accounts only)`
+```
+podman build -f Containerfile -t quay.io/etsauer/pelorus-ui:dev
+podman push quay.io/etsauer/pelorus-ui:dev
+```
 
-## Deployment
+## Deployment in OpenShift
 
-The application is deployed on [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) using auto deployment scripts. The production environment can be viewed at [https://developer-intelligence.vercel.app/](https://developer-intelligence.vercel.app/)
+```
+oc apply -f manifests/
+```
