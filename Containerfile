@@ -55,4 +55,12 @@ EXPOSE 3000
 ENV PORT 3000
 ENV NEXT_PUBLIC_PELORUS_API_URL https://pelorus-api.pelorus-api.svc.cluster.local
 
+ARG ORIGIN_URL=unknown
+ARG COMMIT_DATE=unknown
+ARG COMMIT_ID=unknown
+
+LABEL io.openshift.build.source-location=${ORIGIN_URL}
+LABEL io.openshift.build.commit.date=${COMMIT_DATE}
+LABEL io.openshift.build.commit.id=${COMMIT_ID}
+
 CMD ["node", "server.js"]
