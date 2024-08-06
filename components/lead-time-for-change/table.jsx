@@ -12,11 +12,12 @@ import {
 import { Calendar, GitCommit, GitGraph, Timer } from "lucide-react"
 import {dateFormatter, dayFormatter} from '@/lib/date-funcs';
 import useLeadTimeForChangeData from './leadTimeForChange'
+import Link from "next/link";
 
 export function LeadTimeForChangeTable({ dateRange, appName }) {
   
   const { ltfcData, loading } = useLeadTimeForChangeData(appName, dateRange);
-  console.log('Chart ltfcData: ', ltfcData)
+  console.log('Table ltfcData: ', ltfcData)
 
   if (loading) {
     return <div>Loading...</div>; // Render loading state while data is being fetched
@@ -32,11 +33,11 @@ export function LeadTimeForChangeTable({ dateRange, appName }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {ltfcData.map (({ commit, timestamp, lead_time }) => (
+        {ltfcData.map (({ commit, commit_link, timestamp, lead_time }) => (
           <TableRow key={commit}>
             <TableCell>
               <div className="flex items-center gap-2">
-                <GitGraph className="w-4 h-4" /> {commit}
+                <GitGraph className="w-4 h-4" /> <Link href={commit_link} target='_blank'>{commit}</Link>
               </div>
             </TableCell>
             <TableCell>
