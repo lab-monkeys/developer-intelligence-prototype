@@ -12,16 +12,13 @@ import {
 } from "@/components/ui/card"
 
 import { DeploymentFrequencyChart } from '@/components/deployment-frequency/chart'
-import { LeadTimeForChangeChart } from '@/components/lead-time-for-change/chart'
 import { ChangeFailureRateChart } from '@/components/change-failure-rate/chart'
 import { MeanTimeToRecoveryChart } from '@/components/mean-time-to-recovery/chart'
 
 import { DeploymentFrequencyTabTrigger } from './deployment-frequency/tab-trigger'
 import { ChangeFailureRateTabTrigger } from './change-failure-rate/tab-trigger'
-import { LeadTimeForChangeTabTrigger } from './lead-time-for-change/tab-trigger'
 
 import { DeploymentFrequencyTable } from './deployment-frequency/table'
-import { LeadTimeForChangeTable } from './lead-time-for-change/table'
 import { ChangeFailureRateTable } from './change-failure-rate/table'
 import { MeanTimeToRecoveryTable } from './mean-time-to-recovery/table'
 
@@ -30,6 +27,7 @@ import { ScorecardAnalysis } from './scorecard/analysis'
 import { ScorecardTrend } from './scorecard/trend'
 import { MeanTimeToRecoveryTabTrigger } from './mean-time-to-recovery/tab-trigger'
 
+import LeadTimeForChange from '@/app/dashboard/lead-time-for-change';
 import LeadTimeForChangeData from '@/app/dashboard/lead-time-for-change-data';
 
 export function Dashboard({ appList, searchParams }) {
@@ -99,9 +97,7 @@ export function Dashboard({ appList, searchParams }) {
         <CardContent className="p-0">
           <Tabs defaultValue="dora-ltfc" className="">
             <TabsList className="justify-start w-full h-fit p-0 rounded-none">
-              <TabsTrigger value="dora-ltfc" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-violet-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <LeadTimeForChangeTabTrigger dateRange={dateRange} appName={activeApp} />
-              </TabsTrigger>
+              <LeadTimeForChange dateRange={dateRange} appName={activeApp} />
               {/* <TabsTrigger value="dora-df" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-blue-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
                 <DeploymentFrequencyTabTrigger dateRange={dateRange} appName={activeApp} />
               </TabsTrigger>

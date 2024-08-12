@@ -3,22 +3,11 @@
 import { Clock4, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
-import { LeadTimeForChangeRating } from './rating'
-import { useState, useEffect } from "react"
-import { getDaysBetweenDates } from '@/components/date-range-selector'
-import { useLeadTimeForChange } from './leadTimeForChange'
 
-export function LeadTimeForChangeTabTrigger({ dateRange, data, appName }) {
+export function LeadTimeForChangeTabTrigger({appName, data }) {
 
-  const { response, loading } = useLeadTimeForChange(appName, dateRange);
-  console.log('LTFC Tab: ', response)
-
-  if (loading) {
-    return <div>Loading...</div>; // Render loading state while data is being fetched
-  }
-
-  const chartMean = response.ltfc / 86400
-  const percentChange = Math.round((1 - (response.ltfc / response.last)) * 100)
+  const chartMean = data.ltfc / 86400
+  const percentChange = Math.round((1 - (data.ltfc / data.last)) * 100)
 
   // Anomaly detection
   // const showAnomalyWarning = data.some((day) => {
