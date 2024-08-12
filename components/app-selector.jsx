@@ -1,16 +1,37 @@
 "use client"
 
-import { useState, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { Check, ChevronsUpDown, Github, Gitlab, Box } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 export function AppSelector({ appList, activeApp }) {
 
   const [open, setOpen] = useState(false)
   const [app, setApp] = useState(activeApp)
+
+  // when dateRange is updated, cache it in the browser so that the selected range survives a restart,
+  // and then reload the page with the newly selected date
+  const router = useRouter();
+  const pathname = usePathname()
+  const searchParams = useSearchParams();
+
+  // when the user selects a different app, update the page with new params
+  useEffect(() => {
+    // read/write object containing current search params
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+
+    current.set("app", app)
+    // cast to string
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+
+    // Navigate to the same page with new query parameters
+    router.push(`${pathname}${query}`);
+  }, [app]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

@@ -15,7 +15,7 @@ export default function useLeadTimeForChangeData(appName, dateRange) {
                 const sortedData = data.sort((d1, d2) => (d1.timestamp > d2.timestamp) ? 1 : (d1.timestamp < d2.timestamp) ? -1 : 0);
                 setLtfcData(sortedData);
             } catch (error) {
-                console.error('Error fetching deployment frequency data:', error);
+                console.error('Error fetching lead time data:', error);
             } finally {
                 setLoading(false); // Set loading to false regardless of success or failure
             }

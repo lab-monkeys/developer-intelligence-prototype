@@ -5,7 +5,7 @@ import { format, subDays } from "date-fns"
 import { getDaysBetweenDates } from '@/lib/date-funcs';
 import { Calendar as CalendarIcon } from "lucide-react"
 import 'react-day-picker/dist/style.css';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -49,35 +49,46 @@ export function DateRangeSelector({}) {
       };
     }
   });
+
   const router = useRouter();
   const pathname = usePathname()
+  const searchParams = useSearchParams();
 
   // when dateRange is updated, cache it in the browser so that the selected range survives a restart,
   // and then reload the page with the newly selected date
   useEffect(() => {
-    if (dateRange) {
+    if (isValidDateRange(dateRange)) {
       
       if (typeof window !== 'undefined') {
         localStorage.setItem('dateRange', JSON.stringify(dateRange));
       }
 
-      const query = {
-        from: dateRange.from.toISOString(),
-        to: dateRange.to.toISOString(),
-      };
+      // read/write object containing current search params
+      const current = new URLSearchParams(Array.from(searchParams.entries()));
+      current.set("from", dateRange.from)
+      current.set("to", dateRange.to)
+
+      // cast to string
+      const search = current.toString();
+      const query = search ? `?${search}` : "";
 
       // Navigate to the same page with new query parameters
-      router.push(pathname + '?&from=' + query.from + 'to=' + query.to);
+      router.push(`${pathname}${query}`);
     }
   }, [dateRange]);
 
   // This handler will prevent errors when only 'to' or 'from' are selected
   const handleApplyClick = function (selected) {
-    if (isValidDateRange(selected)) { // Add isValidDateRange check
+    // if only one day is selected (from), set to and from to the same day
+    console.log("Selected range: " + JSON.stringify(selected))
+    if (selected) {
+      if (! (selected?.to)) {
+        selected.to = selected.from
+      }
       // Set "to" date to end of day (23:59:59,999) instead of start
       selected.to.setHours(23, 59, 59, 999)
       console.log(`updating date to ${JSON.stringify(selected)}`)
-      setDateRange(selected);
+      setDateRange(selected);  
     }
   };
 
@@ -118,7 +129,7 @@ export function DateRangeSelector({}) {
               <Button className="rounded-full" variant="ghost" size="sm">Last 12 months</Button>
               <Button className="rounded-full" variant="secondary" size="sm">Custom</Button>
             </div> */}
-            <Calendar initialFocus mode="range" defaultMonth={dateRange?.from} selected={dateRange} onSelect={handleApplyClick} numberOfMonths={1} min={2} />
+            <Calendar initialFocus mode="range" defaultMonth={dateRange?.from} selected={dateRange} onSelect={handleApplyClick} required numberOfMonths={1} min={2} />
           </div>
           <div className="flex items-center justify-between p-4 mx-4 border-t">
             <div className="text-sm"><strong className="font-semibold">Range:</strong> {getDaysBetweenDates(dateRange)} days</div>

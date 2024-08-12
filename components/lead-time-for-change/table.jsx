@@ -13,7 +13,7 @@ import { Calendar, GitCommit, GitGraph, Timer } from "lucide-react"
 import {dateFormatter, dayFormatter} from '@/lib/date-funcs';
 import Link from "next/link";
 
-export function LeadTimeForChangeTable({ ltfcData, appName }) {
+export function LeadTimeForChangeTable({ ltfcData }) {
   
   // const { ltfcData, loading } = useLeadTimeForChangeData(appName, dateRange);
   // console.log('Table ltfcData: ', ltfcData)

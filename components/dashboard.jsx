@@ -34,7 +34,7 @@ import LeadTimeForChangeData from '@/app/dashboard/lead-time-for-change-data';
 
 export function Dashboard({ appList, searchParams }) {
 
-  const activeApp = appList[0].app
+  const activeApp = searchParams?.app || appList[0].app
 
   const defaultDaysAgo = 7;
   const initialDateRange = {
@@ -46,6 +46,7 @@ export function Dashboard({ appList, searchParams }) {
     from: new Date(searchParams?.from || initialDateRange.from),
     to: new Date(searchParams?.to || initialDateRange.to),
   };
+  console.log("Current Date Range: " + JSON.stringify(dateRange))
 
   // const [activeApplication, setActiveApplication] = useState(applicationsList[0].id)
   // const [dataScorecard, setDataScorecard] = useState(applicationsList[0].scorecard[0])
@@ -90,7 +91,7 @@ export function Dashboard({ appList, searchParams }) {
         </CardContent>
       </Card> */}
 
-      {/* <Card className="mt-8">
+      <Card className="mt-8">
         <CardHeader>
           <CardTitle className="dark:text-white">DORA metrics</CardTitle>
           <CardDescription>Key metrics that impact software delivery performance</CardDescription>
@@ -101,7 +102,7 @@ export function Dashboard({ appList, searchParams }) {
               <TabsTrigger value="dora-ltfc" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-violet-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
                 <LeadTimeForChangeTabTrigger dateRange={dateRange} appName={activeApp} />
               </TabsTrigger>
-              <TabsTrigger value="dora-df" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-blue-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
+              {/* <TabsTrigger value="dora-df" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-blue-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
                 <DeploymentFrequencyTabTrigger dateRange={dateRange} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-mttr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-emerald-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
@@ -109,9 +110,9 @@ export function Dashboard({ appList, searchParams }) {
               </TabsTrigger>
               <TabsTrigger value="dora-cfr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-rose-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
                 <ChangeFailureRateTabTrigger dateRange={dateRange} appName={activeApp} />
-              </TabsTrigger>
+              </TabsTrigger> */}
             </TabsList>
-            <TabsContent value="dora-df" className="p-6 mt-8">
+            {/* <TabsContent value="dora-df" className="p-6 mt-8">
               <div className="h-64">
                 <DeploymentFrequencyChart dateRange={dateRange} appName={activeApp} />
               </div>
@@ -122,11 +123,11 @@ export function Dashboard({ appList, searchParams }) {
                 </h2>
                 <DeploymentFrequencyTable dateRange={dateRange} appName={activeApp} />
               </div>
-            </TabsContent>
+            </TabsContent> */}
             <TabsContent value="dora-ltfc" className="p-6 mt-8">
               <LeadTimeForChangeData appName={activeApp} dateRange={dateRange} />
             </TabsContent>
-            <TabsContent value="dora-cfr" className="p-6 mt-8">
+            {/* <TabsContent value="dora-cfr" className="p-6 mt-8">
               <div className="h-64">
                 <ChangeFailureRateChart dateRange={dateRange} appName={activeApp} />
               </div>
@@ -137,8 +138,8 @@ export function Dashboard({ appList, searchParams }) {
                 </h2>
                 <ChangeFailureRateTable cfrData={dataChangeFailureRate} appName={activeApp} />
               </div>
-            </TabsContent>
-            <TabsContent value="dora-mttr" className="p-6 mt-8">
+            </TabsContent> */}
+            {/* <TabsContent value="dora-mttr" className="p-6 mt-8">
               <div className="h-64">
                 <MeanTimeToRecoveryChart dateRange={dateRange} appName={activeApp} />
               </div>
@@ -149,10 +150,10 @@ export function Dashboard({ appList, searchParams }) {
                 </h2>
                 <MeanTimeToRecoveryTable dateRange={dateRange} appName={activeApp} />
               </div>
-            </TabsContent>
+            </TabsContent> */}
           </Tabs>
         </CardContent>
-      </Card> */}
+      </Card>
     </main>
   )
 }

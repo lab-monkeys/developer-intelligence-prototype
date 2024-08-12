@@ -31,7 +31,7 @@ export default async function LeadTimeForChangeData({ appName, dateRange }: { ap
     <div>
       {/* Render chart and table directly here, or pass data to child components */}
       <div className="h-64">
-        <LeadTimeForChangeChart data={data} />
+        <LeadTimeForChangeChart ltfcData={data} />
       </div>
       <div className="mt-8">
         <h2 className="flex items-center gap-2 mb-4 font-semibold dark:text-white">

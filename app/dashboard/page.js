@@ -15,7 +15,7 @@ export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
 }
 
-export default async function Page() {
+export default async function Page({params, searchParams}) {
 
   const session = await getServerSession(options)
   const appList = await getApps()
@@ -53,7 +53,7 @@ export default async function Page() {
         </div>
       </header>
       <div className="flex flex-col h-full ml-20">
-        <Dashboard appList={appList} />
+        <Dashboard appList={appList} searchParams={searchParams} />
       </div>
     </>
   )
