@@ -53,7 +53,7 @@ USER 1001
 EXPOSE 3000
 
 ENV PORT 3000
-ENV NEXT_PUBLIC_PELORUS_API_URL https://pelorus-api.pelorus-api.svc.cluster.local
+ENV NEXT_PUBLIC_PELORUS_API_URL https://pelorus-api-pelorus-api.apps.cluster-kwcgn.kwcgn.sandbox558.opentlc.com
 
 ARG ORIGIN_URL=unknown
 ARG COMMIT_DATE=unknown

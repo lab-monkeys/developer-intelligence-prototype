@@ -1,25 +1,27 @@
-'use client'
+//components/change-failure-rate/changeFailureRate.js
 
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
 import { Orbit, CalendarCheck, Ticket } from "lucide-react"
-import useChangeFailureRate from "./changeFailureRate";
 import { dateFormatter, dayFormatter } from '@/lib/date-funcs';
 
-export function ChangeFailureRateTable({ dateRange, appName }) {
+export function ChangeFailureRateTable({ cfrData, appName }) {
 
-  const { cfrData, loading } = useChangeFailureRate(appName, dateRange);
-  console.log('Table cfrData: ', cfrData)
+  // const { cfrData, loading } = useChangeFailureRate(appName, dateRange);
+  // console.log('Table cfrData: ', cfrData)
 
-  if (loading) {
-    return <div>Loading...</div>; // Render loading state while data is being fetched
+  // if (loading) {
+  //   return <div>Loading...</div>; // Render loading state while data is being fetched
+  // }
+
+  if (!cfrData || cfrData.length === 0) {
+    return <div>No data available.</div>;
   }
 
   return (

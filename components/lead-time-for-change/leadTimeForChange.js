@@ -1,6 +1,6 @@
 // components/deploymentFrequency.js
 import { useState, useEffect } from 'react';
-import { getDaysBetweenDates } from '@/components/date-range-selector'
+import { getDaysBetweenDates } from '@/lib/date-funcs';
 
 export default function useLeadTimeForChangeData(appName, dateRange) {
     const [ltfcData, setLtfcData] = useState([]);

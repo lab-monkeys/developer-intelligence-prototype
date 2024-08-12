@@ -9,7 +9,7 @@ import { AppIcon } from '@/components/app-icon'
 import { Dashboard } from '@/components/dashboard'
 import { Cog, FileText, LayoutGrid, Users, Search, Bell, GitBranch } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { getApps, getData } from '../api/old-api'
+import { getApps } from '../api/pelorus-api'
 
 export const metadata = {
   title: 'Dashboard - Red Hat Developer Intelligence'
@@ -18,7 +18,6 @@ export const metadata = {
 export default async function Page() {
 
   const session = await getServerSession(options)
-  const data = await getData()
   const appList = await getApps()
 
   if (!session) {
@@ -54,7 +53,7 @@ export default async function Page() {
         </div>
       </header>
       <div className="flex flex-col h-full ml-20">
-        <Dashboard data={data} appList={appList} />
+        <Dashboard appList={appList} />
       </div>
     </>
   )

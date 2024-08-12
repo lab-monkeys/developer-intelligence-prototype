@@ -11,16 +11,19 @@ import {
 } from "@/components/ui/table"
 import { Calendar, GitCommit, GitGraph, Timer } from "lucide-react"
 import {dateFormatter, dayFormatter} from '@/lib/date-funcs';
-import useLeadTimeForChangeData from './leadTimeForChange'
 import Link from "next/link";
 
-export function LeadTimeForChangeTable({ dateRange, appName }) {
+export function LeadTimeForChangeTable({ ltfcData, appName }) {
   
-  const { ltfcData, loading } = useLeadTimeForChangeData(appName, dateRange);
-  console.log('Table ltfcData: ', ltfcData)
+  // const { ltfcData, loading } = useLeadTimeForChangeData(appName, dateRange);
+  // console.log('Table ltfcData: ', ltfcData)
 
-  if (loading) {
-    return <div>Loading...</div>; // Render loading state while data is being fetched
+  // if (loading) {
+  //   return <div>Loading...</div>; // Render loading state while data is being fetched
+  // }
+
+  if (!ltfcData || ltfcData.length === 0) {
+    return <div>No data available.</div>;
   }
 
   return (

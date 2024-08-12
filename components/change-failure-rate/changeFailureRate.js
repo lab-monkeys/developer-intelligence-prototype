@@ -1,6 +1,6 @@
-// components/deploymentFrequency.js
+// components/chang-failure-rate/changeFailureRate.js
 import { useState, useEffect } from 'react';
-import { getDaysBetweenDates } from '@/components/date-range-selector'
+import { getDaysBetweenDates } from '@/lib/date-funcs';
 
 export default function useChangeFailureRateData(appName, dateRange) {
     const [cfrData, setCfrData] = useState([]);

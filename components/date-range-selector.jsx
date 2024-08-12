@@ -1,85 +1,84 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { format } from "date-fns"
+import { format, subDays } from "date-fns"
+import { getDaysBetweenDates } from '@/lib/date-funcs';
 import { Calendar as CalendarIcon } from "lucide-react"
 import 'react-day-picker/dist/style.css';
+import { useRouter, usePathname } from 'next/navigation';
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
-export function getDaysBetweenDates(dateRange) {
-  console.log('DateRange value in getDaysBetweenDates', dateRange)
-  let differenceInMs = 0;
-
-  if (dateRange?.from) {
-    if (dateRange.to instanceof Date) {
-      differenceInMs = dateRange.to.getTime() - dateRange.from.getTime();
-    }
+// Function to check if the date range is valid
+const isValidDateRange = (dateRange) => {
+  if (dateRange?.from && dateRange?.to) {
+    const fromDate = new Date(dateRange.from);
+    const toDate = new Date(dateRange.to);
+    return fromDate < toDate;
   }
+  return false;
+};
 
-  return convertMsToDays(differenceInMs + 1);
-}
+export function DateRangeSelector({}) {
 
-function convertMsToDays(ms) {
-  const msInOneSecond = 1000
-  const secondsInOneMinute = 60
-  const minutesInOneHour = 60
-  const hoursInOneDay = 24
-
-  const minutesInOneDay = hoursInOneDay * minutesInOneHour
-  const secondsInOneDay = secondsInOneMinute * minutesInOneDay
-  const msInOneDay = msInOneSecond * secondsInOneDay
-
-  return Math.ceil(ms / msInOneDay)
-}
-
-function isComplete(date) {
-  if (date?.from) {
-    if (date.to) {
-      console.log("Date is complete")
-      return true
+  // This code initializes the date range that the dashboard will show data from.
+  // We start by checking if a previously selected date is cached in the browser.
+  // If not, we default to the past 7 days
+  const [dateRange, setDateRange] = useState(() => {
+    console.log('Initializing activeDateRange');
+    const storedDateRange = localStorage.getItem('dateRange');
+    if (storedDateRange) {
+      console.log('Using stored date range');
+      // Parse the stored dateRange and convert dates back to Date objects
+      const parsedDateRange = JSON.parse(storedDateRange, (key, value) => {
+        if (key === 'from' || key === 'to') {
+          return new Date(value);
+        }
+        return value;
+      });
+      return parsedDateRange;
+    } else {
+      console.log('No stored date range found, using default');
+      const defaultDaysAgo = 7;
+      return {
+        from: subDays(new Date(), defaultDaysAgo),
+        to: new Date()
+      };
     }
-  }
-  console.log("Date is not complete")
-  return false
-}
+  });
+  const router = useRouter();
+  const pathname = usePathname()
 
-export function DateRangeSelector({activeDateRange, setActiveDateRange}) {
-
-  const [dateRange, setDateRange] = useState(() => activeDateRange || null);
-
-  // when dateRange is updated, cache it in the browser so that the selected range survives a restart
+  // when dateRange is updated, cache it in the browser so that the selected range survives a restart,
+  // and then reload the page with the newly selected date
   useEffect(() => {
-    if (dateRange && typeof window !== 'undefined') {
-      localStorage.setItem('dateRange', JSON.stringify(dateRange));
+    if (dateRange) {
+      
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('dateRange', JSON.stringify(dateRange));
+      }
+
+      const query = {
+        from: dateRange.from.toISOString(),
+        to: dateRange.to.toISOString(),
+      };
+
+      // Navigate to the same page with new query parameters
+      router.push(pathname + '?&from=' + query.from + 'to=' + query.to);
     }
-  }, [dateRange]); // Removed setDateRange from the dependency array
-
-  useEffect(() => {
-    console.log('Date range value after update:', dateRange);
   }, [dateRange]);
 
   // This handler will prevent errors when only 'to' or 'from' are selected
-  const handleApplyClick = function () {
-    if (isComplete(dateRange) && isValidDateRange(dateRange)) { // Add isValidDateRange check
-      console.log("Handle Apply Click", dateRange)
+  const handleApplyClick = function (selected) {
+    if (isValidDateRange(selected)) { // Add isValidDateRange check
       // Set "to" date to end of day (23:59:59,999) instead of start
-      dateRange.to.setHours(23, 59, 59, 999)
-      setActiveDateRange(dateRange);
+      selected.to.setHours(23, 59, 59, 999)
+      console.log(`updating date to ${JSON.stringify(selected)}`)
+      setDateRange(selected);
     }
-  };
-  
-  // Function to check if the date range is valid
-  const isValidDateRange = (dateRange) => {
-    if (dateRange?.from && dateRange?.to) {
-      const fromDate = new Date(dateRange.from);
-      const toDate = new Date(dateRange.to);
-      return fromDate < toDate;
-    }
-    return false;
   };
 
   return (
@@ -119,14 +118,10 @@ export function DateRangeSelector({activeDateRange, setActiveDateRange}) {
               <Button className="rounded-full" variant="ghost" size="sm">Last 12 months</Button>
               <Button className="rounded-full" variant="secondary" size="sm">Custom</Button>
             </div> */}
-            <Calendar initialFocus mode="range" defaultMonth={dateRange?.from} selected={dateRange} onSelect={setDateRange} numberOfMonths={1} min={2} />
+            <Calendar initialFocus mode="range" defaultMonth={dateRange?.from} selected={dateRange} onSelect={handleApplyClick} numberOfMonths={1} min={2} />
           </div>
           <div className="flex items-center justify-between p-4 mx-4 border-t">
             <div className="text-sm"><strong className="font-semibold">Range:</strong> {getDaysBetweenDates(dateRange)} days</div>
-            <div className="flex items-center gap-2">
-              <Button className="rounded-full" variant="secondary">Cancel</Button>
-              <Button className="rounded-full" onClick={handleApplyClick}>Apply</Button>
-            </div>
           </div>
 
         </PopoverContent>

@@ -2,8 +2,6 @@
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  annotations:
-    openshift.io/image.dockerRepositoryCheck: "2024-06-18T20:35:00Z"
   labels:
     app: pelorus-ui
     app.kubernetes.io/component: pelorus-ui

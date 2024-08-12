@@ -27,22 +27,34 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        openshift.io/generated-by: OpenShiftWebConsole
       creationTimestamp: null
       labels:
         app: pelorus-ui
         deployment: pelorus-ui
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/instance: pelorus-ui
+        app.kubernetes.io/name: pelorus-ui
+        app.kubernetes.io/part-of: pelorus
+        app.openshift.io/runtime-namespace: pelorus-api
     spec:
+      serviceAccountName: pelorus
       containers:
       - name: pelorus-ui
+        command: ["/bin/bash"]
+        args: ["-c", "export OPENSHIFT_CLIENT_SECRET=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token); node server.js"]
         env:
         - name: NEXTAUTH_SECRET
           value: +03/pWr4sFvxrcm29hwnXLREWjFfmW2toTCUyNcLytc=
         - name: NEXTAUTH_URL
-          value: https://pelorus-ui-pelorus-api.apps.cluster-275jd.dynamic.redhatworkshops.io/
-        image: image-registry.openshift-image-registry.svc:5000/pelorus-api/pelorus-ui@sha256:25e853da5f61cacee240c521b255e3d724c645603c1dc1451bba08c3c439219f
-        imagePullPolicy: IfNotPresent
+          value: https://pelorus-ui-pelorus-api.apps.cluster-kwcgn.kwcgn.sandbox558.opentlc.com/
+        - name: NODE_EXTRA_CA_CERTS
+          value: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        - name: OPENSHIFT_CLIENT_ID
+          value: system:serviceaccount:pelorus-api:pelorus
+        # - name: NEXT_PUBLIC_PELORUS_API_URL
+        #   value: http://pelorus-api.pelorus-api.svc.cluster.local
+        image: quay.io/etsauer/pelorus-ui:dev
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
           protocol: TCP

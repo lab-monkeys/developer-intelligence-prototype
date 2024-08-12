@@ -12,7 +12,6 @@ metadata:
   name: pelorus-ui
   namespace: pelorus-api
 spec:
-  host: pelorus-ui-pelorus-api.apps.cluster-275jd.dynamic.redhatworkshops.io
   port:
     targetPort: 3000-tcp
   tls:

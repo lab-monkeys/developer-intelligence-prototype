@@ -8,19 +8,7 @@ import { useState, useEffect } from "react"
 import { getDaysBetweenDates } from '@/components/date-range-selector'
 import { useMeanTimeToRestore } from './meantimetorestore'
 
-export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
-
-  // Calculate the mean
-  const calculateMean = data => {
-    if (data.length < 1) {
-      return
-    }
-    return data.reduce((prev, current) => prev + current) / data.length
-  }
-
-  const averages = data.map(element => {
-    return element.rollingAverage
-  })
+export function MeanTimeToRecoveryTabTrigger({ dateRange, appName }) {
 
   const { response, loading } = useMeanTimeToRestore(appName, dateRange);
   console.log('MTTR Tab: ', response)
@@ -33,16 +21,16 @@ export function MeanTimeToRecoveryTabTrigger({ dateRange, data, appName }) {
   const percentChange = Math.round((1 - (response.mttr / response.last)) * 100)
 
   // Anomaly detection
-  const showAnomalyWarning = data.some((day) => {
-    if (day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1]) { return true }
-    return false
-  })
+  // const showAnomalyWarning = data.some((day) => {
+  //   if (day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1]) { return true }
+  //   return false
+  // })
 
   return (
     <>
       <div className="flex items-center justify-between w-full mb-2">
         <PackageCheck className="w-6 h-6 stroke-emerald-500" />
-        {showAnomalyWarning && <Badge className="text-orange-700 bg-orange-50 border-orange-700 dark:text-orange-400 dark:bg-orange-950 dark:border-orange-400" variant="outline">Anomaly detected</Badge>}
+        {/* {showAnomalyWarning && <Badge className="text-orange-700 bg-orange-50 border-orange-700 dark:text-orange-400 dark:bg-orange-950 dark:border-orange-400" variant="outline">Anomaly detected</Badge>} */}
       </div>
       <h2 className="flex items-center gap-2">
         <span className="font-semibold text-base dark:text-white">Mean time to recovery</span>
