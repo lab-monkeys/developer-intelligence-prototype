@@ -11,7 +11,7 @@ import {
 import { CalendarCheck, Blocks, Fingerprint } from "lucide-react"
 import { dateFormatter } from '@/lib/date-funcs';
 
-export function DeploymentFrequencyTable({ dfData }) {
+export function DeploymentFrequencyTable({ appName, dfData }) {
 
   return (
     <Table>

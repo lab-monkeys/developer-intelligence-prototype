@@ -37,7 +37,7 @@ export default async function DeploymentFrequencyData({ appName, dateRange }: { 
           <TableIcon />
           Deployments
         </h2>
-        <DeploymentFrequencyTable dfData={data} />
+        <DeploymentFrequencyTable appName={appName} dfData={data} />
       </div>
     </>
   );
