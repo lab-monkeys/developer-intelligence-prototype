@@ -29,6 +29,8 @@ import { MeanTimeToRecoveryTabTrigger } from './mean-time-to-recovery/tab-trigge
 
 import LeadTimeForChange from '@/app/dashboard/lead-time-for-change';
 import LeadTimeForChangeData from '@/app/dashboard/lead-time-for-change-data';
+import DeploymentFrequency from "@/app/dashboard/deployment-frequency";
+import DeploymentFrequencyData from "@/app/dashboard/deployment-frequency-data";
 
 export function Dashboard({ appList, searchParams }) {
 
@@ -97,29 +99,22 @@ export function Dashboard({ appList, searchParams }) {
         <CardContent className="p-0">
           <Tabs defaultValue="dora-ltfc" className="">
             <TabsList className="justify-start w-full h-fit p-0 rounded-none">
-              <LeadTimeForChange dateRange={dateRange} appName={activeApp} />
-              {/* <TabsTrigger value="dora-df" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-blue-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <DeploymentFrequencyTabTrigger dateRange={dateRange} appName={activeApp} />
+              <TabsTrigger value="dora-ltfc" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-violet-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
+                <LeadTimeForChange dateRange={dateRange} appName={activeApp} />
               </TabsTrigger>
-              <TabsTrigger value="dora-mttr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-emerald-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
+              <TabsTrigger value="dora-df" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-blue-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
+                <DeploymentFrequency dateRange={dateRange} appName={activeApp} />
+              </TabsTrigger>
+              {/* <TabsTrigger value="dora-mttr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-emerald-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
                 <MeanTimeToRecoveryTabTrigger dateRange={dateRange} appName={activeApp} />
               </TabsTrigger>
               <TabsTrigger value="dora-cfr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-rose-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
                 <ChangeFailureRateTabTrigger dateRange={dateRange} appName={activeApp} />
               </TabsTrigger> */}
             </TabsList>
-            {/* <TabsContent value="dora-df" className="p-6 mt-8">
-              <div className="h-64">
-                <DeploymentFrequencyChart dateRange={dateRange} appName={activeApp} />
-              </div>
-              <div className="mt-8">
-                <h2 className="flex items-center gap-2 mb-4 font-semibold dark:text-white">
-                  <TableIcon />
-                  Deployments
-                </h2>
-                <DeploymentFrequencyTable dateRange={dateRange} appName={activeApp} />
-              </div>
-            </TabsContent> */}
+            <TabsContent value="dora-df" className="p-6 mt-8">
+              <DeploymentFrequencyData appName={activeApp} dateRange={dateRange} />
+            </TabsContent>
             <TabsContent value="dora-ltfc" className="p-6 mt-8">
               <LeadTimeForChangeData appName={activeApp} dateRange={dateRange} />
             </TabsContent>

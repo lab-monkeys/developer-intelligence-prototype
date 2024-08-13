@@ -3,8 +3,7 @@
 import { useTheme } from "next-themes"
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Area, Line, ReferenceLine } from 'recharts'
 import { DeploymentFrequencyTooltip } from './tooltip'
-import useDeploymentFrequencyData from './deploymentFrequency';
-import { dateFormatter, dayFormatter } from '@/lib/date-funcs';
+import { dateFormatter } from '@/lib/date-funcs';
 
 const calculateMean = data => {
   if (data.length < 1) {
@@ -44,7 +43,7 @@ function deploymentsPerDay(data) {
   return result;
 }
 
-export function DeploymentFrequencyChart({ dateRange, appName }) {
+export function DeploymentFrequencyChart({ dfData }) {
 
   const { resolvedTheme } = useTheme()
   const animationDuration = 1000
@@ -62,13 +61,6 @@ export function DeploymentFrequencyChart({ dateRange, appName }) {
   const strokeRange = '#3b82f6'           // Blue 500
   const strokeRollingAverage = '#3b82f6'  // Blue 500
   const strokeGoal = '#f59e0b'            // Amber 500
-
-  const { dfData, loading } = useDeploymentFrequencyData(appName, dateRange);
-  console.log('Chart dfData: ', dfData)
-
-  if (loading) {
-    return <div>Loading...</div>; // Render loading state while data is being fetched
-  }
 
   var countPerDay = deploymentsPerDay(dfData);
   console.log('Count per day', countPerDay)

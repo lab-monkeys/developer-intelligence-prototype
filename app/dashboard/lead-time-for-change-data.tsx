@@ -11,7 +11,7 @@ interface LeadTimeForChangeData {
 }
 
 async function fetchLeadTimeForChange(appName: string, from: Date, to: Date): Promise<LeadTimeForChangeData[]> {
-  const reqUrl = `${process.env.PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=${getDaysBetweenDates({ to, from })}d&start=${Math.floor(from.getTime() / 1000)}`;
+  const reqUrl = `${process.env.PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=${getDaysBetweenDates({ to, from })}d&start=${Math.floor(to.getTime() / 1000)}`;
   console.log(`LTFC Req URL: ${reqUrl}`);
 
   const response = await fetch(reqUrl);

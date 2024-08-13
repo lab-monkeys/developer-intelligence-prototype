@@ -51,8 +51,8 @@ spec:
           value: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         - name: OPENSHIFT_CLIENT_ID
           value: system:serviceaccount:pelorus-api:pelorus
-        # - name: NEXT_PUBLIC_PELORUS_API_URL
-        #   value: http://pelorus-api.pelorus-api.svc.cluster.local
+        - name: PELORUS_API_URL
+          value: http://pelorus-api.pelorus-api.svc.cluster.local
         image: quay.io/etsauer/pelorus-ui:dev
         imagePullPolicy: Always
         ports:

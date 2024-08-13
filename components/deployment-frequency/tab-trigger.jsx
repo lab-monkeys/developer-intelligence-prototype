@@ -3,22 +3,12 @@
 import { Rocket, ArrowUp } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
-import { DeploymentFrequencyRating } from '@/components/deployment-frequency/rating'
-import { useState, useEffect } from "react"
 import { getDaysBetweenDates } from '@/lib/date-funcs';
-import { useDeploymentFrequency } from './deploymentFrequency'
 
-export function DeploymentFrequencyTabTrigger({ dateRange, appName }) {
+export function DeploymentFrequencyTabTrigger({ appName, data, dateRange }) {
 
-  const { response, loading } = useDeploymentFrequency(appName, dateRange);
-  console.log('DF Tab: ', response)
-
-  if (loading) {
-    return <div>Loading...</div>; // Render loading state while data is being fetched
-  }
-
-  const chartMean = response.df / getDaysBetweenDates(dateRange)
-  const percentChange = Math.round((response.df / response.last) * 100)
+  const chartMean = data.df / getDaysBetweenDates(dateRange)
+  const percentChange = Math.round((data.df / data.last) * 100)
 
   // Anomaly detection
   // const showAnomalyWarning = data.some((day) => {
