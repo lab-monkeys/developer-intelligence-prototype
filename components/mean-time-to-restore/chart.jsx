@@ -1,11 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import { useTheme } from "next-themes"
-import { format } from 'date-fns'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Area, Line, ReferenceLine } from 'recharts'
 import { MeanTimeToRecoveryTooltip } from './tooltip'
-import useMeanTimeToRestore from './meantimetorestore'
 import { dateFormatter, dayFormatter } from '@/lib/date-funcs';
 
 const calculateMean = data => {
@@ -15,7 +12,7 @@ const calculateMean = data => {
   return data.reduce((prev, current) => prev + current) / data.length
 }
 
-export function MeanTimeToRecoveryChart({ appName, dateRange }) {
+export function MeanTimeToRestoreChart({ mttrData }) {
 
   const { resolvedTheme } = useTheme()
   const animationDuration = 1000
@@ -33,13 +30,6 @@ export function MeanTimeToRecoveryChart({ appName, dateRange }) {
   const strokeRange = '#10b981'           // Emerald 500
   const strokeRollingAverage = '#10b981'  // Emerald 500
   const strokeGoal = '#f59e0b'            // Amber 500
-
-  const { mttrData, loading } = useMeanTimeToRestore(appName, dateRange);
-  console.log('Chart mttrData: ', mttrData)
-
-  if (loading) {
-    return <div>Loading...</div>; // Render loading state while data is being fetched
-  }
 
   // Calculate the mean
   const averages = mttrData.map(element => {

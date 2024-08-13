@@ -3,22 +3,11 @@
 import { PackageCheck, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
-import { MeanTimeToRecoveryRating } from './rating'
-import { useState, useEffect } from "react"
-import { getDaysBetweenDates } from '@/components/date-range-selector'
-import { useMeanTimeToRestore } from './meantimetorestore'
 
-export function MeanTimeToRecoveryTabTrigger({ dateRange, appName }) {
+export function MeanTimeToRestoreTabTrigger({ data }) {
 
-  const { response, loading } = useMeanTimeToRestore(appName, dateRange);
-  console.log('MTTR Tab: ', response)
-
-  if (loading) {
-    return <div>Loading...</div>; // Render loading state while data is being fetched
-  }
-
-  const chartMean = response.mttr / 86400
-  const percentChange = Math.round((1 - (response.mttr / response.last)) * 100)
+  const chartMean = data.mttr / 86400
+  const percentChange = Math.round((1 - (data.mttr / data.last)) * 100)
 
   // Anomaly detection
   // const showAnomalyWarning = data.some((day) => {
