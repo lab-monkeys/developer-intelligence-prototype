@@ -11,16 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-import { DeploymentFrequencyChart } from '@/components/deployment-frequency/chart'
 import { ChangeFailureRateChart } from '@/components/change-failure-rate/chart'
-import { MeanTimeToRecoveryChart } from '@/components/mean-time-to-restore/chart'
-
-import { DeploymentFrequencyTabTrigger } from './deployment-frequency/tab-trigger'
-import { ChangeFailureRateTabTrigger } from './change-failure-rate/tab-trigger'
-
-import { DeploymentFrequencyTable } from './deployment-frequency/table'
-import { ChangeFailureRateTable } from './change-failure-rate/table'
-import { MeanTimeToRecoveryTable } from './mean-time-to-restore/table'
 
 import { ScorecardScore } from './scorecard/score'
 import { ScorecardAnalysis } from './scorecard/analysis'
@@ -31,7 +22,9 @@ import LeadTimeForChangeData from '@/app/dashboard/lead-time-for-change-data';
 import DeploymentFrequency from "@/app/dashboard/deployment-frequency";
 import DeploymentFrequencyData from "@/app/dashboard/deployment-frequency-data";
 import MeanTimeToRestore from "@/app/dashboard/mean-time-to-restore";
-import MeanTimeToRestoreData from "@/app/dashboard/meant-time-to-restore-data"
+import MeanTimeToRestoreData from "@/app/dashboard/meant-time-to-restore-data";
+import ChangeFailureRate from "@/app/dashboard/change-failure-rate";
+import ChangeFailureRateData from "@/app/dashboard/change-failure-rate-data"
 
 export function Dashboard({ appList, searchParams }) {
 
@@ -109,9 +102,9 @@ export function Dashboard({ appList, searchParams }) {
               <TabsTrigger value="dora-mttr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-emerald-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
                 <MeanTimeToRestore dateRange={dateRange} appName={activeApp} />
               </TabsTrigger>
-              {/* <TabsTrigger value="dora-cfr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-rose-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
-                <ChangeFailureRateTabTrigger dateRange={dateRange} appName={activeApp} />
-              </TabsTrigger> */}
+              <TabsTrigger value="dora-cfr" className="flex flex-col items-start w-full p-6 bg-neutral-50 border-0 border-l border-b border-t-2 border-t-transparent rounded-none dark:bg-neutral-900 data-[state=active]:bg-white data-[state=active]:border-b-transparent data-[state=active]:border-t-rose-500 data-[state=active]:shadow-none data-[state=active]:dark:bg-card">
+                <ChangeFailureRate dateRange={dateRange} appName={activeApp} />
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="dora-df" className="p-6 mt-8">
               <DeploymentFrequencyData appName={activeApp} dateRange={dateRange} />
@@ -122,18 +115,9 @@ export function Dashboard({ appList, searchParams }) {
             <TabsContent value="dora-mttr" className="p-6 mt-8">
               <MeanTimeToRestoreData appName={activeApp} dateRange={dateRange} />
             </TabsContent>
-            {/* <TabsContent value="dora-cfr" className="p-6 mt-8">
-              <div className="h-64">
-                <ChangeFailureRateChart dateRange={dateRange} appName={activeApp} />
-              </div>
-              <div className="mt-8">
-                <h2 className="flex items-center gap-2 mb-4 font-semibold dark:text-white">
-                  <TableIcon />
-                  Failed deployments
-                </h2>
-                <ChangeFailureRateTable cfrData={dataChangeFailureRate} appName={activeApp} />
-              </div>
-            </TabsContent> */}
+            <TabsContent value="dora-cfr" className="p-6 mt-8">
+              <ChangeFailureRateData appName={activeApp} dateRange={dateRange} />
+            </TabsContent>
           </Tabs>
         </CardContent>
       </Card>
