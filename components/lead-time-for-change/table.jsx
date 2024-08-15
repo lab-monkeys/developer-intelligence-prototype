@@ -30,17 +30,23 @@ export function LeadTimeForChangeTable({ ltfcData }) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Commit SHA</TableHead>
+          <TableHead>Commit Hash</TableHead>
+          <TableHead>Image SHA</TableHead>
           <TableHead>Commit Date</TableHead>
           <TableHead>Lead time</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {ltfcData.map (({ commit, commit_link, timestamp, lead_time }) => (
+        {ltfcData.map (({ commit, commit_link, image, timestamp, lead_time }) => (
           <TableRow key={commit}>
             <TableCell>
               <div className="flex items-center gap-2">
                 <GitGraph className="w-4 h-4" /> <Link href={commit_link} target='_blank'>{commit}</Link>
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="flex items-center gap-2">
+                <GitGraph className="w-4 h-4" />{image}
               </div>
             </TableCell>
             <TableCell>
