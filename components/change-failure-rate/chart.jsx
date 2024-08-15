@@ -1,12 +1,10 @@
 'use client'
 
-import { useState } from 'react'
-import { format } from 'date-fns'
 import { useTheme } from "next-themes"
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Area, Line, ReferenceLine } from 'recharts'
 import { ChangeFailureRateTooltip } from './tooltip'
-import { dateFormatter, dayFormatter } from '@/lib/date-funcs';
-import useChangeFailureRate from './changeFailureRate'
+import { dateFormatter } from '@/lib/date-funcs';
+
 
 const calculateMean = data => {
   if (data.length < 1) {
@@ -47,7 +45,7 @@ function eventsPerDay(data) {
 }
 
 
-export function ChangeFailureRateChart({ dateRange, appName }) {
+export function ChangeFailureRateChart({ cfrData }) {
 
   const { resolvedTheme } = useTheme()
   const animationDuration = 1000
@@ -65,13 +63,6 @@ export function ChangeFailureRateChart({ dateRange, appName }) {
   const strokeRange = '#f43f5e'           // Rose 500
   const strokeRollingAverage = '#f43f5e'  // Rose 500
   const strokeGoal = '#f59e0b'            // Amber 500
-
-  const { cfrData, loading } = useChangeFailureRate(appName, dateRange);
-  console.log('Chart cfrData: ', cfrData)
-
-  if (loading) {
-    return <div>Loading...</div>; // Render loading state while data is being fetched
-  }
 
   var countPerDay = eventsPerDay(cfrData);
   console.log('Count per day', countPerDay)

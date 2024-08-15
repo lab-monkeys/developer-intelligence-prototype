@@ -3,46 +3,23 @@
 import { Clock4, ArrowDown } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { InfoTooltip } from '@/components/info-tooltip'
-import { LeadTimeForChangeRating } from './rating'
-import { useState, useEffect } from "react"
-import { getDaysBetweenDates } from '@/components/date-range-selector'
-import { fetchLeadTimeForChange } from './leadTimeForChange'
 
-export function LeadTimeForChangeTabTrigger({ dateRange, data, appName }) {
+export function LeadTimeForChangeTabTrigger({appName, data }) {
 
-  // Calculate the mean
-  const calculateMean = data => {
-    if (data.length < 1) {
-      return
-    }
-    return data.reduce((prev, current) => prev + current) / data.length
-  }
-
-  const averages = data.map(element => {
-    return element.rollingAverage
-  })
-
-  const { response, loading } = fetchLeadTimeForChange(appName, dateRange);
-  console.log('LTFC Tab: ', response)
-
-  if (loading) {
-    return <div>Loading...</div>; // Render loading state while data is being fetched
-  }
-
-  const chartMean = response.ltfc / 86400
-  const percentChange = Math.round((1 - (response.ltfc / response.last)) * 100)
+  const chartMean = data.ltfc / 86400
+  const percentChange = Math.round((1 - (data.ltfc / data.last)) * 100)
 
   // Anomaly detection
-  const showAnomalyWarning = data.some((day) => {
-    if (day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1]) { return true }
-    return false
-  })
+  // const showAnomalyWarning = data.some((day) => {
+  //   if (day.rollingAverage < day.expectedRange[0] || day.rollingAverage > day.expectedRange[1]) { return true }
+  //   return false
+  // })
 
   return (
     <>
       <div className="flex items-center justify-between w-full mb-2">
         <Clock4 className="w-6 h-6 stroke-violet-500" />
-        {showAnomalyWarning && <Badge className="text-orange-700 bg-orange-50 border-orange-700 dark:text-orange-400 dark:bg-orange-950 dark:border-orange-400" variant="outline">Anomaly detected</Badge>}
+        {/* {showAnomalyWarning && <Badge className="text-orange-700 bg-orange-50 border-orange-700 dark:text-orange-400 dark:bg-orange-950 dark:border-orange-400" variant="outline">Anomaly detected</Badge>} */}
       </div>
       <h2 className="flex items-center gap-2">
         <span className="font-semibold text-base dark:text-white">Lead time for change ({appName})</span>

@@ -13,10 +13,6 @@ First, you'll want to store environment variables locally so you can authenticat
 ```bash
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=
-GITHUB_ID=
-GITHUB_SECRET=
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
 ```
 
 To create a `NEXTAUTH_SECRET` you can refer to [NextAuth options](https://next-auth.js.org/configuration/options)
@@ -41,11 +37,15 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Sign in
 
-The following sign in providers are supported:
+## Building the Code
 
-- `GitHub`
-- `Google (Red Hat accounts only)`
+```
+podman build -f Containerfile -t quay.io/etsauer/pelorus-ui:dev --build-arg "COMMIT_ID=$(git rev-parse HEAD)" --build-arg "COMMIT_DATE=$(git log -1 --format='%ad' --date='format:%a %b %d %H:%M:%S %Y %z')" --build-arg "ORIGIN_URL=$(git config --get remote.origin.url)"
+podman push quay.io/etsauer/pelorus-ui:dev
+```
 
-## Deployment
+## Deployment in OpenShift
 
-The application is deployed on [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) using auto deployment scripts. The production environment can be viewed at [https://developer-intelligence.vercel.app/](https://developer-intelligence.vercel.app/)
+```
+oc apply -f manifests/
+```

@@ -1,6 +1,6 @@
-'use client'
-import { useState, useEffect } from "react"
+import { getDaysBetweenDates } from '@/lib/date-funcs';
 
+// Get initial list of Apps that Pelorus has data for
 export async function getApps() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/apps?range=1w`)
   if (!response.ok) {
@@ -9,45 +9,32 @@ export async function getApps() {
   return response.json()
 }
 
-export function getLTFC(appName) {
+// Lead time for change
+export async function fetchLeadTimeForChangeData(appName, dateRange) {
+  const req = `${process.env.PELORUS_API_URL}/sdp/lead_time_for_change/${appName}/data?range=${getDaysBetweenDates(dateRange)}d&start=${dateRange.to.getTime() / 1000}`;
+  console.log(req)
+  const response = await fetch(req);
 
-  // const [response, setResponse] = useState('')
-  // useEffect(() => {
-  // fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}?range=1w`).then((test) => test.json()).then((data) => {setResponse(data)}).catch((error) => { console.log(error) })
-  // }, []);
-  // return response
-  const response = fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/lead_time_for_change/${appName}?range=1w`).then((test) => test.json()).catch((error) => { console.log(error) })
-  return response
+  if (!response.ok) {
+    throw new Error("Failed to fetch Lead Time for Change data");
+  }
+
+  const data = await response.json();
+  return data.sort((d1, d2) => (d1.timestamp > d2.timestamp) ? 1 : (d1.timestamp < d2.timestamp) ? -1 : 0);
 }
 
-export function getDF(appName) {
+// Change Failure Rate
+export async function fetchChangeFailureRateData(appName, dateRange) {
+  const req = `${process.env.PELORUS_API_URL}/sdp/change_failure_rate/${appName}/data?range=${getDaysBetweenDates(dateRange)}d&start=${Math.floor(dateRange.to.getTime() / 1000)}`;
+  console.log(req)
+  const response = await fetch(req);
+  
+  if (!response.ok) {
+    throw new Error("Failed to fetch Change Failure Rate data");
+  }
 
-  // const [response, setResponse] = useState('')
-  // useEffect(() => {
-  // fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/deployment_frequency/${appName}?range=1w`).then((test) => test.json()).then((data) => {setResponse(data)}).catch((error) => { console.log(error) })
-  // }, []);
-  // return response
-  const response = fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/deployment_frequency/${appName}?range=1w`).then((test) => test.json()).catch((error) => { console.log(error) })
-  return response
-}
-
-export function getMTTR(appName) {
-  // const [response, setResponse] = useState('')
-  // useEffect(() => {
-  // fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/mean_time_to_restore/${appName}?range=1w`).then((test) => test.json()).then((data) => {setResponse(data)}).catch((error) => { console.log(error) })
-  // }, []);
-  const response = fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/mean_time_to_restore/${appName}?range=1w`).then((test) => test.json()).catch((error) => { console.log(error) })
-  return response
-}
-
-export function getCFR(appName) {
-  // const [response, setResponse] = useState('')
-  // useEffect(() => {
-  // fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/change_failure_rate/${appName}?range=1w`).then((test) => test.json()).then((data) => {setResponse(data)}).catch((error) => { console.log(error) })
-  // }, []);
-
-  const response = fetch(`${process.env.NEXT_PUBLIC_PELORUS_API_URL}/sdp/change_failure_rate/${appName}?range=1w`).then((test) => test.json()).catch((error) => { console.log(error) })
-  return response
+  const data = await response.json();
+  return data.sort((d1, d2) => (d1.timestamp > d2.timestamp ? 1 : d1.timestamp < d2.timestamp ? -1 : 0));
 }
 
 export function getDORA(appName) {

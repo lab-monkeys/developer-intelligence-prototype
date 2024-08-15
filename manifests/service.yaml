@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pelorus-ui
+    app.kubernetes.io/component: pelorus-ui
+    app.kubernetes.io/instance: pelorus-ui
+    app.kubernetes.io/name: pelorus-ui
+    app.kubernetes.io/part-of: pelorus-ui
+    app.openshift.io/runtime-version: dev
+  name: pelorus-ui
+  namespace: pelorus-api
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 3000-tcp
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: pelorus-ui
+    deployment: pelorus-ui
+  sessionAffinity: None
+  type: ClusterIP

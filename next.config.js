@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverActions: true,
+  },
   images: {
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
@@ -11,7 +14,8 @@ const nextConfig = {
       use: ['@svgr/webpack'],
     })
     return config
-  }
+  },
+  output: 'standalone'
 }
 
 module.exports = nextConfig

@@ -3,24 +3,15 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Orbit, FileCode, CalendarCheck, Ticket, Timer } from "lucide-react"
-import useMeanTimeToRestore from "./meantimetorestore";
+import { Orbit, CalendarCheck, Ticket, Timer } from "lucide-react"
 import { dateFormatter, dayFormatter } from '@/lib/date-funcs';
 
-export function MeanTimeToRecoveryTable({ dateRange, appName }) {
-
-  const { mttrData, loading } = useMeanTimeToRestore(appName, dateRange);
-  console.log('Table mttrData: ', mttrData)
-
-  if (loading) {
-    return <div>Loading...</div>; // Render loading state while data is being fetched
-  }
+export function MeanTimeToRestoreTable({ appName, mttrData }) {
 
   return (
     <Table>

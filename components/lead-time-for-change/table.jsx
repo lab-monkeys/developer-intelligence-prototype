@@ -11,32 +11,42 @@ import {
 } from "@/components/ui/table"
 import { Calendar, GitCommit, GitGraph, Timer } from "lucide-react"
 import {dateFormatter, dayFormatter} from '@/lib/date-funcs';
-import fetchLeadTimeForChangeData from './leadTimeForChange'
+import Link from "next/link";
 
-export function LeadTimeForChangeTable({ dateRange, appName }) {
+export function LeadTimeForChangeTable({ ltfcData }) {
   
-  const { ltfcData, loading } = fetchLeadTimeForChangeData(appName, dateRange);
-  console.log('Chart ltfcData: ', ltfcData)
+  // const { ltfcData, loading } = useLeadTimeForChangeData(appName, dateRange);
+  // console.log('Table ltfcData: ', ltfcData)
 
-  if (loading) {
-    return <div>Loading...</div>; // Render loading state while data is being fetched
+  // if (loading) {
+  //   return <div>Loading...</div>; // Render loading state while data is being fetched
+  // }
+
+  if (!ltfcData || ltfcData.length === 0) {
+    return <div>No data available.</div>;
   }
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Commit SHA</TableHead>
+          <TableHead>Commit Hash</TableHead>
+          <TableHead>Image SHA</TableHead>
           <TableHead>Commit Date</TableHead>
           <TableHead>Lead time</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {ltfcData.map (({ commit, timestamp, lead_time }) => (
+        {ltfcData.map (({ commit, commit_link, image, timestamp, lead_time }) => (
           <TableRow key={commit}>
             <TableCell>
               <div className="flex items-center gap-2">
-                <GitGraph className="w-4 h-4" /> {commit}
+                <GitGraph className="w-4 h-4" /> <Link href={commit_link} target='_blank'>{commit}</Link>
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="flex items-center gap-2">
+                <GitGraph className="w-4 h-4" />{image}
               </div>
             </TableCell>
             <TableCell>
